@@ -1,0 +1,473 @@
+html,
+body {
+    -webkit-overflow-scrolling: touch;
+    position: absolute;
+    margin:0;
+    padding:0;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #fff;
+}
+
+.content {
+    position:absolute;
+    width:85%;
+    right:0;
+    top:0;
+    bottom:0;
+    overflow-y:scroll;
+}
+
+button {
+    -webkit-tap-highlight-color: transparent;
+}
+.btn {
+    background:rgba(0,0,0,1);
+    border:none;
+    padding:0.06rem 0.01rem;
+    color:#fff;
+    font-size:0.37rem;
+    font-weight:300;
+    color:rgba(255,255,255,1);
+}
+.btn.block{
+    width:100%;
+}
+.btn-hollow{
+    border:0.01rem solid rgba(0,0,0,1);
+    background:#fff;
+    padding:0.05rem 0.3rem;
+    vertical-align:middle;
+    text-align:center;
+    font-size:0.33rem;
+    font-weight:500;
+    color:rgba(0,0,0,1);
+}
+
+input,
+textarea {
+    -webkit-appearance: none;
+}
+
+img {
+    border: none;
+    transition: all 0.4s;
+}
+
+img[lazy=loading] {
+    background: #f2f2f2;
+    background-size: 40%;
+}
+
+img[lazy=error] {
+    background: #f2f2f2;
+    background-size: 40%;
+}
+
+img[lazy=loaded] {
+    animation: fade 0.5s;
+    background: none;
+}
+
+@keyframes fade {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+a {
+    text-decoration: none!important;
+    color: rgba(152, 158, 170, 1);
+}
+
+a:link {
+    text-decoration: none!important;
+}
+
+a:visited {
+    text-decoration: none!important;
+}
+
+a:hover {
+    text-decoration: none!important;
+}
+
+a:active {
+    text-decoration: none!important;
+    color: rgba(152, 158, 170, 1);
+}
+
+.table {
+    display: table;
+    vertical-align: middle;
+    width: 100%
+}
+
+.table.fixed {
+    table-layout: fixed;
+}
+
+.row {
+    display: table-row;
+    width: 100%;
+}
+
+.cell {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.text-ellipsis {
+    word-wrap: normal;
+    /* for IE */
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.text-left {
+    text-align: left;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.padding-sm {
+    padding: 0.5rem;
+}
+
+.padding-md {
+    padding: 1rem;
+}
+
+.padding-lg {
+    padding: 1.5rem;
+}
+
+.padding-xl {
+    padding: 2rem;
+}
+
+.padding-top-sm {
+    padding-top: 0.5rem;
+}
+
+.padding-top-md {
+    padding-top: 1rem;
+}
+
+.padding-top-lg {
+    padding-top: 1.5rem;
+}
+
+.padding-top-xl {
+    padding-top: 2rem;
+}
+
+.padding-right-sm {
+    padding-right: 0.5rem;
+}
+
+.padding-right-md {
+    padding-right: 1rem;
+}
+
+.padding-right-lg {
+    padding-right: 1.5rem;
+}
+
+.padding-right-xl {
+    padding-right: 2rem;
+}
+
+.padding-bottom-sm {
+    padding-bottom: 0.5rem;
+}
+
+.padding-bottom-md {
+    padding-bottom: 1rem;
+}
+
+.padding-bottom-lg {
+    padding-bottom: 1.5rem;
+}
+
+.padding-bottom-xl {
+    padding-bottom: 2rem;
+}
+
+.padding-left-sm {
+    padding-left: 0.5rem;
+}
+
+.padding-left-md {
+    padding-left: 1rem;
+}
+
+.padding-left-lg {
+    padding-left: 1.5rem;
+}
+
+.padding-left-xl {
+    padding-left: 2rem;
+}
+
+.padding-vertical-sm {
+    padding: 0.5rem 0;
+}
+
+.padding-vertical-md {
+    padding: 1rem 0;
+}
+
+.padding-vertical-lg {
+    padding: 1.5rem 0;
+}
+
+.padding-vertical-xl {
+    padding: 2rem 0;
+}
+
+.padding-horizontal-sm {
+    padding: 0 0.5rem;
+}
+
+.padding-horizontal-md {
+    padding: 0 1rem;
+}
+
+.padding-horizontal-lg {
+    padding: 0 1.5rem;
+}
+
+.padding-horizontal-xl {
+    padding: 0 2rem;
+}
+
+.border-top {
+    border-top: 0.015rem solid rgba(229, 229, 229, 1);
+}
+
+.border-bottom {
+    border-bottom: 0.015rem solid rgba(229, 229, 229, 1);
+}
+
+.border-right {
+    border-right: 0.015rem solid rgba(229, 229, 229, 1);
+}
+
+.border-left {
+    border-left: 0.015rem solid rgba(229, 229, 229, 1);
+}
+
+[class*="avg-"] {
+    display: block;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+[class*="avg-"]:before,
+[class*="avg-"]:after {
+    content: " ";
+    display: table;
+}
+
+[class*="avg-"]:after {
+    clear: both;
+}
+
+[class*="avg-"]>li {
+    display: block;
+    height: auto;
+    float: left;
+}
+
+.avg-1>li {
+    width: 100%;
+}
+
+.avg-1>li:nth-of-type(n) {
+    clear: none;
+}
+
+.avg-1>li:nth-of-type(1n+1) {
+    clear: both;
+}
+
+.avg-2>li {
+    width: 50%;
+}
+
+.avg-2>li:nth-of-type(n) {
+    clear: none;
+}
+
+.avg-2>li:nth-of-type(2n+1) {
+    clear: both;
+}
+
+.avg-3>li {
+    width: 33.33333333%;
+}
+
+.avg-3>li:nth-of-type(n) {
+    clear: none;
+}
+
+.avg-3>li:nth-of-type(3n+1) {
+    clear: both;
+}
+
+.avg-4>li {
+    width: 25%;
+}
+
+.avg-4>li:nth-of-type(n) {
+    clear: none;
+}
+
+.avg-4>li:nth-of-type(4n+1) {
+    clear: both;
+}
+
+.avg-5>li {
+    width: 20%;
+}
+
+.avg-5>li:nth-of-type(n) {
+    clear: none;
+}
+
+.avg-5>li:nth-of-type(5n+1) {
+    clear: both;
+}
+
+.avg-6>li {
+    width: 16.66666667%;
+}
+
+.avg-6>li:nth-of-type(n) {
+    clear: none;
+}
+
+.avg-6>li:nth-of-type(6n+1) {
+    clear: both;
+}
+
+.avg-7>li {
+    width: 14.28571429%;
+}
+
+.avg-7>li:nth-of-type(n) {
+    clear: none;
+}
+
+.avg-7>li:nth-of-type(7n+1) {
+    clear: both;
+}
+
+.avg-8>li {
+    width: 12.5%;
+}
+
+.avg-8>li:nth-of-type(n) {
+    clear: none;
+}
+
+.avg-8>li:nth-of-type(8n+1) {
+    clear: both;
+}
+
+.avg-9>li {
+    width: 11.11111111%;
+}
+
+.avg-9>li:nth-of-type(n) {
+    clear: none;
+}
+
+.avg-9>li:nth-of-type(9n+1) {
+    clear: both;
+}
+
+.avg-10>li {
+    width: 10%;
+}
+
+.avg-10>li:nth-of-type(n) {
+    clear: none;
+}
+
+.avg-10>li:nth-of-type(10n+1) {
+    clear: both;
+}
+
+.avg-11>li {
+    width: 9.09090909%;
+}
+
+.avg-11>li:nth-of-type(n) {
+    clear: none;
+}
+
+.avg-11>li:nth-of-type(11n+1) {
+    clear: both;
+}
+
+.avg-12>li {
+    width: 8.33333333%;
+}
+
+.avg-12>li:nth-of-type(n) {
+    clear: none;
+}
+
+.avg-12>li:nth-of-type(12n+1) {
+    clear: both;
+}
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .3s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+    opacity:0;
+}
+
+.fade-in-enter-active{
+  transition: opacity .3s;
+}
+.fade-in-enter{
+    opacity:0;
+}
+
+.popout-enter-active {
+    transition: all .15s ease;
+}
+.popout-leave-active {
+    transition: all .5s ease;
+}
+.popout-enter
+/* .slide-fade-leave-active for below version 2.1.8 */ {
+  transform: translateY(10rem);
+}
+.popout-leave-to{
+    opacity:0;
+}
+
+.slide-enter{
+    transform: translateX(-5rem);
+}
+.slide-enter-active{
+    transition: all .8s ease;
+}

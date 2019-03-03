@@ -1,0 +1,15 @@
+{
+    "name": "Diet",
+    "description": "The backend of diet appliaction",
+    "version": "0.0.1",
+    "dependencies": {
+        "express": "latest",
+        "mysql2": "latest",
+        "connect-multiparty": "latest",
+        "trim": "latest",
+        "htmlspecialchars": "latest",
+        "md5": "latest",
+        "ali-oss": "latest",
+        "app-root-path": "latest"
+    }
+}
