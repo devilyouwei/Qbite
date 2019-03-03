@@ -1,5 +1,6 @@
 import { Toast, Dialog } from 'vant'
 const URL = 'http://localhost:3000'
+const PRICE_SIGN = 'MOP$'
 export default {
     async post(ctl='',act='',data={},load=false){
         if(!ctl || !act) throw new Error('no controller or action')
@@ -8,8 +9,8 @@ export default {
         let form = new FormData()
         for (let i in data) form.append(i, data[i])
         // 用餐者信息
-        form.append('sid',this.getParams()['sid']) // 門店
-        form.append('did',this.getParams()['did']) // 桌子
+        form.append('sid',localStorage.getItem('sid')) // 門店
+        form.append('did',localStorage.getItem('did')) // 桌子
 
         let request = new Request(url, { method: 'POST', body: form})
         try {
@@ -101,5 +102,6 @@ export default {
     async confirm(){
 
     },
-    URL:URL
+    URL:URL,
+    PRICE_SIGN:PRICE_SIGN
 }
