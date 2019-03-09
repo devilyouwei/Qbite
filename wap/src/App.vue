@@ -5,14 +5,9 @@
 </template>
 
 <script>
-import $ from './tool.js'
 export default {
     name: 'App',
     mounted: function(){
-        let sid = $.getParams()['sid']
-        let did = $.getParams()['did']
-        localStorage.setItem('sid',sid)
-        localStorage.setItem('did',did)
     }
 }
 </script>

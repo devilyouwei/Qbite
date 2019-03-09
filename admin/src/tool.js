@@ -1,4 +1,4 @@
-import { Loading } from 'element-ui'
+import { Loading,Message } from 'element-ui'
 const URL = 'http://localhost:3000'
 export default {
     async post(ctl='',act='',data={},load=false){
@@ -21,6 +21,11 @@ export default {
             }
             return res
         } catch (err) {
+            Message({
+                showClose: true,
+                message: '網絡錯誤，請檢查網絡',
+                type: 'error'
+            })
             throw err
         } finally {
             if (load) Loading.service({ fullscreen: true }).close()

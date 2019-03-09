@@ -63,7 +63,7 @@
                     <van-button type="default" @click="showPopup=false"><i class="iconfont icon-error">&nbsp;</i>關閉</van-button>
                 </div>
                 <div class="cell">
-                    <van-button type="primary" @click="order"><i class="iconfont icon-zhengque">&nbsp;</i>下單</van-button>
+                    <van-button type="primary" @click="submit"><i class="iconfont icon-zhengque">&nbsp;</i>下單</van-button>
                 </div>
             </div>
         </div>
@@ -239,6 +239,7 @@ export default{
         return{
             type: [],
             list:[],
+            order:[],
             activeIndex: 0,
             activeId: 1,
             price: 0,
@@ -249,12 +250,21 @@ export default{
         }
     },
     mounted(){
+        let sid = $.getParams()['sid'] // 店鋪ID
+        let did = $.getParams()['did'] // 桌號ID
+        if(sid && did){
+            localStorage.setItem('sid',sid)
+            localStorage.setItem('did',did)
+        }
+        let oid = localStorage.getItem('oid')
+        if(oid) return this.$router.replace('/Order')
         this.loadData()
     },
     methods:{
         async loadData(){
             let res = await $.post('Wap','index')
             if(res.status==1 && res.data.type.length){
+                // 增加字段，計數下單菜的數目
                 for(let i in res.data.food){
                     res.data.food[i].count = 0
                 }
@@ -272,8 +282,15 @@ export default{
             if(this.list[index].count>0) this.list[index].count--
             this.price-=parseFloat(this.list[index].price)
         },
-        order(){
-            localStorage.setItem('order',JSON.stringify(this.list))
+        submit(){
+            for(let i in this.list){
+                if(this.list[i].count>0){
+                    this.order.push(this.list[i])
+                }
+            }
+            localStorage.setItem('order',JSON.stringify(this.order))
+            this.order = []
+            this.$router.push('/Order')
         }
     }
 }

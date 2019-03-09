@@ -48,6 +48,7 @@ class DB {
             return res[0]['affectedRows']
         }catch(e){
             return 0
+            throw e
         }
     }
 }

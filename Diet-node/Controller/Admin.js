@@ -206,7 +206,39 @@ class Admin{
             let data = (await db.query('select title,img from shop where id=?',[user.sid]))
             return res.json({status:1,msg:'輸入店名或者上傳圖片',data:data[0]})
         }
-
+    }
+    // 列出桌位
+    static async deskList(req,res){
+        let user = await $.auth(req.body.user)
+        if(!user) return res.json({status:-1,msg:'未登錄或登錄狀態失效'})
+        let data = await db.list('desk',user)
+        return res.json({status:1,data:data,msg:'全部列出'})
+    }
+    // 新增餐桌
+    static async deskSave(req,res){
+        let user = await $.auth(req.body.user)
+        if(!user) return res.json({status:-1,msg:'未登錄或登錄狀態失效'})
+        if(user.pid!=1) return res.json({status:0,msg:'無權限用戶！'})
+        let data = {
+            title:trim(req.body.title),
+            num:parseInt(req.body.num),
+            sid:user.sid
+        }
+        let id = await db.insert('desk',data)
+        if(id>0) return res.json({status:1,msg:'插入成功'})
+        else return res.json({status:0,msg:'插入失敗，數據寫入錯誤'})
+    }
+    // 删除餐桌
+    static async setDeskDelete(req,res){
+        let user = await $.auth(req.body.user)
+        if(!user) return res.json({status:-1,msg:'未登錄或登錄狀態失效'})
+        if(user.pid!=1) return res.json({status:0,msg:'無權限用戶！'})
+        let id = parseInt(req.body.id)
+        if(id){
+            let flag = await db.delete('desk',id,user)
+            if(flag>0) return res.json({status:1,msg:'已經刪除'})
+            else return res.json({status:0,msg:'未刪除，找不到指定刪除行'})
+        } else return res.json({status:0,msg:'缺少桌參數ID'})
     }
 }
 module.exports=Admin

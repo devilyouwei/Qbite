@@ -22,6 +22,23 @@
             </div>
         </el-dialog>
 
+        <el-dialog title="編輯新桌" :visible.sync="dialogFormVisible2">
+            <el-form :model="form2" :rules="rules2" ref="form2">
+                <el-form-item label="桌編號" prop="title">
+                    <el-input v-model="form2.title" type="text"></el-input>
+                </el-form-item>
+                <el-form-item label="人數" prop="num">
+                    <el-input v-model="form2.num" type="number"></el-input>
+                </el-form-item>
+            </el-form>
+
+            <div slot="footer" class="dialog-footer">
+                <el-button @click="dialogFormVisible2=false">取消</el-button>
+                <el-button type="primary" @click="submit2">確定</el-button>
+            </div>
+        </el-dialog>
+
+        <!--員工管理-->
         <el-row style="margin-bottom:0.3rem;font-size:0.25rem;"><i class="iconfont icon-info">&nbsp;</i>店鋪信息</el-row>
         <el-row type="flex" align="middle" class="header">
             <el-col :span="4">
@@ -64,6 +81,34 @@
                 </el-row>
             </el-collapse-item>
         </el-collapse>
+
+        <!--餐桌管理-->
+        <el-collapse accordion style="margin-top:1rem;">
+            <el-collapse-item>
+                <template slot="title">
+                    <i class="iconfont icon-iconset0203">&nbsp;</i>餐桌管理
+                </template>
+                <el-row>
+                    <el-table :data="desks.filter(data => !search || data.username.toLowerCase().includes(search.toLowerCase()))" style="width:100%">
+                        <el-table-column prop="id" label="編號" width="180"></el-table-column>
+                        <el-table-column prop="title" label="桌編號" width="180"></el-table-column>
+                        <el-table-column prop="num" label="人數"></el-table-column>
+                        <el-table-column align="left" width="300" label="操作">
+                            <template slot-scope="scope">
+                                <el-button size="mini" type="text" @click="deskDelete(scope.row)">刪除</el-button>
+                                &nbsp;&nbsp;&nbsp;
+                                <el-popover placement="right" width="400" trigger="click">
+                                    <img :src="scope.row.qrcode" style="width:3rem;margin:0 auto;">
+                                    <el-button size="mini" type="text" slot="reference">二維碼</el-button>
+                                </el-popover>
+                            </template>
+                        </el-table-column>
+                    </el-table>
+                    <el-button type="primary" icon="el-icon-plus" @click="dialogFormVisible2=true" style="margin-top:0.3rem;float:right;">新增餐桌</el-button>
+                </el-row>
+            </el-collapse-item>
+        </el-collapse>
+
     </div>
 </template>
 <script>
@@ -74,9 +119,11 @@ export default {
         return{
             user:$.getUserInfo(),
             users:[],
+            desks:[],
             uploadUrl:$.URL+'/Upload/img',
             search:'',
             dialogFormVisible:false,
+            dialogFormVisible2:false,
             position:[],
             shop:{
                 title:'',
@@ -98,6 +145,14 @@ export default {
                     {min:5, max:20, message:'長度小於50個字符大於5個字符', trigger:'blur'}
                 ],
                 pid:[{required:true, message:'請輸入職位', trigger:'blur'}],
+            },
+            form2: {
+                title:'',
+                num:0
+            },
+            rules2: {
+                title:[{ required:true, message:'輸入桌號', trigger:'blur' }, { min: 1, max: 20, message: '長度小於20個字符', trigger: 'blur' }],
+                num:[{ required: true, message: '请輸入桌人數', trigger: 'blur' },{min:1,max:99,message:'人數不合法',trigger:'blur'}]
             }
         }
     },
@@ -114,10 +169,19 @@ export default {
                 this.shop.title = res.data.title
                 this.shop.img = res.data.img
             }
+            res = await $.post('Admin','deskList')
+            if(res.status==1){
+                this.desks = res.data
+            }else this.$message.error(res.msg);
         },
         async userDelete(item){
             let res = await $.post('Admin','setUserDelete',{id:item.id})
             if(res.status == 1) this.loadData()
+            else this.$message.error(res.msg)
+        },
+        async deskDelete(item){
+            let res = await $.post('Admin','setDeskDelete',{id:item.id})
+            if(res.status==1) this.loadData()
             else this.$message.error(res.msg)
         },
         userEdit(item){
@@ -126,6 +190,7 @@ export default {
             this.form.pid = item.pid
             this.dialogFormVisible = true
         },
+        // 提交用戶信息
         async submit(){
             let valid = await this.$refs['form'].validate()
             if(valid){
@@ -134,6 +199,19 @@ export default {
                     this.loadData()
                     this.dialogFormVisible = false
                 } else this.$message.error(res.msg)
+            }
+        },
+        // 提交餐桌
+        async submit2(){
+            let valid = await this.$refs['form2'].validate()
+            if(!valid) return
+            let form = this.form2
+            if(form.title && form.num){
+                let res = await $.post('Admin','deskSave',form,true)
+                if(res.status==1){
+                    this.loadData()
+                    this.dialogFormVisible2 = false
+                }else this.$message.error(res.msg);
             }
         },
         async changeShop(){
@@ -163,6 +241,12 @@ export default {
                 this.form.username=''
                 this.form.password=''
                 this.form.pid=''
+            }
+        },
+        async dialogFormVisible2(v){
+            if(v==false){
+                this.form2.title=''
+                this.form2.num=0
             }
         }
     }
