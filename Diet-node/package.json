@@ -10,6 +10,7 @@
         "htmlspecialchars": "latest",
         "md5": "latest",
         "ali-oss": "latest",
+        "qr-image": "latest",
         "app-root-path": "latest"
     }
 }

@@ -30,10 +30,10 @@
 
         <!--新增對話框-->
         <el-dialog title="編輯菜品" :visible.sync="dialogFormVisible">
-            <el-form :model="form" :rules="rules" ref="form" label-width="1rem">
+            <el-form :model="form" :rules="rules" ref="form" label-width="1rem" v-loading="uploading">
                 <el-row :gutter="12" style="text-align:center;padding-bottom:0.5rem">
                     <el-col :span="24">
-                        <el-upload :action="uploadUrl" :show-file-list="false" :on-success="uploadSuccess" :on-error="uploadError" :data="{user:JSON.stringify(user)}" drag accept="image/gif,image/jpeg,image/png">
+                        <el-upload :action="uploadUrl" :show-file-list="false" :on-success="uploadSuccess" :on-error="uploadError" :on-change="uploadChange" :data="{user:JSON.stringify(user)}" drag accept="image/gif,image/jpeg,image/png">
                             <img v-if="form.thumb" :src="form.thumb" :key="form.thumb" class="avatar">
                             <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                         </el-upload>
@@ -86,6 +86,7 @@ export default {
             list:[],
             type:[],
             uploadUrl:$.URL+'/Upload/img',
+            uploading:false,
             form:{
                 id:0,
                 title:'',
@@ -156,10 +157,16 @@ export default {
             else this.$message.error(res.msg)
 
         },
+        uploadChange(){
+            this.uploading = true
+        },
         uploadError(){
             this.$message.error('上傳失敗')
+            this.uploading = false
         },
         uploadSuccess(res){
+            this.uploading = false
+            console.log(this.uploading)
             if(res.status == 1){
                 this.form.thumb = res.data
                 this.$message({

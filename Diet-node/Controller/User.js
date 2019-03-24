@@ -4,8 +4,13 @@ const md5 = require('md5')
 class User{
     // 登陆
     static async login(req,res){
-        if(trim(req.body.username) && trim(req.body.password)){
-            let data = await db.query('select id from user where username=? and password=?',[req.body.username,md5(req.body.password)])
+        let username = trim(req.body.username) // 用戶名
+        let email = trim(req.body.email) // 郵箱
+        let password = md5(req.body.password) // 密碼
+
+        // 開始登陸過程
+        if(username && email && password){
+            let data = await db.query('select * from user_shop where username=? and password=? and email=?',[username,password,email])
             if(data.length>0) {
                 await db.query('update user set token = ? where id = ?', [md5(Date.parse(new Date()) + req.body.username + req.body.password), data[0]['id']])
                 data = await db.query('select * from user where id=?', [data[0]['id']])

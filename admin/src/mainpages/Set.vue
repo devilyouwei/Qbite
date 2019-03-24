@@ -40,19 +40,22 @@
 
         <!--員工管理-->
         <el-row style="margin-bottom:0.3rem;font-size:0.25rem;"><i class="iconfont icon-info">&nbsp;</i>店鋪信息</el-row>
-        <el-row type="flex" align="middle" class="header">
+        <el-row type="flex" align="middle" class="header" :style="shop.background?'background:url('+shop.background+')':''">
             <el-col :span="4">
-                <el-upload class="avatar-uploader" :action="uploadUrl" :show-file-list="false" :on-success="uploadSuccess" :data="{user:JSON.stringify(user)}" :on-error="uploadError">
+                <el-upload class="avatar-uploader" :action="uploadUrl" :show-file-list="false" :on-success="uploadLogoSuccess" :data="{user:JSON.stringify(user)}" :on-error="uploadLogoError">
                     <img v-if="shop.img" :src="shop.img" :key="shop.img" class="avatar">
                     <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                 </el-upload>
             </el-col>
-            <el-col :span="11">
-                <el-input placeholder="请输入店名" v-model="shop.title">
-                    <template slot="prepend">店鋪名</template>
-                    <el-button slot="append" @click="changeShop">保存</el-button>
-                </el-input>
-
+            <el-col :span="12" style="text-align:center">
+                <el-input placeholder="请输入内容" v-model="shop.title" clearable></el-input>
+                <el-input placeholder="店鋪描述" v-model="shop.description" clearable style="margin-top:0.3rem"></el-input>
+            </el-col>
+            <el-col :span="8" style="text-align:right">
+                <el-upload class="upload-demo" :action="uploadUrl" :show-file-list="false" :on-success="uploadBgSuccess" :data="{user:JSON.stringify(user)}" :on-error="uploadBgError">
+                    <el-button size="small" type="primary">上傳店鋪背景</el-button>
+                </el-upload>
+                <el-button type="primary" @click="changeShop">存儲</el-button>
             </el-col>
         </el-row>
 
@@ -93,14 +96,16 @@
                         <el-table-column prop="id" label="編號" width="180"></el-table-column>
                         <el-table-column prop="title" label="桌編號" width="180"></el-table-column>
                         <el-table-column prop="num" label="人數"></el-table-column>
+                        <el-table-column align="left" width="300" label="二維碼">
+                            <template slot-scope="scope">
+                                <div v-html="scope.row.qrcode" style="width:2rem;">
+                                    {{scope.row.qrcode}}
+                                </div>
+                            </template>
+                        </el-table-column>
                         <el-table-column align="left" width="300" label="操作">
                             <template slot-scope="scope">
                                 <el-button size="mini" type="text" @click="deskDelete(scope.row)">刪除</el-button>
-                                &nbsp;&nbsp;&nbsp;
-                                <el-popover placement="right" width="400" trigger="click">
-                                    <img :src="scope.row.qrcode" style="width:3rem;margin:0 auto;">
-                                    <el-button size="mini" type="text" slot="reference">二維碼</el-button>
-                                </el-popover>
                             </template>
                         </el-table-column>
                     </el-table>
@@ -127,6 +132,8 @@ export default {
             position:[],
             shop:{
                 title:'',
+                description:'',
+                background:'',
                 img:''
             },
             form:{
@@ -168,9 +175,16 @@ export default {
             if(res.status == 1) {
                 this.shop.title = res.data.title
                 this.shop.img = res.data.img
+                this.shop.description = res.data.description
+                this.shop.background = res.data.background
             }
             res = await $.post('Admin','deskList')
             if(res.status==1){
+                let QR = require('qr-image')
+                for(let i in res.data){
+                    let url = `${$.CLIENT}?sid=${res.data[i].sid}&did=${res.data[i].id}`
+                    res.data[i].qrcode = QR.imageSync(url, { type: 'svg' })
+                }
                 this.desks = res.data
             }else this.$message.error(res.msg);
         },
@@ -215,15 +229,27 @@ export default {
             }
         },
         async changeShop(){
-            let res = await $.post('Admin','setShop',{title:this.shop.title,img:this.shop.img},true)
+            let res = await $.post('Admin','setShop',this.shop,true)
             if(res.status==1) this.$message({ message: res.msg, type: 'success' })
         },
-        uploadError(){
+        uploadLogoError(){
             this.$message.error('上傳失敗')
         },
-        uploadSuccess(res){
+        uploadLogoSuccess(res){
             if(res.status == 1){
                 this.shop.img = res.data
+                this.$message({
+                    type:'success',
+                    message:res.msg
+                })
+            }
+        },
+        uploadBgError(){
+            this.$message.error('上傳失敗')
+        },
+        uploadBgSuccess(res){
+            if(res.status == 1){
+                this.shop.background = res.data
                 this.$message({
                     type:'success',
                     message:res.msg
@@ -260,6 +286,8 @@ export default {
     border:solid 1px #f0f0f0;
     padding:0.2rem;
     margin-bottom:1rem;
+    background-position:center;
+    background-size:100%;
 }
 .el-upload {
     border: 1px dashed #d9d9d9;
@@ -282,6 +310,6 @@ export default {
 .avatar {
     width: 2rem;
     height: 2rem;
-    display: block;
+    object-fit:cover;
 }
 </style>

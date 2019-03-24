@@ -1,5 +1,15 @@
 <template>
     <div>
+        <div class="header" v-if="shop">
+            <div class="table">
+                <div class="cell logo">
+                    <img :src="shop.img">
+                </div>
+                <div class="cell shop-title">
+                    {{shop.title}}
+                </div>
+            </div>
+        </div>
         <!--分類-->
         <div class="left">
             <van-list>
@@ -37,7 +47,7 @@
                 <i class="iconfont icon-gouwuche"></i>
                 <span class="shopped" v-if="shopped">{{shopped}}</span>
             </div>
-            <van-popup v-model="showPopup" position="top" style="max-height:10rem;">
+            <van-popup v-model="showPopup" position="top">
                 <div class="shopping table">
                     <div class="row" v-for="(item,index) in list" :key="index" v-show="item.count>0">
                         <div class="cell" style="width:2.3rem;">
@@ -54,33 +64,58 @@
                         </div>
                     </div>
                 </div>
-            </van-popup>
-            <div class="table btn-box text-center" v-show="showPopup">
-                <div class="price">
+                <div class="all-price text-center">
                     {{price.toFixed(2)}} {{priceSign}}
                 </div>
-                <div class="cell">
-                    <van-button type="default" @click="showPopup=false"><i class="iconfont icon-error">&nbsp;</i>關閉</van-button>
+                <div class="table btn-box text-center" v-show="showPopup">
+                    <div class="cell">
+                        <van-button type="default" @click="showPopup=false"><i class="iconfont icon-error">&nbsp;</i>關閉</van-button>
+                    </div>
+                    <div class="cell">
+                        <van-button type="danger" @click="submit"><i class="iconfont icon-zhengque">&nbsp;</i>下單</van-button>
+                    </div>
                 </div>
-                <div class="cell">
-                    <van-button type="primary" @click="submit"><i class="iconfont icon-zhengque">&nbsp;</i>下單</van-button>
-                </div>
-            </div>
+            </van-popup>
         </div>
     </div>
 </template>
 <style scoped>
+.van-cell{
+background:#f2f2f2;
+color:#000;
+}
 .van-cell.active{
-    background:#f00;
-    color:#fff;
+    background:#fff;
+    color:#000;
+}
+.header{
+    height:3rem;
+}
+.header .table{
+    height:3rem;
+}
+.header .logo{
+    vertical-align:middle;
+    width:3rem;
+}
+.header .logo img{
+    object-fit:cover;
+    width:1.5rem;
+    height:1.5rem;
+    vertical-align:middle;
+    border-radius:100%;
+    margin-left:0.5rem;
+}
+.header .shop-title{
+    font-size:1rem;
+    font-weight:bold;
 }
 .left{
-    border-right:solid 1px #909090;
-    height:100%;
+    background:#f2f2f2;
     position:absolute;
     width:3rem;
     bottom:0;
-    top:0;
+    top:3rem;
     left:0;
     overflow-y:scroll;
 }
@@ -91,7 +126,7 @@
     position:absolute;
     left:3rem;
     right:0;
-    top:0;
+    top:3rem;
     bottom:0;
     overflow-y:scroll;
 }
@@ -187,9 +222,10 @@
     padding:0.1rem 0;
 }
 .item-label{
-    font-size:0.45rem;
-    padding:0.3rem 0.2rem;
-    border-bottom:solid 1px #ccc;
+    font-size:0.5rem;
+    font-weight:bold;
+    padding:0.5rem 0.2rem;
+    text-align:center;
 }
 .shopping{
     font-size:0.5rem;
@@ -199,29 +235,19 @@
     height:2rem;
     object-fit:cover;
 }
-.shopping .price{
-    color:#f00;
-}
 .btn-box{
-    z-index:999999999;
-    position:fixed;
-    bottom:5rem;
-    left:0;
-    right:0;
+    padding:0.5rem 0;
 }
 .btn-box .van-button{
     border:none;
     font-size:0.5rem;
 }
-.btn-box .price{
-    position:fixed;
-    bottom:2rem;
+.all-price{
     text-align:center;
-    left:0;
-    right:0;
-    color:#f90;
-    font-size:1.2rem;
+    color:#f00;
+    font-size:0.8rem;
     font-weight:bold;
+    line-height:2rem;
 }
 </style>
 <script>
@@ -237,6 +263,7 @@ export default{
     },
     data(){
         return{
+            shop:null,
             type: [],
             list:[],
             order:[],
@@ -270,6 +297,7 @@ export default{
                 }
                 this.type = res.data.type
                 this.list = res.data.food
+                this.shop = res.data.shop
             }
         },
         add(index){

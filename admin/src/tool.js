@@ -1,5 +1,15 @@
 import { Loading,Message } from 'element-ui'
-const URL = 'http://localhost:3000'
+/*---------------测试服-
+---------------*/
+const URL = 'http://localhost:3000' //本地測試服
+const CLIENT = 'http://www.devil.ren'
+
+/*
+const URL = 'http://diet.devil.ren:3000' // 正式服
+const CLIENT = 'http://www.devil.ren'
+*/
+
+const PRICE_SIGN = 'MOP$'
 export default {
     async post(ctl='',act='',data={},load=false){
         if(!ctl || !act) throw new Error('no controller or action')
@@ -66,5 +76,7 @@ export default {
         for (let k in o) if (new RegExp('(' + k + ')').test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length === 1) ? (o[k]) : (('00' + o[k]).substr(('' + o[k]).length)))
         return fmt
     },
-    URL:URL
+    URL:URL,
+    CLIENT:CLIENT,
+    PRICE_SIGN:PRICE_SIGN
 }

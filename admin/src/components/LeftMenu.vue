@@ -1,6 +1,9 @@
 <template>
     <div class="left-menu">
         <el-menu default-active="1" background-color="#fff" @select="menuSelect" style="height:100%;">
+            <el-menu-item index="110" v-if="user.admin">
+                <span slot="title" style="color:red">超級管理</span>
+            </el-menu-item>
             <el-menu-item index="1">
                 <i class="iconfont icon-home">&nbsp;</i>
                 <span slot="title">主要信息</span>
@@ -21,7 +24,7 @@
                 <i class="iconfont icon-dingdan">&nbsp;</i>
                 <span slot="title">訂單</span>
             </el-menu-item>
-            <el-menu-item index="4">
+            <el-menu-item index="4" v-if="user.pid==1">
                 <i class="iconfont icon-shezhi">&nbsp;</i>
                 <span slot="title">配置</span>
             </el-menu-item>
@@ -39,6 +42,11 @@ export default {
     name: 'LeftMenu',
     props: {
         active: String
+    },
+    data(){
+        return{
+            user:$.getUserInfo()
+        }
     },
     methods: {
         menuSelect: function(i){

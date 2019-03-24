@@ -7,6 +7,7 @@
             <menuMenu v-if="menu==22"></menuMenu>
             <menuOrder v-if="menu==3"></menuOrder>
             <menuSet v-if="menu==4"></menuSet>
+            <menuAdmin v-if="menu==110"></menuAdmin>
         </div>
     </div>
 </template>
@@ -17,10 +18,11 @@ import menuMenu from '../mainpages/Menu.vue'
 import menuType from '../mainpages/Type.vue'
 import menuSet from '../mainpages/Set.vue'
 import menuOrder from '../mainpages/Order.vue'
+import menuAdmin from '../mainpages/Admin.vue'
 export default {
     name: 'Index',
     components: {
-        LeftMenu, menuIndex, menuMenu, menuType, menuSet, menuOrder
+        LeftMenu, menuIndex, menuMenu, menuType, menuSet, menuOrder, menuAdmin
     },
     data: function(){
         return{

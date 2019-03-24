@@ -1,5 +1,6 @@
 import { Toast, Dialog } from 'vant'
-const URL = 'http://localhost:3000'
+//const URL = 'http://localhost:3000' // 測試服
+const URL = 'http://diet.devil.ren:3000' // 正式服
 const PRICE_SIGN = 'MOP$'
 export default {
     async post(ctl='',act='',data={},load=false){
