@@ -3,7 +3,7 @@
         <el-dialog title="編輯店員" :visible.sync="dialogFormVisible" width="36%">
             <el-form :model="form" :rules="rules" ref="form" label-width="1.5rem">
                 <el-row>
-                    <el-form-item label="用戶名" prop="username">
+                    <el-form-item label="員工名" prop="username">
                         <el-input v-model="form.username" type="text" style="width:6rem;" :disabled="form.id!=0"></el-input>
                     </el-form-item>
                     <el-form-item label="密碼" prop="password">
@@ -66,10 +66,10 @@
                 </template>
                 <el-row>
                     <el-table :data="users.filter(data => !search || data.username.toLowerCase().includes(search.toLowerCase()))" style="width:100%">
-                        <el-table-column prop="id" label="編號" width="180"></el-table-column>
-                        <el-table-column prop="username" label="用戶名" width="180"></el-table-column>
-                        <el-table-column prop="position" label="店內職務"></el-table-column>
-                        <el-table-column align="left" width="300">
+                        <el-table-column prop="id" label="編號" width="200"></el-table-column>
+                        <el-table-column prop="username" label="員工名"></el-table-column>
+                        <el-table-column prop="position" label="店內職務" width="200"></el-table-column>
+                        <el-table-column align="left" width="200">
                             <template slot="header" slot-scope="scope">
                                 {{scope.length}}
                                 <el-input v-model="search" size="mini" placeholder="輸入用戶名搜索"/>
@@ -103,7 +103,7 @@
                                 </div>
                             </template>
                         </el-table-column>
-                        <el-table-column align="left" width="300" label="操作">
+                        <el-table-column align="left" width="100" label="操作">
                             <template slot-scope="scope">
                                 <el-button size="mini" type="text" @click="deskDelete(scope.row)">刪除</el-button>
                             </template>

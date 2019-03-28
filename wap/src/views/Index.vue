@@ -1,12 +1,15 @@
 <template>
     <div>
-        <div class="header" v-if="shop">
-            <div class="table">
-                <div class="cell logo">
+        <div class="header" v-if="shop" :style="shop.background?'background-image:url('+shop.background+')':''">
+            <div class="text-center">
+                <div class="logo text-center">
                     <img :src="shop.img">
                 </div>
-                <div class="cell shop-title">
+                <div class="shop-title">
                     {{shop.title}}
+                </div>
+                <div class="shop-intro">
+                    “{{shop.description}}”
                 </div>
             </div>
         </div>
@@ -18,9 +21,11 @@
         </div>
 
         <div class="right">
-            <div class="item-label" v-if="type.length">
+            <!--
+                <div class="item-label" v-if="type.length">
                 {{type[activeIndex].title}}
-            </div>
+                </div>
+            -->
             <div class="replace" v-if="replace">
                 暫無菜品
             </div>
@@ -31,7 +36,7 @@
                     </div>
                     <div class="cell relative">
                         <div class="title text-left">{{item.title}}</div>
-                        <div class="price text-right">{{item.price}} {{priceSign}}</div>
+                        <div class="price text-left">{{item.price}} {{priceSign}}</div>
                         <div class="count" v-if="item.count">
                             <i class="iconfont icon-jian" @click="minus(index)"></i>
                             <span>{{item.count}}</span>
@@ -43,134 +48,184 @@
                     </div>
                 </div>
             </div>
-            <div class="shop" :class="shopped>0?'active':''" @click="shopped>0?showPopup=true:showPopup=false">
-                <i class="iconfont icon-gouwuche"></i>
-                <span class="shopped" v-if="shopped">{{shopped}}</span>
-            </div>
-            <van-popup v-model="showPopup" position="top">
-                <div class="shopping table">
-                    <div class="row" v-for="(item,index) in list" :key="index" v-show="item.count>0">
-                        <div class="cell" style="width:2.3rem;">
-                            <img v-lazy="item.thumb">
-                        </div>
-                        <div class="cell price" style="width:3rem;">
-                            {{(parseFloat(item.price)*item.count).toFixed(2)}} {{priceSign}}
-                        </div>
-                        <div class="cell title">
-                            {{item.title}}
-                        </div>
-                        <div class="cell">
-                            ×{{item.count}}
-                        </div>
-                    </div>
-                </div>
-                <div class="all-price text-center">
-                    {{price.toFixed(2)}} {{priceSign}}
-                </div>
-                <div class="table btn-box text-center" v-show="showPopup">
-                    <div class="cell">
-                        <van-button type="default" @click="showPopup=false"><i class="iconfont icon-error">&nbsp;</i>關閉</van-button>
-                    </div>
-                    <div class="cell">
-                        <van-button type="danger" @click="submit"><i class="iconfont icon-zhengque">&nbsp;</i>下單</van-button>
-                    </div>
-                </div>
-            </van-popup>
         </div>
+        <div class="foot">
+            <div class="table">
+                <div class="cell review" :class="shopped>0?'active':''" @click="shopped>0?showPopup=true:showPopup=false">
+                    <i class="iconfont icon-gouwuche"></i>
+                    <span class="shopped" v-if="shopped">{{shopped}}</span>
+                    <span v-if="price" style="margin-left:1rem;">{{price.toFixed(2)}} {{priceSign}}</span>
+                </div>
+                <div class="cell pay">結算</div>
+            </div>
+        </div>
+
+        <van-popup v-model="showPopup" position="bottom" style="padding:0.5rem 0;">
+            <div class="shopping table">
+                <div class="row" v-for="(item,index) in list" :key="index" v-show="item.count>0">
+                    <div class="cell img" style="padding-left:0.5rem;">
+                        <img v-lazy="item.thumb">
+                    </div>
+                    <div class="cell title">
+                        {{item.title}}
+                    </div>
+                    <div class="cell price">
+                        {{(parseFloat(item.price)*item.count).toFixed(2)}} {{priceSign}}
+                    </div>
+                    <div class="cell count" style="padding-right:0.5rem;">
+                        ×{{item.count}}
+                    </div>
+                </div>
+            </div>
+            <div class="all-price text-center">
+                {{price.toFixed(2)}} {{priceSign}}
+            </div>
+            <div class="table btn-box text-center" v-show="showPopup">
+                <div class="cell">
+                    <van-button type="default" @click="showPopup=false" size="small"><i class="iconfont icon-error">&nbsp;</i>關閉</van-button>
+                </div>
+                <div class="cell">
+                    <van-button type="danger" @click="submit" size="small"><i class="iconfont icon-zhengque">&nbsp;</i>下單</van-button>
+                </div>
+            </div>
+        </van-popup>
     </div>
 </template>
 <style scoped>
+.foot{
+    position:fixed;
+    bottom:0;
+    left:0;
+    right:0;
+    color:#fff;
+    text-align:center;
+}
+.pay{
+    background:rgb(255,165,8);
+    padding:0.3rem 0;
+}
+.review{
+    text-align:left;
+    background:#ccc;
+    width:80%;
+    font-size:0.6rem;
+    padding:0.2rem 0;
+}
+.review.active{
+    background: -webkit-linear-gradient(left,rgb(248,81,88), rgb(208,11,35));
+}
 .van-cell{
-background:#f2f2f2;
-color:#000;
+    overflow: hidden;
+    background:#f2f2f2;
+    color:#000;
+}
+.left .van-list .van-cell{
+    font-size:0.35rem;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp:2;
+    -webkit-box-orient: vertical;
+    line-height:0.7rem;
 }
 .van-cell.active{
     background:#fff;
     color:#000;
 }
 .header{
-    height:3rem;
+    height:3.6rem;
+    background-size: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 .header .table{
-    height:3rem;
+    height:3.6rem;
 }
 .header .logo{
-    vertical-align:middle;
-    width:3rem;
+    padding:0.3rem 0;
 }
 .header .logo img{
     object-fit:cover;
-    width:1.5rem;
-    height:1.5rem;
+    width:1.3rem;
+    height:1.3rem;
     vertical-align:middle;
     border-radius:100%;
-    margin-left:0.5rem;
 }
 .header .shop-title{
-    font-size:1rem;
+    font-size:0.45rem;
     font-weight:bold;
+    line-height:0.8rem;
+}
+.header .shop-intro{
+    color:#969799;
+    line-height:0.6rem;
+    font-size:0.35rem;
 }
 .left{
     background:#f2f2f2;
     position:absolute;
     width:3rem;
     bottom:0;
-    top:3rem;
+    top:3.6rem;
     left:0;
     overflow-y:scroll;
 }
-.left .van-list .van-cell{
-    font-size:0.45rem;
-}
 .right{
+    padding:0.5rem 0;
     position:absolute;
     left:3rem;
     right:0;
-    top:3rem;
+    top:3.6rem;
     bottom:0;
     overflow-y:scroll;
 }
 .shop{
     background:#ccc;
     position:fixed;
-    width:1.8rem;
-    height:1.8rem;
-    border-radius:99rem;
+    width:1.6rem;
+    height:1.6rem;
+    border-radius:100%;
     color:#fff;
-    right:0.5rem;
-    bottom:1rem;
+    left:0.5rem;
+    bottom:0.3rem;
+    z-index:9;
     text-align:center;
     line-height:1.8rem;
 }
 .shop.active{
-    background:#f00;
+    background: -webkit-linear-gradient(rgb(208,11,35),rgb(248,81,88));
 }
-.shop .iconfont{
-    font-size:1rem;
+.review .iconfont{
+    margin-left:0.5rem;
+    font-size:0.8rem;
 }
-.shop .shopped{
+.review .shopped{
     font-size:0.4rem;
 }
 .thumb{
     border-radius:0.1rem;
-    width:2rem;
-    height:2rem;
+    width:1.8rem;
+    height:1.8rem;
     object-fit:cover;
 }
-.title{
+.right .title{
     font-weight:600;
-    font-size:0.5rem;
-    padding:0.3rem 0.2rem;
+    font-size:0.33rem;
+    padding:0.2rem 0.2rem;
+    width:3.5rem;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap
 }
 .right .price{
     color:#f00;
-    font-size:0.4rem;
-    padding:0.3rem 0.2rem;
+    font-size:0.35rem;
+    line-height:0.4rem;
+    padding:0.2rem 0.2rem;
     font-weight:600;
 }
-.plus,.count{
+.right .plus,.right .count{
     position:absolute;
-    right:0.3rem;
+    right:0.2rem;
     top:0.6rem;
     background:#2d78f4;
     color:#fff;
@@ -180,17 +235,18 @@ color:#000;
     width:0.5rem;
     text-align:center;
     font-size:0.4rem;
+    line-height:0.5rem;
 }
 .plus .iconfont{
     line-height:0.55rem;
     font-size:0.45rem;
 }
-.count{
+.right .count{
     width:1.8rem;
     background:none;
     color:#000;
 }
-.count .iconfont.icon-jian{
+.right .count .iconfont.icon-jian{
     display:inline-block;
     height:0.5rem;
     width:0.5rem;
@@ -201,7 +257,7 @@ color:#000;
     text-align:center;
     vertical-align:middle;
 }
-.count .iconfont.icon-jia{
+.right .count .iconfont.icon-jia{
     display:inline-block;
     height:0.5rem;
     width:0.5rem;
@@ -212,7 +268,7 @@ color:#000;
     text-align:center;
     vertical-align:middle;
 }
-.count span{
+.right .count span{
     display:inline-block;
     width:0.5rem;
     line-height:0.5rem;
@@ -228,11 +284,11 @@ color:#000;
     text-align:center;
 }
 .shopping{
-    font-size:0.5rem;
+    font-size:0.35rem;
 }
 .shopping img{
-    width:2rem;
-    height:2rem;
+    width:1.3rem;
+    height:1.3rem;
     object-fit:cover;
 }
 .btn-box{
@@ -240,15 +296,34 @@ color:#000;
 }
 .btn-box .van-button{
     border:none;
-    font-size:0.5rem;
+    font-size:0.35rem;
 }
 .all-price{
     text-align:center;
     color:#f00;
-    font-size:0.8rem;
+    font-size:0.6rem;
     font-weight:bold;
     line-height:2rem;
 }
+.shopping .img{
+    width:1.6rem;
+}
+.shopping .title{
+    vertical-align:middle;
+    text-align:left;
+    width:3rem;
+}
+.shopping .price{
+    width:1.5rem;
+    color:#f00;
+    text-align:right;
+}
+.shopping .count{
+    font-size:0.4rem;
+    text-align:right;
+    width:1rem;
+}
+
 </style>
 <script>
 import $ from '../tool.js'

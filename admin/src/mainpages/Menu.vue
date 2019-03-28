@@ -9,10 +9,10 @@
             </el-col>
         </el-row>
         <el-table :data="list">
-            <el-table-column prop="title" label="名稱" width="180"></el-table-column>
-            <el-table-column prop="price" label="價格" width="180"></el-table-column>
+            <el-table-column prop="title" label="名稱" width="200"></el-table-column>
+            <el-table-column prop="price" label="價格" width="150"></el-table-column>
             <el-table-column prop="type" label="分類" width="180"></el-table-column>
-            <el-table-column prop="rank" label="排名" width="180"></el-table-column>
+            <el-table-column prop="rank" label="排名" width="80"></el-table-column>
             <el-table-column prop="time" label="最終編輯時間"></el-table-column>
             <el-table-column label="操作" fixed="right" width="100">
                 <template slot-scope="scope">
@@ -20,7 +20,7 @@
                     <el-button @click="del(scope.row)" type="text" size="small">刪除</el-button>
                 </template>
             </el-table-column>
-            <el-table-column label="供應" fixed="right" width="100">
+            <el-table-column label="供應" fixed="right" width="80">
                 <template slot-scope="scope">
                     <el-switch v-model="scope.row.is_effect" active-value="1" inactive-value="0" active-color="#409EFF" inactive-color="#ccc" @change="switchEffect(scope.row.id,scope.row.is_effect)"></el-switch>
 
@@ -33,7 +33,7 @@
             <el-form :model="form" :rules="rules" ref="form" label-width="1rem" v-loading="uploading">
                 <el-row :gutter="12" style="text-align:center;padding-bottom:0.5rem">
                     <el-col :span="24">
-                        <el-upload :action="uploadUrl" :show-file-list="false" :on-success="uploadSuccess" :on-error="uploadError" :on-change="uploadChange" :data="{user:JSON.stringify(user)}" drag accept="image/gif,image/jpeg,image/png">
+                        <el-upload :action="uploadUrl" :show-file-list="false" :on-success="uploadSuccess" :on-error="uploadError" :on-progress="uploadProgress" :data="{user:JSON.stringify(user)}" drag accept="image/gif,image/jpeg,image/png">
                             <img v-if="form.thumb" :src="form.thumb" :key="form.thumb" class="avatar">
                             <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                         </el-upload>
@@ -65,6 +65,13 @@
                         </el-form-item>
                     </el-col>
                 </el-row>
+                <el-row>
+                    <el-col :span="24">
+                        <el-form-item label="簡介">
+                            <el-input type="textarea" v-model="form.intro"></el-input>
+                        </el-form-item>
+                    </el-col>
+                </el-row>
             </el-form>
 
             <div slot="footer" class="dialog-footer">
@@ -93,6 +100,7 @@ export default {
                 tid:'',
                 price:0,
                 rank:0,
+                intro:'',
                 thumb:''
             },
             rules:{
@@ -141,6 +149,7 @@ export default {
             this.form.price=item.price
             this.form.rank=item.rank
             this.form.thumb=item.thumb
+            this.form.intro=item.intro
             this.dialogFormVisible=true
         },
         async del(item){
@@ -157,16 +166,15 @@ export default {
             else this.$message.error(res.msg)
 
         },
-        uploadChange(){
+        uploadProgress(){
             this.uploading = true
         },
         uploadError(){
-            this.$message.error('上傳失敗')
             this.uploading = false
+            this.$message.error('上傳失敗')
         },
         uploadSuccess(res){
             this.uploading = false
-            console.log(this.uploading)
             if(res.status == 1){
                 this.form.thumb = res.data
                 this.$message({
@@ -184,6 +192,7 @@ export default {
             }else{
                 this.form.id=0
                 this.form.title=''
+                this.form.intro=''
                 this.form.tid=''
                 this.form.price=0
                 this.form.rank=0

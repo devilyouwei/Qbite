@@ -5,11 +5,11 @@ const URL = 'http://localhost:3000' //本地測試服
 const CLIENT = 'http://www.devil.ren'
 
 /*
-const URL = 'http://diet.devil.ren:3000' // 正式服
+const URL = 'http://node.devil.ren:3000' // 正式服
 const CLIENT = 'http://www.devil.ren'
 */
 
-const PRICE_SIGN = 'MOP$'
+const PRICE_SIGN = '$'
 export default {
     async post(ctl='',act='',data={},load=false){
         if(!ctl || !act) throw new Error('no controller or action')

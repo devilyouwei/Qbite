@@ -76,6 +76,7 @@ class Admin{
         if(!id){ //新增
             let data = {
                 title: trim(req.body.title),
+                intro: trim(req.body.intro),
                 rank: parseInt(req.body.rank),
                 price: parseFloat(req.body.price),
                 tid: parseInt(req.body.tid),
@@ -94,13 +95,14 @@ class Admin{
                 id: id,
                 sid: parseInt(user.sid),
                 title: trim(req.body.title),
+                intro: trim(req.body.intro),
                 rank: parseInt(req.body.rank),
                 price: parseFloat(req.body.price),
                 tid: parseInt(req.body.tid),
                 thumb: req.body.thumb,
                 time: $.date2stamp()
             }
-            let flag = (await db.query('update food set title=?,rank=?,price=?,tid=?,time=?,thumb=? where id=? and sid=?',[data.title,data.rank,data.price,data.tid,data.time,data.thumb,data.id,user.sid]))['affectedRows']
+            let flag = (await db.query('update food set title=?,intro=?,rank=?,price=?,tid=?,time=?,thumb=? where id=? and sid=?',[data.title,data.intro,data.rank,data.price,data.tid,data.time,data.thumb,data.id,user.sid]))['affectedRows']
             if(flag>0) return res.json({status:1,msg:'編輯成功'})
             else return res.json({status:0,msg:'編輯失敗'})
         }

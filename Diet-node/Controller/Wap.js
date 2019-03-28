@@ -49,8 +49,8 @@ class Wap{
         if(!did) return res.json({status:0,msg:'選擇餐桌，掃描餐桌二維碼'})
 
         //選擇全部的分類和食物，店鋪信息
-        let data = await db.query('select * from type where sid=?',[sid])
-        let data2 = await db.query('select * from food where sid=? and is_effect=1',[sid])
+        let data = await db.query('select * from type where sid=? order by rank asc',[sid])
+        let data2 = await db.query('select * from food where sid=? and is_effect=1 order by rank asc',[sid])
         let data3 = await db.query('select * from shop where id=?',[sid])
         return res.json({status:1,data:{type:data,food:data2,shop:data3[0]},msg:'全部列出'})
     }
