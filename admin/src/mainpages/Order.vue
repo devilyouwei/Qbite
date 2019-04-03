@@ -1,7 +1,7 @@
 <template>
     <div class="order">
         <!--已完成訂單詳情-->
-        <el-dialog :visible.sync="dialogTableVisible2" style="">
+        <el-dialog :visible.sync="dialogTableVisible2" style="" :close-on-click-modal="false">
             <div class="title">訂單號：{{content.id}}<br>餐桌：{{content.title}}</div>
             <div class="table fixed" v-for="(item,index) in content.content" :key="index">
                 <div class="cell">{{item.id}}</div>
@@ -12,7 +12,7 @@
         </el-dialog>
 
         <!--未完成訂單詳情-->
-        <el-dialog v-if="selectDesk" :title="selectDesk.title+'未結算訂單'" :visible.sync="dialogTableVisible" style="height:10rem;">
+        <el-dialog v-if="selectDesk" :title="selectDesk.title+'未結算訂單'" :visible.sync="dialogTableVisible" style="height:10rem;" :close-on-click-modal="false">
             <el-collapse accordion>
                 <el-collapse-item v-for="(item,index) in orders" :key="index" :title="'訂單號：'+item.id" :name="item.id" style="font-weight:bold">
                     <span class="span" v-for="(item2,index2) in item.content" :key="index2">

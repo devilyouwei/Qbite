@@ -1,4 +1,4 @@
-const $ = require('./Public.js')
+const $ = require('./private/Public.js')
 const OSS = require('ali-oss')
 const config = require('../ossconfig.json')
 const client = new OSS(config)

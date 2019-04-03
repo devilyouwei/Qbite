@@ -1,6 +1,6 @@
 <template>
     <div class="admin">
-        <el-dialog title="編輯菜品" :visible.sync="dialogFormVisible">
+        <el-dialog title="編輯商铺" :visible.sync="dialogFormVisible">
             <el-form :model="form" :rules="rules" ref="form" label-width="1rem">
                 <el-row :gutter="12">
                     <el-col :span="24">

@@ -17,7 +17,7 @@
             </el-table-column>
         </el-table>
         <!--新增對話框-->
-        <el-dialog title="編輯類別" :visible.sync="dialogFormVisible">
+        <el-dialog title="編輯類別" :visible.sync="dialogFormVisible" :close-on-click-modal="false">
             <el-form :model="form" :rules="rules" ref="form">
                 <el-form-item label="類別名" prop="title">
                     <el-input v-model="form.title" type="text"></el-input>

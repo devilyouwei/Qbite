@@ -1,6 +1,6 @@
-const db = require('./DB.js');
+const db = require('./private/DB.js');
 const trim = require('trim')
-const $ = require('./Public.js')
+const $ = require('./private/Public.js')
 const md5 = require('md5')
 
 // 店鋪管理員類
@@ -216,7 +216,7 @@ class Admin{
         let user = await $.auth(req.body.user)
         if(!user) return res.json({status:-1,msg:'未登錄或登錄狀態失效'})
         // 左連接查詢
-        let data = await db.query('select id,sid,title,qrcode,num,sit,IFNULL(orderNum,0) as orderNum from desk d left join (select count(*) as orderNum,did from orders where endtime=0 group by did) o on d.id=o.did where d.sid=?',[user.sid])
+        let data = await db.query('select id,sid,title,qrcode,num,sit,IFNULL(orderNum,0) as orderNum from desk d left join (select count(*) as orderNum,did from orders where endtime=0 and sid=? group by did) o on d.id=o.did where d.sid=?',[user.sid,user.sid])
         return res.json({status:1,data:data,msg:'全部列出'})
     }
     // 新增餐桌

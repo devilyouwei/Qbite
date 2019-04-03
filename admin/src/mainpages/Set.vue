@@ -1,6 +1,6 @@
 <template>
     <div class="set">
-        <el-dialog title="編輯店員" :visible.sync="dialogFormVisible" width="36%">
+        <el-dialog title="編輯店員" :visible.sync="dialogFormVisible" width="36%" :close-on-click-modal="false">
             <el-form :model="form" :rules="rules" ref="form" label-width="1.5rem">
                 <el-row>
                     <el-form-item label="員工名" prop="username">
@@ -22,7 +22,7 @@
             </div>
         </el-dialog>
 
-        <el-dialog title="編輯新桌" :visible.sync="dialogFormVisible2">
+        <el-dialog title="編輯新桌" :visible.sync="dialogFormVisible2" :close-on-click-modal="false">
             <el-form :model="form2" :rules="rules2" ref="form2">
                 <el-form-item label="桌編號" prop="title">
                     <el-input v-model="form2.title" type="text"></el-input>

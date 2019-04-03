@@ -1,4 +1,4 @@
-const db = require('./DB.js');
+const db = require('./private/DB.js');
 
 class Wap{
     // 鎖定桌
@@ -11,11 +11,14 @@ class Wap{
         if(!did) return res.json({status:0,msg:'選擇餐桌，掃描餐桌二維碼'})
         //如果用戶存在訂單
         if(oid){
-            let order = (await db.query('select * from orders_desk where id=? and endtime=?',[oid,0]))[0]
-            if(order) return res.json({status:1,msg:'訂單鎖定中',data:order})
-            else return res.json({status:0,msg:'查不到訂單，訂單已經結束'})
+            let order = (await db.query('select * from orders_desk where id=?',[oid]))[0]
+            if(order) {
+                if(order.endtime==0) return res.json({status:1,msg:'訂單进行中',data:order})
+                else return res.json({status:0,msg:'訂單已結束'})
+            }
+            else return res.json({status:0,msg:'查不到訂單'})
         }
-        // 鎖桌
+        // 如果用戶不存在訂單，鎖桌
         let flag = (await db.query('update desk set sit=1 where id=? and sid=?',[did,sid]))['affectedRows']
         let price = 0 // 訂單總價
         let num = 0 // 訂單總數

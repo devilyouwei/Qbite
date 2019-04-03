@@ -1,5 +1,5 @@
 const mysql = require('mysql2')
-const config = require('../dbconfig.json')
+const config = require('../../dbconfig.json')
 let pool = mysql.createPool(config).promise()
 
 // 优雅async与await

@@ -69,11 +69,15 @@
                     <div class="cell title">
                         {{item.title}}
                     </div>
-                    <div class="cell price">
+                    <div class="cell price" style="text-align:left;">
                         {{(parseFloat(item.price)*item.count).toFixed(2)}} {{priceSign}}
                     </div>
-                    <div class="cell count" style="padding-right:0.5rem;">
-                        ×{{item.count}}
+                    <div class="cell count" style="padding-right:0.1rem;width:1.8rem;text-align:right">
+                        <div class="count" v-if="item.count" style="width:1.8rem;">
+                            <i class="iconfont icon-jian" @click="minus(index)"></i>
+                            <span style="width: 0.45rem;line-height:0.5rem;display: inline-block;text-align: center;">{{item.count}}</span>
+                            <i class="iconfont icon-jia" @click="add(index)"></i>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -226,7 +230,7 @@
 .right .plus,.right .count{
     position:absolute;
     right:0.2rem;
-    top:0.6rem;
+    bottom:0.6rem;
     background:#2d78f4;
     color:#fff;
     padding:0.05rem;
@@ -246,7 +250,7 @@
     background:none;
     color:#000;
 }
-.right .count .iconfont.icon-jian{
+.count .iconfont.icon-jian{
     display:inline-block;
     height:0.5rem;
     width:0.5rem;
@@ -257,7 +261,7 @@
     text-align:center;
     vertical-align:middle;
 }
-.right .count .iconfont.icon-jia{
+.count .iconfont.icon-jia{
     display:inline-block;
     height:0.5rem;
     width:0.5rem;
@@ -364,11 +368,19 @@ export default{
     },
     methods:{
         async loadData(){
-            let res = await $.post('Wap','index')
+            let res = await $.post('Wap','index',{},true)
             if(res.status==1 && res.data.type.length){
+                let save =  JSON.parse(localStorage.getItem('save_list'))
                 // 增加字段，計數下單菜的數目
                 for(let i in res.data.food){
                     res.data.food[i].count = 0
+                    for(let j in save){ // 遍历查找是否有相应的点过菜
+                        if(save[j].id == res.data.food[i].id) res.data.food[i].count = save[j].count
+                    }
+                    if(res.data.food[i].count>0){
+                        this.price+=parseFloat(res.data.food[i].price*res.data.food[i].count)
+                        this.shopped+=res.data.food[i].count
+                    }
                 }
                 this.type = res.data.type
                 this.list = res.data.food
@@ -379,11 +391,13 @@ export default{
             this.shopped++
             this.list[index].count++
             this.price+=parseFloat(this.list[index].price)
+            localStorage.setItem('save_list',JSON.stringify(this.list)) // 缓存用户点餐信息
         },
         minus(index){
             this.shopped--
             if(this.list[index].count>0) this.list[index].count--
             this.price-=parseFloat(this.list[index].price)
+            localStorage.setItem('save_list',JSON.stringify(this.list)) // 缓存用户点餐信息
         },
         submit(){
             for(let i in this.list){
@@ -393,7 +407,13 @@ export default{
             }
             localStorage.setItem('order',JSON.stringify(this.order))
             this.order = []
+            localStorage.removeItem('save_list')
             this.$router.push('/Order')
+        }
+    },
+    watch:{
+        shopped(v){
+            if(v==0) this.showPopup=false
         }
     }
 }

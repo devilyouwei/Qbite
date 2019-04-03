@@ -29,7 +29,7 @@
         </el-table>
 
         <!--新增對話框-->
-        <el-dialog title="編輯菜品" :visible.sync="dialogFormVisible">
+        <el-dialog title="編輯菜品" :visible.sync="dialogFormVisible" :close-on-click-modal="false">
             <el-form :model="form" :rules="rules" ref="form" label-width="1rem" v-loading="uploading">
                 <el-row :gutter="12" style="text-align:center;padding-bottom:0.5rem">
                     <el-col :span="24">
