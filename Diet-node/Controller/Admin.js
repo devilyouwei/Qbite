@@ -216,7 +216,8 @@ class Admin{
         let user = await $.auth(req.body.user)
         if(!user) return res.json({status:-1,msg:'未登錄或登錄狀態失效'})
         // 左連接查詢
-        let data = await db.query('select id,sid,title,qrcode,num,sit,IFNULL(orderNum,0) as orderNum from desk d left join (select count(*) as orderNum,did from orders where endtime=0 and sid=? group by did) o on d.id=o.did where d.sid=?',[user.sid,user.sid])
+        const sql = 'select *,IFNULL(orderNum,0) orderNum from desk d left join (select count(*) as orderNum,did from orders where endtime=0 group by did) o on d.id=o.did where d.sid=? and d.is_del=0'
+        let data = await db.query(sql,[user.sid])
         return res.json({status:1,data:data,msg:'全部列出'})
     }
     // 新增餐桌
@@ -243,9 +244,9 @@ class Admin{
             // 查找該桌未完成訂單
             let flag = await db.query('select id from orders where endtime=? and did=?',[0,id])
             if(flag.length>0) return res.json({status:0,msg:'餐桌有未完成訂單，刪除餐桌失敗！'})
-            flag = await db.delete('desk',id,user)
+            flag = (await db.query('update desk set is_del=1 where sid=? and id=?', [user.sid,id]))['changedRows']
             if(flag>0) return res.json({status:1,msg:'已經刪除'})
-            else return res.json({status:0,msg:'未刪除，找不到指定刪除行'})
+            else return res.json({status:0,msg:'未刪除，找不到指定刪除餐桌编号'})
         } else return res.json({status:0,msg:'缺少桌參數ID'})
     }
     // 列出未完成訂單
@@ -254,14 +255,14 @@ class Admin{
         if(!user) return res.json({status:-1,msg:'未登錄或登錄狀態失效'})
         let did = parseInt(req.body.id) //桌號
         if(!did) return res.json({status:0,msg:'輸入桌ID參數'})
-        let data = await db.query('select * from orders where did=? and sid=? and endtime=?',[did,user.sid,0])
+        let data = await db.query('select * from orders_desk where did=? and endtime=? and sid=?',[did,0,user.sid])
         return res.json({status:1,msg:'',data:data})
     }
     // 歷史訂單
     static async orderHistoryList(req,res){
         let user = await $.auth(req.body.user)
         if(!user) return res.json({status:-1,msg:'未登錄或登錄狀態失效'})
-        let data = await db.query(`select *,IFNULL(title,'已刪除') as title from orders o left join(select id as did,title from desk) d on o.did=d.did where o.sid=? and o.endtime>?`,[user.sid,0])
+        let data = await db.query(`select * from orders_desk where sid=? order by endtime desc`,[user.sid,0])
         return res.json({status:1,msg:'',data:data})
     }
     // 結賬訂單
@@ -276,7 +277,7 @@ class Admin{
             price+=content[i].price*content[i].count
         }
         // 更新訂單為已結算狀態
-        let flag = (await db.query('update orders set content=?,endtime=?,price=? where id=? and sid=?', [
+        let flag = (await db.query('update orders_desk set content=?,endtime=?,price=? where id=? and sid=?', [
             JSON.stringify(content),
             Date.parse(new Date())/1000,
             price,

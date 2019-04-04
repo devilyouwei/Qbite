@@ -9,11 +9,10 @@ export default {
         // 表單信息
         let form = new FormData()
         for (let i in data) form.append(i, data[i])
-        // 用餐者信息
-        form.append('sid',localStorage.getItem('sid')) // 門店
+        // 餐桌ID
         form.append('did',localStorage.getItem('did')) // 桌子
 
-        let request = new Request(url, { method: 'POST', body: form})
+        let request = new Request(url, {method: 'POST', body: form})
         try {
             if (load) this.loading(true)
             let res = await fetch(request).then(res => res.json())

@@ -39,11 +39,9 @@ export default{
     },
     methods:{
         async loadData(){
-            let sid = localStorage.getItem('sid')
-            let did = localStorage.getItem('did')
             let oid = localStorage.getItem('oid')
             let order = localStorage.getItem('order')
-            let res = await $.post('Wap','sit',{sid:sid,did:did,order:order,oid:oid})
+            let res = await $.post('Wap','order',{order:order,oid:oid},true)
             if(res.status == 1){
                 this.order = res.data
                 this.order.time = $.formatDate($.stamp2date(this.order.createtime),'yyyy-MM-dd hh:mm:ss')

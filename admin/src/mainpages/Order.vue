@@ -30,21 +30,24 @@
         </el-dialog>
 
         <div class="replace" v-if="replace">
-            暫無數據
+            暫無餐桌數據
         </div>
-        <div class="tip">
-            點擊餐桌查看訂單詳細
+        <!--桌號-->
+        <div v-if="list.length">
+            <div class="tip">
+                點擊餐桌查看訂單詳細
+            </div>
+            <el-row :gutter="12">
+                <el-col :span="8" v-for="(item,index) in list" :key="index">
+                    <el-card shadow="hover" class="card" :class="item.orderNum>0?'lock':''">
+                        <div>{{item.title}}</div>
+                        <div style="font-size:0.3rem;padding-top:0.2rem;">
+                            <div @click="showOrder(item),selectDesk=item">訂單：{{item.orderNum}}</div>
+                        </div>
+                    </el-card>
+                </el-col>
+            </el-row>
         </div>
-        <el-row :gutter="12" v-if="list.length">
-            <el-col :span="8" v-for="(item,index) in list" :key="index">
-                <el-card shadow="hover" class="card" :class="item.orderNum>0?'lock':''">
-                    <div>{{item.title}}</div>
-                    <div style="font-size:0.3rem;padding-top:0.2rem;">
-                        <div @click="showOrder(item),selectDesk=item">訂單：{{item.orderNum}}</div>
-                    </div>
-                </el-card>
-            </el-col>
-        </el-row>
         <!--歷史訂單-->
         <el-collapse accordion style="margin-top:1rem;">
             <el-collapse-item>
@@ -54,9 +57,9 @@
                 <el-row>
                     <el-table :data="orders2.filter(data => !search || data.id.toLowerCase().includes(search.toLowerCase()))" style="width:100%">
                         <el-table-column prop="id" label="編號" width="180"></el-table-column>
-                        <el-table-column prop="num" label="人數"></el-table-column>
+                        <el-table-column prop="num" label="菜數"></el-table-column>
                         <el-table-column prop="price" label="總價" width="180"></el-table-column>
-                        <el-table-column prop="title" label="桌號" width="180"></el-table-column>
+                        <el-table-column prop="title" label="桌號" width="100"></el-table-column>
                         <el-table-column prop="createtime" label="開始時間" width="180"></el-table-column>
                         <el-table-column prop="endtime" label="結束時間" width="180"></el-table-column>
                         <el-table-column label="訂單內容" fixed="right" width="100">
@@ -103,6 +106,7 @@ export default{
                 for(let i in res.data){
                     res.data[i].createtime = $.formatDate($.stamp2date(res.data[i].createtime),'yyyy-MM-dd hh:mm:ss')
                     res.data[i].endtime = $.formatDate($.stamp2date(res.data[i].endtime),'yyyy-MM-dd hh:mm:ss')
+                    if(res.data[i].is_del) res.data[i].title='已刪除'
                 }
                 this.orders2 = res.data
             }else this.$message.error(res.msg)

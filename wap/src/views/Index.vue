@@ -95,6 +95,93 @@
         </van-popup>
     </div>
 </template>
+<script>
+import $ from '../tool.js'
+import { List,Cell,Popup,Button} from 'vant'
+export default{
+    name:"Index",
+    components: {
+        'van-list': List,
+        'van-cell': Cell,
+        'van-popup': Popup,
+        'van-button': Button
+    },
+    data(){
+        return{
+            shop:null,
+            type: [],
+            list:[],
+            order:[],
+            activeIndex: 0,
+            activeId: 1,
+            price: 0,
+            showPopup: false,
+            shopped: 0,
+            priceSign:$.PRICE_SIGN,
+            replace: false
+        }
+    },
+    mounted(){
+        let did = $.getParams()['did'] // 桌號ID
+        if(did){
+            localStorage.setItem('did',did)
+        }
+        let oid = localStorage.getItem('oid')
+        if(oid) return this.$router.replace('/Order')
+        this.loadData()
+    },
+    methods:{
+        async loadData(){
+            let res = await $.post('Wap','index',{},true)
+            if(res.status==1 && res.data.type.length){
+                let save =  JSON.parse(localStorage.getItem('save_list'))
+                // 增加字段，計數下單菜的數目
+                for(let i in res.data.food){
+                    res.data.food[i].count = 0
+                    for(let j in save){ // 遍历查找是否有相应的点过菜
+                        if(save[j].id == res.data.food[i].id) res.data.food[i].count = save[j].count
+                    }
+                    if(res.data.food[i].count>0){
+                        this.price+=parseFloat(res.data.food[i].price*res.data.food[i].count)
+                        this.shopped+=res.data.food[i].count
+                    }
+                }
+                this.type = res.data.type
+                this.list = res.data.food
+                this.shop = res.data.shop
+            }
+        },
+        add(index){
+            this.shopped++
+            this.list[index].count++
+            this.price+=parseFloat(this.list[index].price)
+            localStorage.setItem('save_list',JSON.stringify(this.list)) // 缓存用户点餐信息
+        },
+        minus(index){
+            this.shopped--
+            if(this.list[index].count>0) this.list[index].count--
+            this.price-=parseFloat(this.list[index].price)
+            localStorage.setItem('save_list',JSON.stringify(this.list)) // 缓存用户点餐信息
+        },
+        submit(){
+            for(let i in this.list){
+                if(this.list[i].count>0){
+                    this.order.push(this.list[i])
+                }
+            }
+            localStorage.setItem('order',JSON.stringify(this.order))
+            this.order = []
+            localStorage.removeItem('save_list')
+            this.$router.push('/Order')
+        }
+    },
+    watch:{
+        shopped(v){
+            if(v==0) this.showPopup=false
+        }
+    }
+}
+</script>
 <style scoped>
 .foot{
     position:fixed;
@@ -329,92 +416,3 @@
 }
 
 </style>
-<script>
-import $ from '../tool.js'
-import { List,Cell,Popup,Button} from 'vant'
-export default{
-    name:"Index",
-    components: {
-        'van-list': List,
-        'van-cell': Cell,
-        'van-popup': Popup,
-        'van-button': Button
-    },
-    data(){
-        return{
-            shop:null,
-            type: [],
-            list:[],
-            order:[],
-            activeIndex: 0,
-            activeId: 1,
-            price: 0,
-            showPopup: false,
-            shopped: 0,
-            priceSign:$.PRICE_SIGN,
-            replace: false
-        }
-    },
-    mounted(){
-        let sid = $.getParams()['sid'] // 店鋪ID
-        let did = $.getParams()['did'] // 桌號ID
-        if(sid && did){
-            localStorage.setItem('sid',sid)
-            localStorage.setItem('did',did)
-        }
-        let oid = localStorage.getItem('oid')
-        if(oid) return this.$router.replace('/Order')
-        this.loadData()
-    },
-    methods:{
-        async loadData(){
-            let res = await $.post('Wap','index',{},true)
-            if(res.status==1 && res.data.type.length){
-                let save =  JSON.parse(localStorage.getItem('save_list'))
-                // 增加字段，計數下單菜的數目
-                for(let i in res.data.food){
-                    res.data.food[i].count = 0
-                    for(let j in save){ // 遍历查找是否有相应的点过菜
-                        if(save[j].id == res.data.food[i].id) res.data.food[i].count = save[j].count
-                    }
-                    if(res.data.food[i].count>0){
-                        this.price+=parseFloat(res.data.food[i].price*res.data.food[i].count)
-                        this.shopped+=res.data.food[i].count
-                    }
-                }
-                this.type = res.data.type
-                this.list = res.data.food
-                this.shop = res.data.shop
-            }
-        },
-        add(index){
-            this.shopped++
-            this.list[index].count++
-            this.price+=parseFloat(this.list[index].price)
-            localStorage.setItem('save_list',JSON.stringify(this.list)) // 缓存用户点餐信息
-        },
-        minus(index){
-            this.shopped--
-            if(this.list[index].count>0) this.list[index].count--
-            this.price-=parseFloat(this.list[index].price)
-            localStorage.setItem('save_list',JSON.stringify(this.list)) // 缓存用户点餐信息
-        },
-        submit(){
-            for(let i in this.list){
-                if(this.list[i].count>0){
-                    this.order.push(this.list[i])
-                }
-            }
-            localStorage.setItem('order',JSON.stringify(this.order))
-            this.order = []
-            localStorage.removeItem('save_list')
-            this.$router.push('/Order')
-        }
-    },
-    watch:{
-        shopped(v){
-            if(v==0) this.showPopup=false
-        }
-    }
-}
-</script>

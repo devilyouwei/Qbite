@@ -12,6 +12,9 @@
             </div>
         </div>
         <!--走勢圖-->
+        <div class="chart">
+            <ve-pie :data="chart"></ve-pie>
+        </div>
     </div>
 </template>
 <script>
@@ -21,6 +24,11 @@ export default{
     data(){
         return {
             value:'',
+            list:[],
+            chart:{
+                columns: ['桌號', '訂單數'],
+                rows: []
+            },
             pickerOptions: {
                 shortcuts: [{
                     text: '今天',
@@ -65,13 +73,22 @@ export default{
             end += 3600*24*1000 // 向後延時一天，以獲得今天數據
             let res = await $.post('Index','incomeByDesk',{begin:begin,end:end})
             if(res.status==1) {
-                this.tableData = res.data
+                this.list = res.data
             } else this.$message.error(res.msg)
         }
     },
     watch:{
         value(v){
             this.loadData(Date.parse(v[0]),Date.parse(v[1]))
+        },
+        list(v){
+            this.chart.rows = []
+            for(let i in v){
+                this.chart.rows.push({
+                    '桌號': v[i].title,
+                    '訂單數': v[i].orders
+                })
+            }
         }
     }
 }
