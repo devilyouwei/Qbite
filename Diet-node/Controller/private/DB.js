@@ -10,6 +10,7 @@ class DB {
             let [rows, fields] = await pool.query(sql,opts)
             return rows
         }catch(err){
+            return null
             throw err
         }
     }

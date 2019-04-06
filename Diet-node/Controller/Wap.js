@@ -11,13 +11,17 @@ class Wap{
 
         //如果用戶存在訂單
         if(oid){
-            let order = (await db.query('select * from orders_desk where id=?',[oid]))[0]
+            let order = (await db.query('select * from orders_desk where id=? and is_del=0',[oid]))[0]
             if(order) {
                 if(order.endtime==0) return res.json({status:1,msg:'訂單进行中',data:order})
                 else return res.json({status:0,msg:'訂單已結束'})
             }
             else return res.json({status:0,msg:'查不到訂單'})
         }
+
+        // 檢查餐桌
+        let flag = await db.query('select id from desk where id=? and is_del=0',[did])
+        if(!flag || !flag.length) return res.json({status:0,msg:'找不到該餐桌，請掃描其他二維碼或咨詢店家'})
 
         let price = 0 // 訂單總價
         let num = 0 // 訂單總數
@@ -34,7 +38,7 @@ class Wap{
             createtime: Date.parse(new Date())/1000, //訂單創建時間
             endtime:0
         }
-        let flag = await db.insert('orders',data)
+        flag = await db.insert('orders',data)
         if(flag){
             let order = (await db.query('select * from orders_desk where id=?',[flag]))[0]
             return res.json({status:1,msg:'訂單鎖定',data:order})
@@ -49,7 +53,7 @@ class Wap{
         if(!did) return res.json({status:0,msg:'選擇餐桌，掃描餐桌二維碼'})
 
         // 根據桌號獲得店ID
-        let data = await db.query('select sid from desk where id=?',[did])
+        let data = await db.query('select sid from desk where id=? and is_del=0',[did])
         if(!data || !data.length) return res.json({status:0,msg:'查無此餐桌，請咨詢店家或掃描其他二維碼！'})
         let sid = data[0]['sid']
 

@@ -1,6 +1,6 @@
 import { Toast, Dialog } from 'vant'
-//const URL = 'http://localhost:3000' // 測試服
-const URL = 'http://node.devil.ren:3000' // 正式服
+const URL = 'http://localhost:3000' // 測試服
+//const URL = 'http://node.devil.ren:3000' // 正式服
 const PRICE_SIGN = '$'
 export default {
     async post(ctl='',act='',data={},load=false){
@@ -18,9 +18,7 @@ export default {
             let res = await fetch(request).then(res => res.json())
             res.status = parseInt(res.status) || 0
             // 錯誤信息
-            if(res.status === 0) {
-                await this.alert('提示',res.msg)
-            }
+            if(res.status === 0) await this.alert('提示',res.msg)
             return res
         } catch (err) {
             throw err
@@ -94,13 +92,16 @@ export default {
         }
     },
     async alert(title='', content=''){
-        return await Dialog.alert({
+        Dialog.alert({
             title: title,
             message: content
         })
     },
-    async confirm(){
-
+    async confirm(title='', content=''){
+        Dialog.confirm({
+            title: title,
+            message: content
+        })
     },
     URL:URL,
     PRICE_SIGN:PRICE_SIGN

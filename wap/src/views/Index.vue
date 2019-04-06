@@ -50,8 +50,8 @@
             </div>
         </div>
         <div class="foot">
-            <div class="table">
-                <div class="cell review" :class="shopped>0?'active':''" @click="shopped>0?showPopup=true:showPopup=false">
+            <div class="table" @click="shopped>0?showPopup=true:showPopup=false">
+                <div class="cell review" :class="shopped>0?'active':''">
                     <i class="iconfont icon-gouwuche"></i>
                     <span class="shopped" v-if="shopped">{{shopped}}</span>
                     <span v-if="price" style="margin-left:1rem;">{{price.toFixed(2)}} {{priceSign}}</span>
@@ -223,40 +223,43 @@ export default{
     color:#000;
 }
 .header{
-    height:3.6rem;
+    height:2.3rem;
     background-size: 100%;
     background-position: center;
     background-repeat: no-repeat;
+    overflow:visible;
 }
 .header .table{
     height:3.6rem;
 }
 .header .logo{
-    padding:0.3rem 0;
+    padding:0.2rem 0;
+    padding-top:1rem;
 }
 .header .logo img{
     object-fit:cover;
-    width:1.3rem;
-    height:1.3rem;
+    width:1.8rem;
+    height:1.8rem;
     vertical-align:middle;
     border-radius:100%;
 }
 .header .shop-title{
     font-size:0.45rem;
     font-weight:bold;
-    line-height:0.8rem;
+    line-height:0.6rem;
 }
 .header .shop-intro{
     color:#969799;
-    line-height:0.6rem;
+    line-height:0.5rem;
     font-size:0.35rem;
+    padding-top:0.3rem;
 }
 .left{
     background:#f2f2f2;
     position:absolute;
     width:3rem;
     bottom:0;
-    top:3.6rem;
+    top:5rem;
     left:0;
     overflow-y:scroll;
 }
@@ -265,8 +268,9 @@ export default{
     position:absolute;
     left:3rem;
     right:0;
-    top:3.6rem;
+    top:5rem;
     bottom:0;
+    padding-bottom:1.5rem;
     overflow-y:scroll;
 }
 .shop{
