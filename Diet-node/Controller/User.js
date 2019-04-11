@@ -10,17 +10,17 @@ class User{
 
         // 開始登陸過程
         if(username && email && password){
-            let data = await db.query('select * from user_shop where username=? and password=? and email=?',[username,password,email])
-            if(data.length>0) {
-                await db.query('update user set token = ? where id = ?', [md5(Date.parse(new Date()) + req.body.username + req.body.password), data[0]['id']])
-                data = await db.query('select * from user where id=?', [data[0]['id']]) // 获取用户信息
-                let shop = await db.query('select title from shop where id=?', [data[0]['sid']]) // 店鋪信息
-                let position = await db.query('select title from position where id=?', [data[0]['pid']]) // 職位
-                data[0]['shop'] = shop[0]['title']
-                data[0]['position'] = position[0]['title']
-                delete data[0]['password'] // 密码不返回
-                return res.json({status:1, msg:'登錄成功', data:data[0]})
-            } else return res.json({status:0,msg:'用戶名或密碼錯誤'})
+            let data = await db.query('select * from login_view where username=? and password=? and email=?',[username,password,email])
+            if(data && data.length>0) {
+                if(data[0]['is_del']==1) return res.json({status:0,msg:'店鋪被禁用，請聯繫管理員'})
+                const token = md5(Date.parse(new Date()) + data[0].username + data[0].password)
+                let flag = (await db.query('update user set token = ? where id = ?', [token, data[0]['id']])).changedRows
+                if(flag) {
+                    data[0].token = token
+                    delete data[0]['password'] // 密码不返回
+                    return res.json({status:1, msg:'登錄成功', data:data[0]})
+                } else return res.json({status:0,msg:'登錄記錄寫入失敗'})
+            } else return res.json({status:0,msg:'登錄信息錯誤'})
         } else return res.json({status:0,msg:'輸入用戶名或者密碼'})
     }
 

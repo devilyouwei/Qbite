@@ -46,7 +46,8 @@ button {
     color:rgba(0,0,0,1);
 }
 .replace{
-    font-size:1rem;
+    padding:1rem;
+    font-size:.6rem;
     text-align:center;
     color:#ccc;
 }

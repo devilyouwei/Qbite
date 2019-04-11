@@ -9,10 +9,10 @@
   },
   "dependencies": {
     "babel-plugin-import": "^1.11.0",
-    "vant": "^1.6.12",
+    "vant": "^1.6.13",
     "vue": "^2.6.10",
     "vue-lazyload": "^1.2.6",
-    "vue-router": "^3.0.2"
+    "vue-router": "^3.0.3"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.5.5",

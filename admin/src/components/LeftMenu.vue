@@ -1,9 +1,18 @@
 <template>
     <div class="left-menu">
         <el-menu default-active="1" background-color="#fff" @select="menuSelect" style="height:100%;">
-            <el-menu-item index="110" v-if="user.admin">
-                <span slot="title" style="color:red">超級管理</span>
-            </el-menu-item>
+            <el-submenu index="110" v-if="user.admin">
+                <template slot="title">
+                    <i class="iconfont icon-menu">&nbsp;</i>
+                    <span style="color:red">超級管理</span>
+                </template>
+                <el-menu-item index="1101">
+                    <span slot="title" style="color:red">店铺管理</span>
+                </el-menu-item>
+                <el-menu-item index="1102">
+                    <span slot="title" style="color:red">支付配置</span>
+                </el-menu-item>
+            </el-submenu>
             <el-menu-item index="1">
                 <i class="iconfont icon-home">&nbsp;</i>
                 <span slot="title">主要信息</span>

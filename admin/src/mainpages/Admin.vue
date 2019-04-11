@@ -49,8 +49,8 @@
                     <el-input v-model="search" size="mini" placeholder="輸入用戶名搜索"/>
                 </template>
                 <template slot-scope="scope">
-                    <el-button type="text" size="mini" @click="userEdit(scope.row)">編輯</el-button>
-                    <el-button size="mini" type="text" @click="userDelete(scope.row)">刪除</el-button>
+                    <el-button type="text" size="mini" @click="shopEdit(scope.row)">編輯</el-button>
+                    <el-button size="mini" type="text" @click="shopDelete(scope.row.id)">刪除</el-button>
                 </template>
             </el-table-column>
         </el-table>
@@ -91,7 +91,7 @@ export default{
     },
     methods:{
         async loadData(){
-            let res = await $.post('Admin','adminListShops')
+            let res = await $.post('SuperAdmin','listShops')
             if(res.status == 1){
                 for(let i in res.data){
                     res.data[i].time = $.formatDate($.stamp2date(res.data[i].time),'yyyy-MM-dd')
@@ -102,11 +102,23 @@ export default{
         async submit(){
             let valid = await this.$refs['form'].validate()
             if(valid){
-                let res = await $.post('Admin','adminAddShops',this.form,true)
+                let res = await $.post('SuperAdmin','addShops',this.form,true)
                 if(res.status==1){
                     this.loadData()
                 } else this.$message.error(res.msg)
             }
+        },
+        // 店铺编辑
+        async shopEdit(){
+        },
+        // 店铺删除
+        shopDelete(id){
+            this.$confirm('此操作將刪除店鋪，是否繼續？將導致該店鋪用戶無法登錄','刪除店鋪').then(async ()=>{
+                let res = await $.post('SuperAdmin','delShops',{id:id})
+                if(res.status == 1){
+                    this.loadData()
+                } else this.$message.error(res.msg)
+            }).catch(()=>{})
         }
     }
 }

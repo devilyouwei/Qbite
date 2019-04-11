@@ -186,7 +186,7 @@ export default {
                     res.data[i].qrcode = QR.imageSync(url, { type: 'svg' })
                 }
                 this.desks = res.data
-            }else this.$message.error(res.msg);
+            } else this.$message.error(res.msg)
         },
         async userDelete(item){
             let res = await $.post('Admin','setUserDelete',{id:item.id})
@@ -229,6 +229,10 @@ export default {
             }
         },
         async changeShop(){
+            if(!this.shop.title) return this.$message.error('請輸入店名');
+            if(!this.shop.img) return this.$message.error('請上傳圖片');
+            if(!this.shop.description) return this.$message.error('請輸入簡介');
+            if(!this.shop.background) return this.$message.error('請上傳背景');
             let res = await $.post('Admin','setShop',this.shop,true)
             if(res.status==1) this.$message({ message: res.msg, type: 'success' })
         },

@@ -137,9 +137,7 @@ export default {
                 if(res.status == 1){
                     this.loadData()
                     this.dialogFormVisible = false
-                }else{
-                    this.$message.error(res.msg)
-                }
+                } else this.$message.error(res.msg)
             }
         },
         async edit(item){
