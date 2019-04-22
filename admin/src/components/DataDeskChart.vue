@@ -3,7 +3,7 @@
     <div>
         <div class="table">
             <div class="cell title">
-                收入分佈
+                收入餐桌分佈
             </div>
             <div class="cell tool">
                 <div class="picker">
@@ -71,7 +71,7 @@ export default{
     methods:{
         async loadData(begin=0,end=Date.parse(new Date())){
             end += 3600*24*1000 // 向後延時一天，以獲得今天數據
-            let res = await $.post('Index','incomeByDesk',{begin:begin,end:end})
+            let res = await $.post('Index','incomeByDesk',{begin:begin,end:end},true)
             if(res.status==1) {
                 this.list = res.data
             } else this.$message.error(res.msg)
@@ -101,5 +101,8 @@ export default{
 }
 .tool{
     text-align:right;
+}
+.chart{
+    padding-top:1rem;
 }
 </style>

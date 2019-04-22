@@ -1,7 +1,7 @@
 <template>
-    <div class="login">
+    <div class="login" :style="bg?'background-image:url('+bg+')':'background-image:none;opacity:0'" :key="bg">
         <el-alert :title="msg" :type="success" v-show="msg" show-icon></el-alert>
-        <h1>後台登錄</h1>
+        <h1>後台</h1>
         <div class="form-field">
             <el-form :model="form" status-icon :rules="formRule" ref="form" label-width="100px" class="form">
                 <el-form-item label="店鋪郵箱" prop="email">
@@ -13,26 +13,47 @@
                 <el-form-item label="密碼" prop="password">
                     <el-input type="password" v-model="form.password" autocomplete="off" @keyup.enter.native="login('form')"></el-input>
                 </el-form-item>
-                <el-form-item>
-                    <el-button type="primary" @click="login('form')">登入</el-button>
-                </el-form-item>
             </el-form>
+            <div>
+                <el-button type="primary" @click="login('form')" style="width:4rem;font-size:0.4rem;margin-top:0.5rem;">登入</el-button>
+            </div>
+            <el-button type="text" @click="toReg()" size="mini" class="reg">沒有店鋪？立即註冊</el-button>
         </div>
     </div>
 </template>
 <style scoped>
+.reg{
+    position:absolute;
+    right:0.4rem;
+    bottom:0.2rem;
+}
 .login{
     text-align:center;
+    position:absolute;
+    top:0;
+    bottom:0;
+    width:100%;
+    height:100%;
+    overflow:hidden;
+    background-color:rgba(0,0,0,0.1);
+    background-repeat:no-repeat;
+    background-position:center;
+    background-size:100%;
 }
 .login h1{
-    padding-top:10%;
+    margin-top:2rem;
     font-size:0.8rem;
     font-weight:bolder;
     padding:0.5rem 0;
+    color:#fff;
 }
 .login .form-field{
-    width:60%;
+    position:relative;
+    width:8rem;
     margin:0 auto;
+    background-color:#fff;
+    padding:1rem 0.6rem;
+    color:#fff;
 }
 </style>
 <script>
@@ -41,6 +62,7 @@ export default {
     name: 'Login',
     data: function (){
         return {
+            bg:'/imgs/bg/bg'+parseInt($.random(1,10))+'.jpg',
             msg: '',
             success: 'success',
             form: {
@@ -63,6 +85,14 @@ export default {
     },
     mounted: function(){
         if($.getUserInfo().id) this.$router.replace('/Index')
+        /*
+        let count = 1;
+        setInterval(()=>{
+            count++
+            if(count>10) count=1
+            this.bg = '/imgs/bg/bg'+count+'.jpg'
+        },5000)
+        */
     },
     methods: {
         login: function(form){
@@ -81,6 +111,9 @@ export default {
                     this.msg = res.msg
                 }
             })
+        },
+        toReg(){
+            this.$router.replace('/Register')
         }
     }
 }

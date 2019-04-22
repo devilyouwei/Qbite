@@ -10,6 +10,13 @@ body {
     right: 0;
     background: #fff;
 }
+.fullscreen{
+    position:absolute;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+}
 
 .content {
     position:absolute;
@@ -463,17 +470,29 @@ a:active {
 .popout-leave-active {
     transition: all .5s ease;
 }
-.popout-enter
-/* .slide-fade-leave-active for below version 2.1.8 */ {
+.popout-enter {
   transform: translateY(10rem);
 }
 .popout-leave-to{
     opacity:0;
 }
 
-.slide-enter{
+.slide-enter {
     transform: translateX(-5rem);
 }
-.slide-enter-active{
+.slide-enter-active {
     transition: all .8s ease;
+}
+.slide-enter-active {
+    transition: all 0.2s ease;
+}
+.slide-leave-active {
+    transition: all 0.2s ease-out;
+}
+.slide-enter {
+    transform: translateX(100%);
+}
+.slide-leave-to {
+    transform: translateX(100%);
+    opacity:0;
 }

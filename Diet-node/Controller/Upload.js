@@ -1,9 +1,9 @@
 const $ = require('./private/Public.js')
 const OSS = require('ali-oss')
-const config = require('../ossconfig.json')
-const client = new OSS(config)
+const config = require('../Config/oss.json')
 const fs = require('fs')
 const path = require('path')
+const client = new OSS(config)
 
 class Upload{
     static async img(req,res){

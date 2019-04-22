@@ -30,8 +30,13 @@
         <div class="data-show">
             <DataIncomeChart></DataIncomeChart>
         </div>
-        <div class="data-show">
-            <DataDeskChart></DataDeskChart>
+        <div class="data-show table fixed">
+            <div class="cell">
+                <DataDeskChart style="padding-right:0.5rem;">></DataDeskChart>
+            </div>
+            <div class="cell" style="padding-left:0.5rem;">
+                <DataPayChart></DataPayChart>
+            </div>
         </div>
     </div>
 </template>
@@ -40,10 +45,11 @@ import $ from '../tool.js'
 import DataIncome from '../components/DataIncome.vue'
 import DataIncomeChart from '../components/DataIncomeChart.vue'
 import DataDeskChart from '../components/DataDeskChart.vue'
+import DataPayChart from '../components/DataPayChart.vue'
 export default {
     name: 'Index',
     components:{
-        DataIncome,DataIncomeChart,DataDeskChart
+        DataIncome,DataIncomeChart,DataDeskChart,DataPayChart
     },
     data: function(){
         return{

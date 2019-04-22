@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Index from './views/Index.vue'
 import Login from './views/Login.vue'
+import Register from './views/Register.vue'
 
 Vue.use(Router)
 
@@ -23,6 +24,14 @@ export default new Router({
             component: Login,
             meta: {
                 title: '后台-登陆'
+            }
+        },
+        {
+            path: '/Register',
+            name: Register.name,
+            component: Register,
+            meta: {
+                title: '后台-注册'
             }
         },
         {

@@ -28,7 +28,7 @@
                     <el-input v-model="form2.title" type="text"></el-input>
                 </el-form-item>
                 <el-form-item label="人數" prop="num">
-                    <el-input v-model="form2.num" type="number"></el-input>
+                    <el-input v-model.number="form2.num" type="number"></el-input>
                 </el-form-item>
             </el-form>
 
@@ -105,6 +105,7 @@
                         </el-table-column>
                         <el-table-column align="left" width="100" label="操作">
                             <template slot-scope="scope">
+                                <el-button type="text" size="mini" @click="deskEdit(scope.row)">編輯</el-button>
                                 <el-button size="mini" type="text" @click="deskDelete(scope.row)">刪除</el-button>
                             </template>
                         </el-table-column>
@@ -154,12 +155,13 @@ export default {
                 pid:[{required:true, message:'請輸入職位', trigger:'blur'}],
             },
             form2: {
+                id:0,
                 title:'',
                 num:0
             },
             rules2: {
                 title:[{ required:true, message:'輸入桌號', trigger:'blur' }, { min: 1, max: 20, message: '長度小於20個字符', trigger: 'blur' }],
-                num:[{ required: true, message: '请輸入桌人數', trigger: 'blur' },{min:1,max:99,message:'人數不合法',trigger:'blur'}]
+                num:[{ required: true, message: '请輸入桌人數', trigger: 'blur' },{type:'number',min:1,max:99,message:'人數不合法',trigger:'blur'}]
             }
         }
     },
@@ -194,15 +196,28 @@ export default {
             else this.$message.error(res.msg)
         },
         async deskDelete(item){
-            let res = await $.post('Admin','setDeskDelete',{id:item.id})
-            if(res.status==1) this.loadData()
-            else this.$message.error(res.msg)
+            let flag = await this.$confirm('此操作將永久刪除該餐桌，訂單將會被保留', '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+            })
+            if(flag=='confirm'){
+                let res = await $.post('Admin','setDeskDelete',{id:item.id})
+                if(res.status==1) this.loadData()
+                else this.$message.error(res.msg)
+            }
         },
         userEdit(item){
             this.form.id = item.id
             this.form.username = item.username
             this.form.pid = item.pid
             this.dialogFormVisible = true
+        },
+        deskEdit(item){
+            this.form2.id = parseInt(item.id)
+            this.form2.title = item.title
+            this.form2.num = parseInt(item.num)
+            this.dialogFormVisible2 = true
         },
         // 提交用戶信息
         async submit(){
@@ -277,6 +292,7 @@ export default {
             if(v==false){
                 this.form2.title=''
                 this.form2.num=0
+                this.form2.id=0
             }
         }
     }

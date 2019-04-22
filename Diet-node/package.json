@@ -11,6 +11,8 @@
         "md5": "latest",
         "ali-oss": "latest",
         "qr-image": "latest",
+        "nodemailer": "latest",
+        "nodemailer-smtp-transport": "latest",
         "app-root-path": "latest"
     }
 }

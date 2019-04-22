@@ -12,7 +12,8 @@ class Index{
         if(!end) end=Date.parse(new Date())
         const sql = 'select iFNULL(sum(price),0.00) price,count(*) orders from orders_desk where endtime>=? and endtime<=? and endtime!=0 and sid=?'
         let data = await db.query(sql,[begin/1000,end/1000,user.sid])
-        return res.json({status:1,data:data,msg:'总收入'})
+        let pay = await db.query('select id,pay,title,price,endtime from orders_desk where endtime>=? and endtime<=? and endtime!=0 and sid=?',[begin/1000,end/1000,user.sid])
+        return res.json({status:1,data:{all:data,pay:pay},msg:'总收入'})
     }
 
     // 按天列出收入數據(走勢圖)
@@ -39,9 +40,24 @@ class Index{
         // 如果未获取到範圍
         if(!begin) begin=0
         if(!end) end=Date.parse(new Date())
-        const sql = 'select id,title,IFNULL(orders,0) orders,IFNULL(money,0) money from desk d left join (select did,count(*) orders,sum(price) money from orders where endtime>=? and endtime<=? and endtime!=0 group by did) o on d.id=o.did where sid=?'
+        const sql = 'select id,title,IFNULL(orders,0) orders,IFNULL(money,0) money from desk d left join (select did,count(*) orders,sum(price) money from orders where endtime>=? and endtime<=? and endtime!=0 group by did) o on d.id=o.did where sid=? and is_del=0'
         let data = await db.query(sql,[begin/1000,end/1000,user.sid])
         return res.json({status:1,data:data,msg:'按桌劃分'})
+    }
+
+    // 不同平台和货币的收入
+    static async incomeByPayWay(req,res){
+        let user = await $.auth(req.body.user)
+        if(!user) return res.json({status:-1,msg:'未登錄或登錄狀態失效'})
+        let begin = parseInt(req.body.begin)
+        let end = parseInt(req.body.end)
+        if(!begin) begin=0
+        if(!end) end=Date.parse(new Date())
+        const sql = 'select pay from orders where endtime>=? and endtime<=? and endtime!=0'
+        let data = {}
+        data['orders'] = await db.query(sql,[begin/1000,end/1000])
+        data['payway'] = await db.query('select * from payway where is_del=0')
+        return res.json({status:1,data:data,msg:'所有支付方式'})
     }
 }
 module.exports=Index

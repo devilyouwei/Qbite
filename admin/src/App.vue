@@ -6,7 +6,12 @@
 
 <script>
 export default {
-    name: 'App'
+    name: 'App',
+    mounted(){
+        if(localStorage.getItem('reg_info')) {
+            this.$router.replace('/Register')
+        }
+    }
 }
 </script>
 

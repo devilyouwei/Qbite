@@ -1,6 +1,7 @@
 const mysql = require('mysql2')
-const config = require('../../dbconfig.json')
+const config = require('../../Config/db.json')
 let pool = mysql.createPool(config).promise()
+const debug = true // 是否打開sql debug模式
 
 // 优雅async与await
 class DB {
@@ -9,9 +10,9 @@ class DB {
         try{
             let [rows, fields] = await pool.query(sql,opts)
             return rows
-        }catch(err){
-            return null
-            throw err
+        }catch(e){
+            if(debug) throw e
+            else return null
         }
     }
 
@@ -22,9 +23,9 @@ class DB {
         try{
             let [rows, fields] = await pool.query(`select * from ${table} where sid=?`,[user.sid])
             return rows
-        }catch(err){
-            return []
-            throw err
+        }catch(e){
+            if(debug) throw e
+            else return []
         }
     }
 
@@ -34,8 +35,8 @@ class DB {
             let res = await pool.query(`insert into ${table} set ?`,data)
             return res[0]['insertId']
         }catch(e){
-            return 0
-            throw e
+            if(debug) throw e
+            else return null
         }
     }
 
@@ -47,7 +48,19 @@ class DB {
             let res = await pool.query(`delete from ${table} where id=? and sid=?`, [id,user.sid])
             return res[0]['affectedRows']
         }catch(e){
-            return 0
+            if(debug) throw e
+            else return null
+        }
+    }
+
+    //事务
+    static async transaction(){
+        try{
+            const conn = await pool.getConnection() //獲得連接
+            await conn.beginTransaction() //開啟事務
+            return conn
+        } catch(e) {
+            // 事務一定要拋出異常
             throw e
         }
     }

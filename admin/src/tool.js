@@ -1,12 +1,12 @@
 import { Loading,Message } from 'element-ui'
 /*---------------测试服-
+---------------*/
 const URL = 'http://localhost:3000' //本地測試服
 const CLIENT = 'http://www.devil.ren'
----------------*/
 /*
-*/
 const CLIENT = 'http://www.devil.ren'
 const URL = 'http://node.devil.ren:3000' // 正式服
+*/
 
 
 const PRICE_SIGN = '$'
@@ -75,6 +75,13 @@ export default {
         if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (date.getFullYear() + '').substr(4 - RegExp.$1.length))
         for (let k in o) if (new RegExp('(' + k + ')').test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length === 1) ? (o[k]) : (('00' + o[k]).substr(('' + o[k]).length)))
         return fmt
+    },
+    random(minNum,maxNum){
+        switch(arguments.length){
+            case 1:return Math.random()*minNum+1
+            case 2:return Math.random()*(maxNum-minNum+1)+minNum
+            default:return 0 
+        }
     },
     URL:URL,
     CLIENT:CLIENT,

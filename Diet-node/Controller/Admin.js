@@ -166,7 +166,9 @@ class Admin{
                 username:req.body.username,
                 password:md5(req.body.password),
                 token:'',
-                pid:req.body.pid
+                pid:req.body.pid,
+                createtime:(new Date()).getTime()/1000,
+                is_del:0
             }
             let id = await db.insert('user',data)
             if(id>0) return res.json({status:1,msg:'插入成功'})
@@ -226,14 +228,27 @@ class Admin{
         let user = await $.auth(req.body.user)
         if(!user) return res.json({status:-1,msg:'未登錄或登錄狀態失效'})
         if(user.pid!=1) return res.json({status:0,msg:'無權限用戶！'})
-        let data = {
-            title:trim(req.body.title),
-            num:parseInt(req.body.num),
-            sid:user.sid
+        let id = parseInt(req.body.id)
+        if(!id){ // 新增桌
+            let data = {
+                title:trim(req.body.title),
+                num:parseInt(req.body.num),
+                sid:user.sid
+            }
+            let id = await db.insert('desk',data)
+            if(id>0) return res.json({status:1,msg:'插入成功'})
+            else return res.json({status:0,msg:'插入失敗，數據寫入錯誤'})
+        } else {
+            let data = {
+                id: id,
+                title:trim(req.body.title),
+                num:parseInt(req.body.num),
+                sid:user.sid
+            }
+            let flag = await db.query('update desk set title=?,num=? where sid=? and id=?',[data.title,data.num,data.sid,data.id])
+            if(flag && flag.changedRows) return res.json({status:1,msg:'修改成功'})
+            else return res.json({status:0,msg:'無修改'})
         }
-        let id = await db.insert('desk',data)
-        if(id>0) return res.json({status:1,msg:'插入成功'})
-        else return res.json({status:0,msg:'插入失敗，數據寫入錯誤'})
     }
     // 删除餐桌
     static async setDeskDelete(req,res){
@@ -250,20 +265,23 @@ class Admin{
             else return res.json({status:0,msg:'未刪除，找不到指定刪除餐桌编号'})
         } else return res.json({status:0,msg:'缺少桌參數ID'})
     }
-    // 列出未完成訂單
-    static async orderList(req,res){
+    // 按桌列出未完成訂單
+    static async orderListByDesk(req,res){
         let user = await $.auth(req.body.user)
         if(!user) return res.json({status:-1,msg:'未登錄或登錄狀態失效'})
         let did = parseInt(req.body.id) //桌號
         if(!did) return res.json({status:0,msg:'輸入桌ID參數'})
-        let data = await db.query('select * from orders_desk where did=? and endtime=? and sid=?',[did,0,user.sid])
+        let data = {}
+        data['orders'] = await db.query('select * from orders_desk where did=? and endtime=? and sid=?',[did,0,user.sid])
+        data['pays'] = await db.query('select * from payway where is_del=0')
+        data['currency'] = await db.query('select * from currency where is_del=0')
         return res.json({status:1,msg:'',data:data})
     }
     // 歷史訂單
     static async orderHistoryList(req,res){
         let user = await $.auth(req.body.user)
         if(!user) return res.json({status:-1,msg:'未登錄或登錄狀態失效'})
-        let data = await db.query(`select * from orders_desk where sid=? order by endtime desc`,[user.sid,0])
+        let data = await db.query(`select * from orders_desk where sid=? and endtime>0 order by endtime desc`,[user.sid,0])
         return res.json({status:1,msg:'',data:data})
     }
     // 結賬訂單
@@ -273,20 +291,22 @@ class Admin{
         let id = parseInt(req.body.id) //訂單號
         if(!id) return res.json({status:0,msg:'缺少訂單號ID'})
         let content = JSON.parse(req.body.content) //菜單內容，可能有變化
+        let pay = req.body.pay // 各種支付方式
         let price = 0
         for(let i in content){ // 重新計算價格
             price+=content[i].price*content[i].count
         }
         // 更新訂單為已結算狀態
-        let flag = (await db.query('update orders_desk set content=?,endtime=?,price=? where id=? and sid=?', [
+        let flag = await db.query('update orders_desk set content=?,endtime=?,price=?,pay=? where id=? and sid=?', [
             JSON.stringify(content),
             Date.parse(new Date())/1000,
             price,
+            pay,
             id,
             user.sid
-        ]))['affectedRows']
-        if(flag) return res.json({status:1,msg:'結算成功'})
-        else return res.json({status:0,msg:'結算失敗'})
+        ])
+        if(flag && flag.changedRows) return res.json({status:1,msg:'結算成功'})
+        else return res.json({status:0,msg:'結算失敗，未結算'})
     }
 }
 

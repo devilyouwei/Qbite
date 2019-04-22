@@ -3,7 +3,7 @@
     <div>
         <div class="table">
             <div class="cell title">
-                收入圖表
+                收入日走勢
             </div>
             <div class="cell tool">
                 <div class="picker">
@@ -75,7 +75,7 @@ export default{
     methods:{
         async loadData(begin=0,end=Date.parse(new Date())){
             end += 3600*24*1000 // 向後延時一天，以獲得今天數據
-            let res = await $.post('Index','incomeByDay',{begin:begin,end:end})
+            let res = await $.post('Index','incomeByDay',{begin:begin,end:end},true)
             this.list = []
             if(res.status==1) {
                 if(res.data.length>0){

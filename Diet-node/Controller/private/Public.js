@@ -52,5 +52,21 @@ class Public{
         }
         return date
     }
+    static random(minNum,maxNum){
+        switch(arguments.length){
+            case 1:return Math.random()*minNum+1
+            case 2:return Math.random()*(maxNum-minNum+1)+minNum
+            default:return 0 
+        }
+    }
+    static checkEmail(email){
+        if(!email) return false
+        var reg = /^([a-zA-Z]|[0-9])(\w|\-)+@[a-zA-Z0-9]+\.([a-zA-Z]{2,4})$/
+        if(reg.test(email)){
+            return email
+        }else{
+            return false
+        }
+    }
 }
 module.exports=Public
