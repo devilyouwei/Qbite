@@ -53,9 +53,9 @@ class Index{
         let end = parseInt(req.body.end)
         if(!begin) begin=0
         if(!end) end=Date.parse(new Date())
-        const sql = 'select pay from orders where endtime>=? and endtime<=? and endtime!=0'
+        const sql = 'select pay from orders_desk where endtime>=? and endtime<=? and endtime!=0 and sid=?'
         let data = {}
-        data['orders'] = await db.query(sql,[begin/1000,end/1000])
+        data['orders'] = await db.query(sql,[begin/1000,end/1000,user.sid])
         data['payway'] = await db.query('select * from payway where is_del=0')
         return res.json({status:1,data:data,msg:'所有支付方式'})
     }

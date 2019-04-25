@@ -37,11 +37,11 @@
             <h1 class="reg-title">STEP2-詳細資料</h1>
             <p style="color:red;">*為了更好的經營和管理您的店鋪，請繼續填寫店鋪的詳細信息</p>
             <el-form ref="form" :model="form" label-width="80px" class="form">
-                <el-upload class="upload-box" drag action="https://jsonplaceholder.typicode.com/posts/" multiple>
-                    <i class="el-icon-upload"></i>
-                    <div class="el-upload__text">將營業執照或相關餐飲許可證拖拽至此，或<em>點擊上傳</em></div>
-                    <div class="el-upload__tip" slot="tip">只能上傳jpg/png文件</div>
+                <el-upload class="avatar-uploader" :action="uploadUrl" :show-file-list="false" :mutiple="false" :on-success="uploadSuccess" :on-error="uploadError" :data="{user:user}">
+                    <img v-if="certificate" :src="certificate" class="avatar">
+                    <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                 </el-upload>
+                <p class="tip">請上傳營業執照或相關產業的資質證明</p>
                 <el-form-item label="詳細地址" class="text-left">
                     <el-input type="textarea" v-model="location" style="width:7rem;"></el-input>
                 </el-form-item>
@@ -57,6 +57,7 @@ export default{
     data(){
         return {
             step:0,
+            uploadUrl:$.URL+'/Upload/img',
             form:{
                 eid:0,
                 email:'',
@@ -66,6 +67,7 @@ export default{
                 area:1,
                 password:''
             },
+            user:localStorage.getItem('userinfo')||null,
             location:'',
             certificate:'',
             interval:0,
@@ -75,6 +77,7 @@ export default{
     },
     async mounted(){
         if(localStorage.getItem('reg_info')) return this.step = 2
+        this.step = 1
         let res = await $.post('User','areas')
         this.area = res.data
         if(this.codeTime>0){
@@ -95,6 +98,8 @@ export default{
                     this.$message({message: res.msg,type: 'success'})
                     setTimeout(()=>{
                         localStorage.setItem('reg_info',JSON.stringify(res.data))
+                        localStorage.setItem('userinfo',JSON.stringify(res.data.user)) // 登錄
+                        this.user = JSON.stringify(res.data.user)
                         this.step = 2
                     },500)
                 } else this.$message.error(res.msg)
@@ -103,7 +108,22 @@ export default{
         async submitMore() {
             let data = JSON.parse(localStorage.getItem('reg_info'))
             data.location = this.location
+            data.certificate = this.certificate
+            if(!data.shopId) return this.$message.error('缺少店鋪ID')
+            if(!data.userId) return this.$message.error('缺少用戶ID')
+            if(!data.location) return this.$message.error('缺少詳細地址')
+            if(!data.certificate) return this.$message.error('缺少相關證明證件圖')
+            delete data.user
             let res = await $.post('User','regMore',data,true)
+            if(res.status == 1){
+                this.$message({message: res.msg,type: 'success'})
+                localStorage.removeItem('reg_info')
+                localStorage.removeItem('userinfo')
+                localStorage.removeItem('code_time')
+                setTimeout(()=>{
+                    this.$router.replace('/')
+                },800)
+            } else this.$message.error(res.msg)
         },
         toLog(){
             this.$router.replace('/Login')
@@ -124,6 +144,13 @@ export default{
                     this.form.eid = res.data
                 } else this.$message.error(res.msg)
             } else this.$message.error("請輸入郵箱")
+        },
+        uploadSuccess(res){
+            if(res.status == 1){
+                this.certificate=res.data
+            } else this.$message.error(res.msg)
+        },
+        uploadError(e){
         }
     }
 }
@@ -132,6 +159,36 @@ export default{
 .fullscreen{
     background:#ccc url('/imgs/bg/bg11.jpg');
 }
+.avatar-uploader{
+    margin:0.5rem 0 0.1rem 0;
+}
+p.tip{
+    padding-bottom:0.5rem;
+    font-size:0.3rem;
+}
+.avatar-uploader .el-upload {
+    border: 1px dashed #d9d9d9;
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+  .avatar-uploader .el-upload:hover {
+    border-color: #409EFF;
+  }
+  .avatar-uploader-icon {
+    font-size: 28px;
+    color: #8c939d;
+    width: 178px;
+    height: 178px;
+    line-height: 178px;
+    text-align: center;
+  }
+  .avatar {
+    width: 178px;
+    height: 178px;
+    display: block;
+  }
 .reg-box{
     text-align:center;
     width:10rem;

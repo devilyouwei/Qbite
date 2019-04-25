@@ -33,6 +33,15 @@ class User{
         return res.json({status:1,data:data})
     }
 
+    // 獲取當前用戶店鋪信息
+    static async shopInfo(req,res){
+        let user = await $.auth(req.body.user)
+        if(!user) return res.json({status:-1,msg:'登錄狀態失效！'})
+        let data = await db.query('select * from shop where id=?',[user.sid])
+        if(data && data[0]) return res.json({status:1,data:data[0],msg:'店鋪信息獲得'})
+        else return res.json({status:0,msg:'無法獲得店鋪信息'})
+    }
+
     // 發送驗證碼
     static async sendCode(req,res){
         let email = trim(req.body.email)
@@ -56,7 +65,8 @@ class User{
             html: html
         }
 
-        mail.send(opt) // 發送激活郵件
+        let result = await mail.send(opt) // 發送激活郵件
+        if(!result) return res.json({status:0,msg:'郵件發送失敗，請更換有效郵箱'})
 
         const data = {
             id:null,
@@ -110,7 +120,7 @@ class User{
             pid:1,
             sid:0,
             admin:0,
-            token:'',
+            token:md5(Date.parse(new Date()) + trim(req.body.username) + trim(req.body.password)),
             createtime:(new Date()).getTime()/1000,
             is_del:0
         }
@@ -129,6 +139,9 @@ class User{
             user.sid = insert.shopId
             insert.userId = (await trans.query('insert into user set ?',user))[0].insertId // 插入店長
             await trans.commit() // 事務提交
+            delete user.password // 刪除密碼
+            user.id = insert.userId
+            insert.user = user
             return res.json({status:1,msg:'創建成功',data:insert})
         } catch(e) {
             await trans.rollback() // 回滾事務
@@ -137,11 +150,18 @@ class User{
             trans.destroy() // 銷毀事務
         }
     }
+
     static async regMore(req,res){
-        let sid = parseInt(req.body.shopId)
-        let uid = parseInt(req.body.userId)
+        let user = await $.auth(req.body.user)
+        if(!user) return res.json({status:0,msg:'未登錄或登錄狀態失效'})
+
         let location = trim(req.body.location)
-        console.log(req.body)
+        let certificate = trim(req.body.certificate)
+        if(!location) return res.json({status:0,msg:'地址呢'})
+        if(!certificate) return res.json({status:0,msg:'證書圖片呢'})
+        let flag = await db.query('update shop set location=?,certificates=? where id=?',[location,certificate,user.sid])
+        if(flag && flag.changedRows) return res.json({status:1,msg:'註冊成功'})
+        else return res.json({status:0,msg:'註冊失敗，無法更新信息'})
     }
 
 }

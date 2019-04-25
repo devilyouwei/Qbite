@@ -1,7 +1,7 @@
 const db = require('./private/DB.js');
 
 class Wap{
-    // 鎖定桌
+    // 下單
     static async order(req,res){
         let did = parseInt(req.body.did) // 餐桌id
         let oid = parseInt(req.body.oid) // 訂單id
@@ -16,18 +16,23 @@ class Wap{
                 if(order.endtime==0) return res.json({status:1,msg:'訂單进行中',data:order})
                 else return res.json({status:0,msg:'訂單已結束'})
             }
-            else return res.json({status:0,msg:'查不到訂單'})
+            else return res.json({status:0,msg:'查不到訂單，或者訂單已經結束'})
         }
 
         // 檢查餐桌
         let flag = await db.query('select id from desk where id=? and is_del=0',[did])
-        if(!flag || !flag.length) return res.json({status:0,msg:'找不到該餐桌，請掃描其他二維碼或咨詢店家'})
+        if(!flag || !flag.length) return res.json({status:0,msg:'該餐桌已經關閉，請掃描其他二維碼或咨詢店家'})
 
         let price = 0 // 訂單總價
         let num = 0 // 訂單總數
+        // 計算價格和總數
         for(let i in order){
-            price+=order[i].price*order[i].count
-            num+=order[i].count
+            price += order[i].price * parseInt(order[i].count)
+            num += parseInt(order[i].count)
+            delete order[i]['rank']
+            delete order[i]['time']
+            delete order[i]['is_effect']
+            order[i]['cooked'] = 0
         }
         // 創建訂單
         let data = {

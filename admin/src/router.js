@@ -3,6 +3,8 @@ import Router from 'vue-router'
 import Index from './views/Index.vue'
 import Login from './views/Login.vue'
 import Register from './views/Register.vue'
+import Cooker from './views/Cooker.vue'
+import Waiter from './views/Waiter.vue'
 
 Vue.use(Router)
 
@@ -40,6 +42,22 @@ export default new Router({
             component: Index,
             meta: {
                 title: '后台-首页'
+            }
+        },
+        {
+            path: '/Cooker',
+            name: Cooker.name,
+            component: Cooker,
+            meta: {
+                title: '後台-廚師專頁'
+            }
+        },
+        {
+            path: '/Waiter',
+            name: Waiter.name,
+            component: Waiter,
+            meta: {
+                title: '後台-服务员專頁'
             }
         }
     ]

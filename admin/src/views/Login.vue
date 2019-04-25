@@ -38,7 +38,7 @@
     background-color:rgba(0,0,0,0.1);
     background-repeat:no-repeat;
     background-position:center;
-    background-size:100%;
+    background-size:100% 100%;
 }
 .login h1{
     margin-top:2rem;
@@ -84,15 +84,9 @@ export default {
         }
     },
     mounted: function(){
-        if($.getUserInfo().id) this.$router.replace('/Index')
-        /*
-        let count = 1;
-        setInterval(()=>{
-            count++
-            if(count>10) count=1
-            this.bg = '/imgs/bg/bg'+count+'.jpg'
-        },5000)
-        */
+        if($.getUserInfo().pid==1) this.$router.replace('/Index')
+        if($.getUserInfo().pid==2) this.$router.replace('/Cooker')
+        if($.getUserInfo().pid==3) this.$router.replace('/Waiter')
     },
     methods: {
         login: function(form){
@@ -104,7 +98,12 @@ export default {
                         localStorage.setItem('userinfo',JSON.stringify(res.data))
                         localStorage.setItem('s_email',this.form.email)
                         setTimeout(()=>{
-                            this.$router.replace('/Index')
+                            switch(res.data.pid){
+                                case 1:return this.$router.replace('/Index') // 店长
+                                case 2:return this.$router.replace('/Cooker') // 厨师
+                                case 3:return this.$router.replace('/Waiter') // 服务员
+                                default:this.$router.replace('/Index') // 店长
+                            }
                         },800)
                     }
                     else this.success = 'error'

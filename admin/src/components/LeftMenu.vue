@@ -67,7 +67,20 @@ export default {
     }
 }
 </script>
-
+<style>
+.el-submenu .el-menu-item {
+    height: 50px;
+    line-height: 50px;
+    padding: 0 45px;
+    min-width: 0;
+}
+.el-submenu .el-menu-item {
+    height: 50px;
+    line-height: 50px;
+    padding: 0 45px;
+    min-width: 0;
+}
+</style>
 <style scoped>
 .left-menu{
     position:absolute;
