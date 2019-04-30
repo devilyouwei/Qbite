@@ -1,10 +1,9 @@
 <template>
     <div class="order">
         <div class="desk" v-if="order">
-            桌號 {{order.title}}
-            <div class="time">訂單編號：{{order.id}}</div>
+            <div class="desk-title">{{shop.title}}{{order.title}}</div>
+            <div class="time">訂單{{order.id}}</div>
             <div class="time">下單時間：{{order.time}}</div>
-            <div class="time">状态：进行中</div>
         </div>
         <div class="table" v-if="order">
             <div class="row" v-for="(item,index) in order.content" :key="index">
@@ -13,7 +12,13 @@
                     <div class="title">{{item.title}}</div>
                     <div class="price">{{item.price}} {{priceSign}}</div>
                 </div>
-                <div class="cell count">
+                <div class="cell status making" style="min-width:1.5rem;" v-if="item.count-item.cooked>0">
+                    準備中×{{item.count-item.cooked}}
+                </div>
+                <div class="cell status success" style="min-width:2rem;" v-else>
+                    已上菜
+                </div>
+                <div class="cell count" :class="item.count==item.cooked?'success':''">
                     ×{{item.count}}
                 </div>
             </div>
@@ -30,26 +35,31 @@ export default{
     data(){
         return{
             oid:0,
+            shop: JSON.parse(localStorage.getItem('shop')) || null,
             order:null,
+            interval:null,
             priceSign:$.PRICE_SIGN
         }
     },
     mounted(){
-        this.loadData()
+        this.loadData(true)
+        this.interval = setInterval(this.loadData,5000)
     },
     methods:{
-        async loadData(){
+        async loadData(load=false){
             let oid = localStorage.getItem('oid')
             let order = localStorage.getItem('order')
-            let res = await $.post('Wap','order',{order:order,oid:oid},true)
+            let res = await $.post('Wap','order',{order:order,oid:oid},load)
             if(res.status == 1){
                 this.order = res.data
                 this.order.time = $.formatDate($.stamp2date(this.order.createtime),'yyyy-MM-dd hh:mm:ss')
                 localStorage.setItem('oid',res.data.id)
-            }else { // 訂單有問題
+            } else { // 訂單有問題
                 localStorage.removeItem('oid')
                 localStorage.removeItem('order')
-                this.$router.replace('/')
+                clearInterval(this.interval)
+                await $.alert(res.msg)
+                location.replace('/')
             }
         }
     }
@@ -58,17 +68,22 @@ export default{
 <style scoped>
 .order{
     padding:0.5rem;
+    background:#fff6e7;
+    min-height:100%;
 }
 .table{
     font-size:0.35rem;
-    margin-top:1rem;
 }
 .desk{
     text-align:center;
+}
+.desk-title{
     font-size:0.7rem;
-    line-height:2rem;
+    line-height:1.4rem;
+    font-weight:bold;
 }
 .thumb{
+    border-radius:0.1rem;
     width:1.6rem;
     height:1.6rem;
     object-fit:cover;
@@ -79,7 +94,7 @@ export default{
 }
 .title{
     font-size:0.35rem;
-    width:5rem;
+    width:4rem;
 }
 .price{
     color:#f00;
@@ -93,11 +108,18 @@ export default{
     line-height:0.8rem;
 }
 .pay {
-    padding-top:1rem;
+    padding-top:0.5rem;
     line-height:0.8rem;
     text-align:center;
     font-size:0.5rem;
     font-weight:bold;
     color:#f00;
+}
+.status.making{
+    color:#f00;
+}
+.success{
+    color:green;
+    font-weight:bold;
 }
 </style>

@@ -11,33 +11,28 @@
         <div class="replace" v-if="replace">
             大廚先生，暫無訂單，請休息一會~
         </div>
-        <div v-if="!replace">
-            <el-row>
-                <el-col :span="8" v-for="(item,index) in list" :key="index" class="text-center">
-                    <div class="card" @click="showOrder(item.id)">
-                        <div class="title">{{item.title}}</div>
-                        <div style="font-size:0.3rem;padding-top:0.2rem;">
-                            <div>訂單：{{item.orderNum}}</div>
+        <div class="orders" v-if="!replace">
+            <el-row :gutter="20">
+                <el-col v-for="(item,index) in list" :key="index" :span="6">
+                    <div class="table title" :class="item.percent==1?'finish':''">
+                        <div class="cell text-left">訂單號：{{item.id}}</div>
+                        <div class="cell text-right">桌號：{{item.title}}</div>
+                    </div>
+                    <div class="table" :class="item.percent==1?'tbg':''">
+                        <div class="row orders-content" :class="item2.cooked==item2.count?'finish':''" v-for="(item2,index2) in item.content" :key="index2">
+                            <div class="cell" style="width:0.7rem;"><img :src="item2.thumb"></div>
+                            <div class="cell order-title">{{item2.title}}</div>
+                            <div class="cell">{{item2.cooked}}/{{item2.count}}</div>
+                            <div class="cell text-center">
+                                <i class="el-icon-success" v-if="item2.cooked==item2.count"></i>
+                                <i class="el-icon-dish" v-else></i>
+                            </div>
                         </div>
                     </div>
+                    <el-progress class="progress" :text-inside="true" :stroke-width="15" color="#4caf50" :percentage="parseInt(item.percent*100)"></el-progress>
                 </el-col>
             </el-row>
         </div>
-        <el-dialog title="客戶菜單" :visible.sync="dialog">
-            <div class="order" v-for="(item,index) in orders" :key="index">
-                <h1 class="order-title">訂單號：{{item.id}}</h1>
-                <div class="tag" v-for="(item2,index2) in item.content" :key="index2">
-                    <div class="tag-content">
-                        <img :src="item2.thumb" class="tag-thumb">
-                        {{item2.title}}
-                        <div class="tag-num">×{{item2.count}}</div>
-                    </div>
-                    <div class="tag-opt">
-                        完成
-                    </div>
-                </div>
-            </div>
-        </el-dialog>
     </div>
 </template>
 <script>
@@ -47,10 +42,9 @@ export default {
     data(){
         return {
             list: [],
-            dialog:false,
             shop: null,
-            orders: [],
             user: $.getUserInfo(),
+            interval:null,
             replace:false
         }
     },
@@ -58,27 +52,31 @@ export default {
         let res = await $.post('User','shopInfo',{},true)
         if(res.status) this.shop = res.data
         this.loadData()
-        setInterval(()=>{
-            this.loadData()
-        },10000)
-        
+        this.interval = setInterval(this.loadData,8000)
     },
     methods:{
         async loadData(){
-            let res = await $.post('Cooker','deskList')
+            let res = await $.post('Cooker','orderList')
             if(res.status==1){
                 if(!res.data || res.data.length == 0) return this.replace = true
+                if(res.data.length>this.list.length)
+                    this.$message({
+                        message: '您有新的訂單了~',
+                        type: 'warning'
+                    })
                 for(let i in res.data){
-                    this.list = res.data
+                    let cooked = 0
+                    let count = 0
+                    for(let j in res.data[i].content){
+                        count += parseInt(res.data[i].content[j].count)
+                        cooked += parseInt(res.data[i].content[j].cooked)
+                    }
+                    console.log(count)
+                    console.log(cooked)
+                    res.data[i].percent = cooked/count
                 }
+                this.list = res.data
             }
-        },
-        async showOrder(id){
-            let res = await $.post('Cooker','foodList',{id:id},true)
-            if(res.status == 1){
-                this.orders = res.data
-                this.dialog = true
-            } else this.$message.error(res.msg)
         },
         logout(){
             this.$confirm('是否退出登錄?', '提示', {
@@ -87,7 +85,8 @@ export default {
                 type: 'warning'
             }).then(() => {
                 localStorage.removeItem('userinfo')
-                this.$router.replace('/Login')
+                clearInterval(this.interval)
+                location.replace('/Login')
             }).catch(() => {})
         }
     }
@@ -116,52 +115,51 @@ export default {
     line-height:0.7rem;
     color:#ccc;
 }
-.card {
-    padding:0.5rem 1rem;
-    display:inline-block;
-    border-radius:0.1rem;
-    background:#409EFF;
-    color:#fff;
-    margin:0 auto;
-    text-align:center;
-    font-size:0.5rem;
-    font-weight:bold;
-    cursor:pointer;
+.orders{
+    paddinG:0 0.5rem;
 }
-.order {
-
-}
-.order .order-title{
-    font-size:0.3rem;
-    color:#ccc;
-    line-height:0.8rem;
-}
-.order .tag{
-    display:inline-block;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.19);
-    border-radius:0.1rem;
-    font-size:0.3rem;
-    margin-left:0.3rem;
-    text-align: center;
-}
-.order .tag .tag-content{
-    padding:0.3rem 0.5rem;
-}
-.order .tag .tag-num{
-    font-weight:bold;
-    color:red;
-    line-height:0.6rem;
-    font-size:0.4rem;
-}
-.order .tag .tag-thumb{
-    display:block;
-    max-width:2rem;
-}
-.order .tag .tag-opt{
-    background:#4caf50;
-    padding:0.2rem 0.3rem;
+.orders .title{
     font-size:0.25rem;
+    font-weight:bold;
+    background:#ccc;
     color:#fff;
+}
+.orders .title.finish{
+    background:#4caf50;
+}
+.orders .title .cell{
+    padding:0.1rem 0.2rem;
+}
+.orders .orders-content{
+    font-size:0.2rem;
+}
+.orders .orders-content .cell.order-title{
+    max-width:1.5rem;
+}
+.orders .orders-content.finish .cell.order-title{
+    text-decoration:line-through;
+    color:#ccc;
+}
+.orders .orders-content.finish img{
+    opacity:0.5;
+}
+.orders .orders-content img{
+    vertical-align:middle;
+    width:0.5rem;height:0.5rem;object-fit:cover;
+    border-radius:0.05rem;
+    padding:0.05rem;
+}
+.orders .orders-content i.el-icon-success{
+    color:#4caf50;
+}
+.orders .orders-content i.el-icon-dish{
+    color:#ccc;
+}
+.orders .progress{
+    margin-top:0.1rem;
+}
+.orders .tbg{
+    background:rgba(76, 175, 80,0.1);
 }
 .logout{
     position:fixed;

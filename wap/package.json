@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "babel-plugin-import": "^1.11.0",
-    "vant": "^1.6.13",
+    "vant": "^1.6.16",
     "vue": "^2.6.10",
     "vue-lazyload": "^1.2.6",
     "vue-router": "^3.0.6"

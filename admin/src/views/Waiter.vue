@@ -30,8 +30,8 @@
                     <div class="tag-content">
                         <img :src="item2.thumb" class="tag-thumb">
                         {{item2.title}}
+                        <div class="tag-num-cooked" style="color:#4caf50;">上菜 ×{{item2.cooked}}</div>
                         <div class="tag-num">${{item2.price}} ×{{item2.count}}</div>
-                        <div class="tag-num-cooked">完成 ×{{item2.cooked}}</div>
                     </div>
                     <div class="tag-opt" @click="finish(index,index2)" v-if="item2.cooked<item2.count">
                         完成
@@ -56,6 +56,7 @@ export default {
             list: [],
             dialog:false,
             shop: null,
+            interval:null,
             orders: [],
             user: $.getUserInfo(),
             replace:false
@@ -107,7 +108,8 @@ export default {
                 type: 'warning'
             }).then(() => {
                 localStorage.removeItem('userinfo')
-                this.$router.replace('/Login')
+                clearInterval(this.interval)
+                location.replace('/Login')
             }).catch(() => {})
         }
     }

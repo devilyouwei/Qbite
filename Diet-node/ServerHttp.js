@@ -17,9 +17,9 @@ var allowCrossDomain = function(req, res, next) {
     res.header('Access-Control-Allow-Credentials','true');
     next();
 };
-app.use(allowCrossDomain);
+app.use(allowCrossDomain)
 
 //可以根据
-init.controller(app);
+init.controller(app)
  
-app.listen(3000) 
+app.listen(3000)

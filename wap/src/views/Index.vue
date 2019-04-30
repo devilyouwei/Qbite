@@ -149,7 +149,8 @@ export default{
                 this.type = res.data.type
                 this.list = res.data.food
                 this.shop = res.data.shop
-            }
+                localStorage.setItem('shop',JSON.stringify(this.shop))
+            } else this.alert('提示',res.msg)
         },
         add(index){
             this.shopped++

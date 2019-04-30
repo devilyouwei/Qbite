@@ -2,6 +2,7 @@ const db = require('./private/DB.js');
 const trim = require('trim')
 const $ = require('./private/Public.js')
 const md5 = require('md5')
+const PAGE_SIZE = 10
 
 // 店鋪管理員類
 class Admin{
@@ -281,8 +282,22 @@ class Admin{
     static async orderHistoryList(req,res){
         let user = await $.auth(req.body.user)
         if(!user) return res.json({status:-1,msg:'未登錄或登錄狀態失效'})
-        let data = await db.query(`select * from orders_desk where sid=? and endtime>0 order by endtime desc`,[user.sid,0])
-        return res.json({status:1,msg:'',data:data})
+        let cPage = parseInt(req.body.currentPage) // 当前页
+        if(!cPage) return res.json({status:0,msg:'頁數錯誤'})
+        let count = await db.query('select count(*) as count from orders_desk where sid=? and endtime>0',[user.sid])
+        if(count && count[0] && count[0].count) count=count[0].count
+        else count = 0
+        let pages = (count % PAGE_SIZE==0)?parseInt(count/PAGE_SIZE):(parseInt(count/PAGE_SIZE)+1)
+        const sql = 'select * from orders_desk where sid=? and endtime>0 order by id desc limit ?,?'
+        let data = await db.query(sql,[user.sid,(cPage-1)*PAGE_SIZE,PAGE_SIZE,0])
+
+        let page = {
+            totalPage:pages, // 總頁數
+            currentPage:cPage, //當前頁
+            count:count, //總數據量
+            pageSize:PAGE_SIZE //每頁數目
+        }
+        return res.json({status:1,msg:'',data:data,page:page})
     }
     // 結賬訂單
     static async pay(req,res){

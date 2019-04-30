@@ -24,6 +24,8 @@
                     <span class="span" v-for="(item2,index2) in item.content" :key="index2">
                         <span class="span-del" @click="delFood(index,index2)">×</span>
                         {{item2.title}} × {{item2.count}} × {{item2.price}}
+                        <span v-if="item2.count>item2.cooked" style="color:red">(未完成)</span>
+                        <span v-else style="color:green">(完成)</span>
                     </span>
                     <div class="table">
                         <div class="row text-left" style="color:#f00;font-size:0.3rem;line-height:0.8rem;">合計：{{item.price}}</div>
@@ -84,6 +86,8 @@
                                 </template>
                             </el-table-column>
                         </el-table>
+                        <el-pagination class="page" background layout="prev, pager, next" :current-page="currentPage" :page-size="pageSize" :page-count="totalPage" @current-change="pageChange">
+                        </el-pagination>
                     </el-row>
                 </el-collapse-item>
             </el-collapse>
@@ -105,6 +109,9 @@ export default{
             payJson:[],
             selectDesk:null,
             search: '',
+            totalPage: 1,
+            currentPage: 1,
+            pageSize:0,
             replace:false,
             PRICE_SIGN:$.PRICE_SIGN,
             dialogTableVisible:false,
@@ -119,21 +126,24 @@ export default{
             this.payJson = []
             this.pay = []
             this.currency = []
-            let res = await $.post('Admin','deskList',{},true)
+            let res = await $.post('Admin','deskList')
             if(res.status==1){
                 this.list = res.data
                 this.list.length==0?this.replace=true:this.replace=false
             }else this.$message.error(res.msg)
 
-            res = await $.post('Admin','orderHistoryList',{},true)
+            res = await $.post('Admin','orderHistoryList',{currentPage:this.currentPage},true)
             if(res.status==1){
+                this.currentPage = res.page.currentPage
+                this.totalPage = res.page.totalPage
+                this.pageSize = res.page.pageSize
                 for(let i in res.data){
                     res.data[i].createtime = $.formatDate($.stamp2date(res.data[i].createtime),'yyyy-MM-dd hh:mm:ss')
                     res.data[i].endtime = $.formatDate($.stamp2date(res.data[i].endtime),'yyyy-MM-dd hh:mm:ss')
                     if(res.data[i].is_del) res.data[i].title='已刪除'
                 }
                 this.orders2 = res.data
-            }else this.$message.error(res.msg)
+            } else this.$message.error(res.msg)
         },
         async showOrder(item){
             if(item.orderNum==0) return
@@ -165,7 +175,6 @@ export default{
                     }
                 }
             }
-            console.log(this.payJson)
             this.$confirm('確定用戶已經結賬？訂單號：' + order.id, '結賬', {
                 confirmButtonText: '确定',
                 cancelButtonText: '取消',
@@ -194,6 +203,10 @@ export default{
                 this.payJson[i].value=0
                 this.payJson[i].cid=this.currency[0].id
             }
+        },
+        pageChange(p){
+            this.currentPage = p
+            this.loadData()
         }
     }
 }
@@ -276,5 +289,9 @@ export default{
     padding:0.5rem 0;
     font-size:0.5rem;
     color:#ff0000;
+}
+.page {
+    padding:0.5rem 0;
+    text-align:right;
 }
 </style>

@@ -22,7 +22,7 @@ class Waiter{
         if(!user || user.pid!=PID) return res.json({status:-1,msg:'登錄權限錯誤'})
         let id = parseInt(req.body.id)
         if(!id) return res.json({status:0,msg:'給出桌ID'})
-        let data = await db.query('select id,content,createtime,state from orders_desk where sid=? and did=? and state=0 and endtime=0',[user.sid,id])
+        let data = await db.query('select id,content,createtime,state from orders_desk where sid=? and did=? and state=0 and endtime=0 order by createtime desc',[user.sid,id])
         return res.json({status:1,msg:'全部列出',data:data})
     }
     // 保存订单

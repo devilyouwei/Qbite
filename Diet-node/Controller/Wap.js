@@ -19,6 +19,8 @@ class Wap{
             else return res.json({status:0,msg:'查不到訂單，或者訂單已經結束'})
         }
 
+        // 檢查訂單內容是否有
+        if(!order || order.length==0) return res.json({status:0,msg:'訂單生成失敗，無內容！'})
         // 檢查餐桌
         let flag = await db.query('select id from desk where id=? and is_del=0',[did])
         if(!flag || !flag.length) return res.json({status:0,msg:'該餐桌已經關閉，請掃描其他二維碼或咨詢店家'})
