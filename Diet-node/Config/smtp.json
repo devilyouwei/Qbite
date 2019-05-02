@@ -1,8 +1,6 @@
 {
     "host": "smtp.qq.com",
-    "port": 465,
-    "secure": true,
-    "secureConnection": true,
+    "secure": false,
     "auth": {
         "user": "devilyouwei@foxmail.com",
         "pass": "h18015647707"

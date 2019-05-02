@@ -6,7 +6,7 @@ const CLIENT = 'http://www.devil.ren'
 /*---------------正式服
 */
 const CLIENT = 'http://www.devil.ren'
-const URL = 'http://node.devil.ren:3000' // 正式服
+const URL = 'http://node.diet.devil.ren' // 正式服
 
 
 const PRICE_SIGN = '$'

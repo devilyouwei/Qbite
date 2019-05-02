@@ -131,7 +131,7 @@ export default{
         async sendMail(){
             let email = this.form.email
             if(email){
-                let res = await $.post('User','sendCode',{email:email})
+                let res = await $.post('User','sendCode',{email:email},true)
                 if(res.status==1){
                     this.codeTime = 60
                     localStorage.setItem('code_time',this.codeTime)
@@ -157,7 +157,7 @@ export default{
 </script>
 <style scoped>
 .fullscreen{
-    background:#ccc url('/imgs/bg/bg11.jpg');
+    background:#ccc url('/imgs/bg/bg11.jpg') no-repeat fixed center;
 }
 .avatar-uploader{
     margin:0.5rem 0 0.1rem 0;
@@ -192,7 +192,7 @@ p.tip{
 .reg-box{
     text-align:center;
     width:10rem;
-    margin:2.8rem auto;
+    margin:5vw auto;
     background:#fff;
     padding:0.5rem;
 }

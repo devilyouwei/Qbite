@@ -17,10 +17,8 @@ class Mail{
         }
         return new Promise((resolve,reject)=>{
             transporter.sendMail(opt, (error, info) => {
-                if (error) {
-                    resolve(false)
-                }
-                resolve(info)
+                if (error) resolve(false)
+                else resolve(info)
             })
         })
     }
