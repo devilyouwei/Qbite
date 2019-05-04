@@ -300,7 +300,7 @@ export default {
 </script>
 <style>
 .set{
-    padding:0.5rem;
+    padding:1rem;
 }
 .header{
     border:solid 1px #f0f0f0;

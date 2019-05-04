@@ -1,6 +1,6 @@
 <template>
     <div class="left-menu">
-        <el-menu default-active="1" background-color="#fff" @select="menuSelect" style="height:100%;">
+        <el-menu default-active="1" background-color="#409eff" text-color="#fff" active-text-color="#fff" @select="menuSelect" style="height:100%;">
             <el-submenu index="110" v-if="user.admin">
                 <template slot="title">
                     <i class="iconfont icon-menu">&nbsp;</i>
@@ -68,17 +68,23 @@ export default {
 }
 </script>
 <style>
-.el-submenu .el-menu-item {
+.left-menu .el-submenu .el-menu-item {
     height: 50px;
     line-height: 50px;
     padding: 0 45px;
-    min-width: 0;
+    min-width: 0!important;
 }
-.el-submenu .el-menu-item {
+.left-menu .el-submenu .el-menu-item {
     height: 50px;
     line-height: 50px;
     padding: 0 45px;
-    min-width: 0;
+    min-width: 0!important;
+}
+.left-menu .el-submenu__icon-arrow .el-icon-arrow-down{
+    color:#fff!important;
+}
+.left-menu .el-submenu__title i {
+    color: #fff!important;
 }
 </style>
 <style scoped>
@@ -92,5 +98,6 @@ export default {
 }
 .left-menu .iconfont{
     font-size:0.3rem;
+    color:#fff;
 }
 </style>

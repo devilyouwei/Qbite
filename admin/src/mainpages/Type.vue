@@ -102,6 +102,6 @@ export default {
 </script>
 <style scoped>
 .type{
-    padding:0.5rem;
+    padding:1rem;
 }
 </style>

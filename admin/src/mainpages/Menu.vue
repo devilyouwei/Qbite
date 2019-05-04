@@ -202,7 +202,7 @@ export default {
 </script>
 <style scoped>
 .menu{
-    padding:0.5rem;
+    padding:1rem;
 }
 .avatar-uploader .el-upload {
     border: 0.1rem solid #000;

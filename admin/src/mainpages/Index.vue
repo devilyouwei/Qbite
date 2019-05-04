@@ -60,9 +60,14 @@ export default {
     }
 }
 </script>
+<style>
+.index .el-card {
+    background-color: #e5e5e5;
+}
+</style>
 <style scoped>
 .index{
-    padding:0.5rem;
+    padding:1rem;
 }
 .index .card {
     font-size:0.4rem;

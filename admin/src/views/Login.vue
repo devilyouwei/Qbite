@@ -41,7 +41,7 @@
     background-size:100% 100%;
 }
 .login h1{
-    margin-top:2rem;
+    margin-top:3vw;
     font-size:0.8rem;
     font-weight:bolder;
     padding:0.5rem 0;

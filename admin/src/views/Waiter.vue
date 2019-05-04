@@ -4,7 +4,7 @@
         <a class="refresh" @click="loadData()">刷新</a>
         <a class="logout" @click="logout()">登出</a>
         <div class="h1-title" v-if="shop">
-            <h1><img src="/imgs/icon/fuwuyuan.png" alt="" style="height:0.8rem;position:absolute;right:7rem;top:0.2rem;">服務員專頁</h1>
+            <h1>服務員專頁</h1>
             <h2>{{shop.title}}-{{user.position}}-{{user.username}}</h2>
             <p>{{shop.description}}</p>
         </div>

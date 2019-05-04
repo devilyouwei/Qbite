@@ -17,7 +17,7 @@ export default new Router({
             name: Login.name,
             component: Login,
             meta: {
-                title: '后台-登陆'
+                title: '登錄'
             }
         },
         {
@@ -25,7 +25,7 @@ export default new Router({
             name: Login.name,
             component: Login,
             meta: {
-                title: '后台-登陆'
+                title: '登錄'
             }
         },
         {
@@ -33,7 +33,7 @@ export default new Router({
             name: Register.name,
             component: Register,
             meta: {
-                title: '后台-注册'
+                title: '註冊'
             }
         },
         {
@@ -41,7 +41,7 @@ export default new Router({
             name: Index.name,
             component: Index,
             meta: {
-                title: '后台-首页'
+                title: '首頁'
             }
         },
         {
@@ -49,7 +49,7 @@ export default new Router({
             name: Cooker.name,
             component: Cooker,
             meta: {
-                title: '後台-廚師專頁'
+                title: '廚師專頁'
             }
         },
         {
@@ -57,7 +57,7 @@ export default new Router({
             name: Waiter.name,
             component: Waiter,
             meta: {
-                title: '後台-服务员專頁'
+                title: '服务员專頁'
             }
         }
     ]

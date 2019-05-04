@@ -228,7 +228,7 @@ export default{
     cursor:pointer;
 }
 .order{
-    padding:0.5rem;
+    padding:1rem;
 }
 .tip{
     text-align:center;

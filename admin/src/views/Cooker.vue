@@ -4,7 +4,7 @@
         <a class="refresh" @click="loadData()">刷新</a>
         <a class="logout" @click="logout()">登出</a>
         <div class="h1-title" v-if="shop">
-            <h1><img src="/imgs/icon/chushi.png" alt="" style="height:0.8rem;position:absolute;right:7.5rem;top:0.2rem;">廚師專頁</h1>
+            <h1>廚師專頁</h1>
             <h2>{{shop.title}}-{{user.position}}-{{user.username}}</h2>
             <p>{{shop.description}}</p>
         </div>
@@ -156,7 +156,7 @@ export default {
     color:#ccc;
 }
 .orders .progress{
-    margin-top:0.1rem;
+    margin:0.2rem 0;
 }
 .orders .tbg{
     background:rgba(76, 175, 80,0.1);

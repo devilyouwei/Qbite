@@ -126,6 +126,6 @@ export default{
 
 <style scoped>
 .admin{
-    padding:0.5rem;
+    padding:1rem;
 }
 </style>

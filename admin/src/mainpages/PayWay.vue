@@ -159,7 +159,7 @@ export default{
 </script>
 <style scoped>
 .payway{
-    padding:0.5rem;
+    padding:1rem;
 }
 .payway .block{
     padding-bottom:0.5rem;
