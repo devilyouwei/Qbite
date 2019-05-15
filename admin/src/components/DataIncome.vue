@@ -6,7 +6,7 @@
                 <el-table-column type="expand">
                     <template slot-scope="props">
                         <div class="table fixed">
-                            <div v-for="(item,index) in props.row.pay" :key="index" v-if="item.value" class="cell text-center">
+                            <div v-for="(item,index) in props.row.pay" :key="index" class="cell text-center">
                                 <div style="color:#000;font-size:0.3rem;line-height:0.4rem;font-weight:bold;">{{item.title}}</div>
                                 <div style="color:#ff0000;line-height:0.4rem;">{{item.value}}</div>
                                 <div style="color:#67C23A;line-height:0.4rem;">{{item.currency}}</div>
@@ -35,6 +35,7 @@
             <el-table-column prop="orders" label="訂單數目"></el-table-column>
             <el-table-column label="操作">
                 <el-button @click="dialog=true" type="text" size="small">收入詳細</el-button>
+                <el-button @click="print" type="text" size="small">打印</el-button>
             </el-table-column>
         </el-table>
     </div>
@@ -74,7 +75,7 @@ export default{
                     onClick(picker) {
                         const start = new Date(new Date().toLocaleDateString());
                         const end = new Date(new Date().toLocaleDateString());
-                        start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
+                        start.setTime(start.getTime() - 3600 * 1000 * 24 * 6);
                         picker.$emit('pick', [start, end]);
                     }
                 }, {
@@ -105,12 +106,22 @@ export default{
             end += 3600*24*1000 // 向後延時一天，以獲得今天數據
             let res = await $.post('Index','income',{begin:begin,end:end},true)
             if(res.status==1) {
-                this.tableData = res.data.all
-                this.pay = res.data.pay
+                this.pay = res.data
+                this.tableData = [{
+                    price:0,
+                    orders:0
+                }]
                 for(let i in this.pay){
                     this.pay[i].endtime = $.formatDate($.stamp2date(this.pay[i].endtime),'yyyy-MM-dd hh:mm:ss')
+                    this.tableData[0].price+=parseFloat(this.pay[i].price)
+                    this.tableData[0].orders++
                 }
             } else this.$message.error(res.msg)
+        },
+        print(){
+            let begin = Date.parse(this.value[0])
+            let end = Date.parse(this.value[1])
+            window.open(`/PrintIncome?begin=${begin}&end=${end}`,"_blank")
         }
     },
     watch:{

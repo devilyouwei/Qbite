@@ -21,6 +21,11 @@
         </div>
     </div>
 </template>
+<style>
+.el-message-box {
+    width:auto!important;
+}
+</style>
 <style scoped>
 .reg{
     position:absolute;
@@ -84,6 +89,21 @@ export default {
         }
     },
     mounted: function(){
+        if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent)) {
+            this.$msgbox({
+                title: '提示',
+                message: '<font color="red">您當前使用的是手機瀏覽，進入後台可能出現排版問題</font><br>請使用電腦登錄<div style="font-weight:bold;">www.cocodata.xyz</div>進行後台操作，體驗更佳',
+                dangerouslyUseHTMLString: true,
+                showCancelButton: true,
+                confirmButtonText: '好的！查看教學',
+                cancelButtonText: '繼續使用手機',
+            }).then(async action => {
+                if(action=='confirm') {
+                    let res = await $.post('Config','config')
+                    if(res.status == 1) location.href = res.data.study_url
+                }
+            })
+        }
         if($.getUserInfo().pid==1) this.$router.replace('/Index')
         if($.getUserInfo().pid==2) this.$router.replace('/Cooker')
         if($.getUserInfo().pid==3) this.$router.replace('/Waiter')

@@ -1,4 +1,6 @@
-const db = require('./private/DB.js');
+const db = require('./private/DB.js')
+const trim = require('trim')
+const md5 = require('md5')
 const $ = require('./private/Public.js')
 class SuperAdmin {
     /*-----------------超級管理員權限方法--------------------*/
@@ -7,12 +9,13 @@ class SuperAdmin {
         let user = await $.auth(req.body.user)
         if(!user) return res.json({status:-1,msg:'未登錄或登錄狀態失效'})
         if(!user.admin) return res.json({status:-1,msg:'滾開，你不是管理員，禁止一切惡意攻擊！'})
-        let data = await db.query('select * from shop where is_del=0 order by id asc')
+
+        let data = await db.query('select id,uid,email,title,username,is_del,createtime from user_shop where is_del=0 order by id asc, uid asc')
         if(data) return res.json({status:1,msg:'全部列出',data:data})
         else return res.json({status:0,msg:'列出失敗'})
     }
     // 新增商店
-    static async addShops(req,res){
+    static async saveShop(req,res){
         let user = await $.auth(req.body.user)
         if(!user) return res.json({status:-1,msg:'未登錄或登錄狀態失效'})
         if(!user.admin) return res.json({status:-1,msg:'滾開，你不是管理員，禁止一切惡意攻擊！'})
@@ -20,36 +23,44 @@ class SuperAdmin {
         let username = trim(req.body.username) // 用戶名
         let password = trim(req.body.password) // 密碼
         let email = trim(req.body.email) // 郵箱
+        let id = parseInt(req.body.id) // 店鋪id
+        let uid = parseInt(req.body.uid) // 店長id
         if(!title) return res.json({status:0,msg:'輸入店名！'})
         if(!username) return res.json({status:0,msg:'輸入店長用戶名！'})
-        if(!password) return res.json({status:0,msg:'輸入密碼！'})
-        if(!email) return res.json({status:0,msg:'輸入郵箱！'})
+        if(!password) return res.json({status:0,msg:'輸入店長密碼！'})
+        if(!email) return res.json({status:0,msg:'輸入店鋪郵箱！'})
+        // 編輯店鋪
+        if(id){
+            let flag = await db.query('update shop set title=? where id=?', [title,id])
+            flag = await db.query('update user set username=?, password=? where id=?', [username,md5(password),uid])
+            if(flag.affectedRows==1) return res.json({status:1,msg:'修改成功'})
+        }else{
+            // 驗證店鋪email是否重複
+            let count = await db.query('select id from shop where email=?',[email])
+            if(count.length>0) return res.json({status:0,msg:'郵箱存在，請更改'})
 
-        // 驗證店鋪email是否重複
-        let count = await db.query('select id from shop where email=?',[email])
-        if(count.length>0) return res.json({status:0,msg:'郵箱存在，請更改'})
+            // 插入店鋪
+            let data = {
+                title:title,
+                email:email,
+                time:Date.parse(new Date())/1000
+            }
+            let flag = await db.insert('shop',data)
+            if(!flag) return res.json({status:0,msg:'新增店鋪失敗'})
 
-        // 插入店鋪
-        let data = {
-            title:title,
-            email:email,
-            time:Date.parse(new Date())/1000
+            // 插入店長用戶
+            data = {
+                sid:flag,
+                username:username,
+                password:md5(password),
+                token:'',
+                pid:1,
+                admin:0
+            }
+            flag = await db.insert('user',data)
+            if(flag) return res.json({status:1,msg:'插入新店鋪和新用戶成功'})
+            else return res.json({status:0,msg:'插入用戶失敗'})
         }
-        let flag = await db.insert('shop',data)
-        if(!flag) return res.json({status:0,msg:'新增店鋪失敗'})
-
-        // 插入店長用戶
-        data = {
-            sid:flag,
-            username:username,
-            password:md5(password),
-            token:'',
-            pid:1,
-            admin:0
-        }
-        flag = await db.insert('user',data)
-        if(flag) return res.json({status:1,msg:'插入新店鋪和新用戶成功'})
-        else return res.json({status:0,msg:'插入用戶失敗'})
     }
     static async delShops(req,res){
         let user = await $.auth(req.body.user)

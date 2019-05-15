@@ -5,6 +5,7 @@ import Login from './views/Login.vue'
 import Register from './views/Register.vue'
 import Cooker from './views/Cooker.vue'
 import Waiter from './views/Waiter.vue'
+import PrintIncome from './views/PrintIncome.vue'
 
 Vue.use(Router)
 
@@ -58,6 +59,14 @@ export default new Router({
             component: Waiter,
             meta: {
                 title: '服务员專頁'
+            }
+        },
+        {
+            path: '/PrintIncome',
+            name: PrintIncome.name,
+            component: PrintIncome,
+            meta: {
+                title: '收入報告打印'
             }
         }
     ]

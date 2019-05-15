@@ -10,10 +10,8 @@ class Index{
         // 如果未获取到範圍
         if(!begin) begin=0
         if(!end) end=Date.parse(new Date())
-        const sql = 'select iFNULL(sum(price),0.00) price,count(*) orders from orders_desk where endtime>=? and endtime<=? and endtime!=0 and sid=?'
-        let data = await db.query(sql,[begin/1000,end/1000,user.sid])
-        let pay = await db.query('select id,pay,title,price,endtime from orders_desk where endtime>=? and endtime<=? and endtime!=0 and sid=?',[begin/1000,end/1000,user.sid])
-        return res.json({status:1,data:{all:data,pay:pay},msg:'总收入'})
+        let data = await db.query('select id,pay,title,price,endtime from orders_desk where endtime>=? and endtime<=? and endtime!=0 and sid=?',[begin/1000,end/1000,user.sid])
+        return res.json({status:1,data:data,msg:'收入羅列'})
     }
 
     // 按天列出收入數據(走勢圖)
@@ -58,6 +56,20 @@ class Index{
         data['orders'] = await db.query(sql,[begin/1000,end/1000,user.sid])
         data['payway'] = await db.query('select * from payway where is_del=0')
         return res.json({status:1,data:data,msg:'所有支付方式'})
+    }
+    // 貨幣
+    static async getCurrency(req,res){
+        let user = await $.auth(req.body.user)
+        if(!user) return res.json({status:-1,msg:'未登錄或登錄狀態失效'})
+        let data = await db.query('select * from currency where is_del=0')
+        return res.json({status:1,data:data,msg:'列出所有可用貨幣'})
+    }
+    // 支付方式
+    static async getPayWay(req,res){
+        let user = await $.auth(req.body.user)
+        if(!user) return res.json({status:-1,msg:'未登錄或登錄狀態失效'})
+        let data = await db.query('select * from payway where is_del=0')
+        return res.json({status:1,data:data,msg:'列出所有可用支付方式'})
     }
 }
 module.exports=Index

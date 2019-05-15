@@ -1,7 +1,7 @@
 <template>
     <div class="admin">
         <el-dialog title="編輯商铺" :visible.sync="dialogFormVisible">
-            <el-form :model="form" :rules="rules" ref="form" label-width="1rem">
+            <el-form :model="form" :rules="rules" ref="form" label-width="2rem">
                 <el-row :gutter="12">
                     <el-col :span="24">
                         <el-form-item label="店名" prop="title">
@@ -41,9 +41,11 @@
         <el-table :data="shops.filter(data => !search || data.title.toLowerCase().includes(search.toLowerCase()))" style="width:100%">
             <el-table-column prop="id" label="編號" width="180"></el-table-column>
             <el-table-column prop="title" label="店鋪名" width="180"></el-table-column>
-            <el-table-column prop="email" label="郵箱" width="180"></el-table-column>
-            <el-table-column prop="time" label="加入時間"></el-table-column>
-            <el-table-column align="left" width="300">
+            <el-table-column prop="email" label="郵箱" width="240"></el-table-column>
+            <el-table-column prop="createtime" label="加入時間" width="300"></el-table-column>
+            <el-table-column prop="uid" label="店長ID" width="200"></el-table-column>
+            <el-table-column prop="username" label="店長名" width="300"></el-table-column>
+            <el-table-column align="right">
                 <template slot="header" slot-scope="scope">
                     {{scope.length}}
                     <el-input v-model="search" size="mini" placeholder="輸入用戶名搜索"/>
@@ -69,6 +71,8 @@ export default{
             shops:[],
             dialogFormVisible: false,
             form: {
+                id: 0,
+                uid: 0,
                 title:'',
                 username:'',
                 email:'',
@@ -94,7 +98,7 @@ export default{
             let res = await $.post('SuperAdmin','listShops')
             if(res.status == 1){
                 for(let i in res.data){
-                    res.data[i].time = $.formatDate($.stamp2date(res.data[i].time),'yyyy-MM-dd')
+                    res.data[i].createtime= $.formatDate($.stamp2date(res.data[i].createtime),'yyyy-MM-dd')
                 }
                 this.shops = res.data
             }
@@ -102,14 +106,22 @@ export default{
         async submit(){
             let valid = await this.$refs['form'].validate()
             if(valid){
-                let res = await $.post('SuperAdmin','addShops',this.form,true)
-                if(res.status==1){
+                let res = await $.post('SuperAdmin','saveShop',this.form,true)
+                if(res.status==1) {
                     this.loadData()
+                    this.dialogFormVisible = false
                 } else this.$message.error(res.msg)
             }
         },
         // 店铺编辑
-        async shopEdit(){
+        async shopEdit(row){
+            this.form.id = row.id
+            this.form.uid = row.uid
+            this.form.title = row.title
+            this.form.username = row.username
+            this.form.email = row.email
+            this.form.password = ''
+            this.dialogFormVisible = true
         },
         // 店铺删除
         shopDelete(id){
@@ -119,6 +131,18 @@ export default{
                     this.loadData()
                 } else this.$message.error(res.msg)
             }).catch(()=>{})
+        }
+    },
+    watch:{
+        dialogFormVisible(v){
+            if(!v){
+                this.form.id = 0
+                this.form.uid = 0
+                this.form.title = ''
+                this.form.username = ''
+                this.form.email = ''
+                this.form.password = ''
+            }
         }
     }
 }

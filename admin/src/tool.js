@@ -1,12 +1,13 @@
 import { Loading,Message } from 'element-ui'
 /*---------------测试服-
+---------------*/
 const URL = 'http://localhost:3000' //本地測試服
 const CLIENT = 'http://diet.devil.ren'
----------------*/
+
 /*---------------正式服
-*/
 const CLIENT = 'http://diet.devil.ren'
 const URL = 'http://node.diet.devil.ren' // 正式服
+*/
 
 
 const PRICE_SIGN = '$'
@@ -40,6 +41,34 @@ export default {
         } finally {
             if (load) Loading.service({ fullscreen: true }).close()
         }
+    },
+    getParams(){
+        let url = location.href
+        let theRequest = {}
+        let i = url.indexOf('?')
+        if (i !== -1) url = url.substr(++i)
+        else return {}
+
+        if (url.indexOf('&') !== -1) {
+            let strs = url.split('&')
+            for (let i = 0; i < strs.length; i++) {
+                theRequest[strs[i].split('=')[0]] = unescape(strs[i].split('=')[1])
+            }
+        } else {
+            theRequest[url.split('=')[0]] = unescape(url.split('=')[1])
+        }
+        return theRequest
+    },
+    removeDuplicatedItem(arr) {
+        for(var i = 0; i < arr.length-1; i++){
+            for(var j = i+1; j < arr.length; j++){
+                if(arr[i]==arr[j]){
+                    arr.splice(j,1)
+                    j--
+                }
+            }
+        }
+        return arr
     },
     getUserInfo(){
         try{

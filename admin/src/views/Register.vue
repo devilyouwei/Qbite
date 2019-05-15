@@ -28,8 +28,9 @@
                         <el-option v-for="(item,index) in area" :index="index" :label="item.title" :value="item.id"></el-option>
                     </el-select>
                 </el-form-item>
-                <el-button type="primary" size="medium" @click="submit()" style="width:8rem;">創建店鋪</el-button>
+                <el-button type="primary" size="medium" @click="submit()" style="width:80%;">創建店鋪</el-button>
                 <el-button type="text" @click="toLog()" size="mini" class="log">已有賬戶？立即登錄</el-button>
+                <el-button v-if="study" type="primary" @click="toStudy()" size="mini" class="study"><i class="iconfont icon-shubiaozhizhen">&nbsp;</i>點擊觀看後台教學</el-button>
             </el-form>
         </div>
         </transition>
@@ -60,6 +61,7 @@ export default{
         return {
             step:0,
             uploadUrl:$.URL+'/Upload/img',
+            study:false,
             form:{
                 eid:0,
                 email:'',
@@ -89,6 +91,7 @@ export default{
                 localStorage.setItem('code_time',this.codeTime)
             },1000)
         }
+        if(!localStorage.getItem('study')) setTimeout(()=>{this.study = true},300)
     },
     methods:{
         async submit(){
@@ -127,9 +130,12 @@ export default{
                 },800)
             } else this.$message.error(res.msg)
         },
-        async toLog(){
+        async toStudy(){
             let res = await $.post('Config','config')
             if(res.status == 1) location.href = res.data.study_url
+        },
+        toLog(){
+            this.$router.replace('/Login')
         },
         async sendMail(){
             let email = this.form.email
@@ -169,7 +175,7 @@ export default{
 </style>
 <style scoped>
 .fullscreen{
-    background:url('/imgs/bg/reg_bg.jpg');
+    background:#f0f0f0;
     background-attachment:fixed;
     background-repeat:no-repeat;
     background-size:auto 100%;
@@ -218,10 +224,21 @@ p.tip{
     position:relative;
 }
 .form .log{
-    paddinG:0.3rem 0;
+    padding-top:0.5rem;
+}
+.form .study{
+    position:fixed;
+    top:0;
+    width:100%;
+    left:0;
+    right:0;
+    margin:0;
+    border-radius:0;
+    font-size:0.5rem;
+    font-weight:bold;
 }
 .reg-title{
-    margin-top:1.2rem;
+    margin-top:1rem;
     padding:0.3rem 0;
     font-size:0.6rem;
     font-weight:bold;

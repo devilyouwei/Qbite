@@ -32,7 +32,7 @@
             <div class="table" v-if="list.length">
                 <div class="row" v-for="(item,index) in list" :key="index" v-show="type[activeIndex].id==item.tid">
                     <div class="cell" style="width:2.2rem;text-align:right;">
-                        <img v-lazy="item.thumb" class="thumb" alt="">
+                        <img v-lazy="item.thumb" class="thumb" alt="" @click="showIndex=index,showDesc=true">
                     </div>
                     <div class="cell relative">
                         <div class="title text-left">{{item.title}}</div>
@@ -59,6 +59,13 @@
                 <div class="cell pay">結算</div>
             </div>
         </div>
+
+        <van-popup v-model="showDesc" :overlay="true" class="descPop">
+            <div class="img-box"><img :src="list[showIndex].thumb" alt=""></div>
+            <div class="title">{{list[showIndex].title}}</div>
+            <div class="desc">{{list[showIndex].intro}}</div>
+            <div class="price">${{list[showIndex].price}}</div>
+        </van-popup>
 
         <van-popup v-model="showPopup" position="bottom" style="padding:0.5rem 0;">
             <div class="shopping table">
@@ -116,6 +123,8 @@ export default{
             activeId: 1,
             price: 0,
             showPopup: false,
+            showIndex:0,
+            showDesc:false,
             shopped: 0,
             priceSign:$.PRICE_SIGN,
             replace: false
@@ -418,6 +427,37 @@ export default{
     font-size:0.4rem;
     text-align:right;
     width:1rem;
+}
+.descPop{
+    width:70%;
+    border:none;
+}
+.descPop .title{
+    font-size:0.6rem;
+    line-height:0.85rem;
+    font-weight:bold;
+    line-height:0.85rem;
+    padding:0 0.5rem;
+}
+.descPop .img-box{
+    width:100%;
+}
+.descPop .img-box img{
+    width:100%;
+    height:5rem;
+    object-fit:cover;
+}
+.descPop .desc{
+    font-size:0.5rem;
+    line-height:0.85rem;
+    padding:0 0.5rem;
+}
+.descPop .price{
+    color:#f00;
+    font-size:0.5rem;
+    font-weight:bold;
+    text-align:right;
+    padding:0.5rem;
 }
 
 </style>
