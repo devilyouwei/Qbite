@@ -94,6 +94,7 @@ export default{
         if(!localStorage.getItem('study')) setTimeout(()=>{this.study = true},300)
     },
     methods:{
+        // step1
         async submit(){
             let valid = await this.$refs['form'].validate()
             if(!this.form.eid) this.$message.error("請點擊發送驗證碼，并查看對應郵箱")
@@ -110,6 +111,7 @@ export default{
                 } else this.$message.error(res.msg)
             }
         },
+        // step2
         async submitMore() {
             let data = JSON.parse(localStorage.getItem('reg_info'))
             data.location = this.location
@@ -139,27 +141,24 @@ export default{
         },
         async sendMail(){
             let email = this.form.email
-            if(email){
-                let res = await $.post('User','sendCode',{email:email},true)
-                if(res.status==1){
-                    this.codeTime = 60
+            if(!email) return this.$message.error("請輸入郵箱")
+            let res = await $.post('User','sendCode',{email:email},true)
+            if(res.status==1){
+                this.codeTime = 60
+                localStorage.setItem('code_time',this.codeTime)
+                this.interval = setInterval(()=>{
+                    if(this.codeTime>0) this.codeTime--
+                    else clearInterval(this.interval)
                     localStorage.setItem('code_time',this.codeTime)
-                    this.interval = setInterval(()=>{
-                        if(this.codeTime>0) this.codeTime--
-                        else clearInterval(this.interval)
-                        localStorage.setItem('code_time',this.codeTime)
-                    },1000)
-                    this.$message({message: res.msg,type: 'success'})
-                    this.form.eid = res.data
-                } else this.$message.error(res.msg)
-            } else this.$message.error("請輸入郵箱")
+                },1000)
+                this.$message({message: res.msg,type: 'success'})
+                this.form.eid = res.data
+            } else this.$message.error(res.msg)
         },
         uploadSuccess(res){
             if(res.status == 1){
                 this.certificate=res.data
             } else this.$message.error(res.msg)
-        },
-        uploadError(e){
         }
     }
 }
@@ -194,23 +193,23 @@ p.tip{
     cursor: pointer;
     position: relative;
     overflow: hidden;
-  }
-  .avatar-uploader .el-upload:hover {
+}
+.avatar-uploader .el-upload:hover {
     border-color: #409EFF;
-  }
-  .avatar-uploader-icon {
+}
+.avatar-uploader-icon {
     font-size: 28px;
     color: #8c939d;
     width: 178px;
     height: 178px;
     line-height: 178px;
     text-align: center;
-  }
-  .avatar {
+}
+.avatar {
     width: 178px;
     height: 178px;
     display: block;
-  }
+}
 .reg-box{
     text-align:center;
     width:9rem;

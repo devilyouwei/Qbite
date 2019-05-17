@@ -1,6 +1,9 @@
 <!--打印收入报告-->
 <template>
     <div class="print-income">
+        <div class="replace" v-if="replace">
+            暫無數據
+        </div>
         <div class="table" v-if="tableData">
             <div class="row">
                 <div class="cell bold">貨幣/支付方式</div>
@@ -21,6 +24,7 @@ export default{
     data(){
         return {
             tableData:null,
+            replace: false,
             pay:[],
             currency:[],
             orders:[],
@@ -41,15 +45,16 @@ export default{
             this.tableData = null
             this.currency = []
             this.payway = []
-            const beginTime = new Date(new Date().toLocaleDateString()).getTime()
-            let endTime = new Date(new Date().toLocaleDateString()).getTime() + 24 * 60 * 60 * 1000 - 1
+            const beginTime = new Date(new Date().toLocaleDateString()).getTime() // 0點
+            const endTime = new Date(new Date().toLocaleDateString()).getTime() + 24 * 60 * 60 * 1000 - 1 //23:59:59
             begin = isNaN(begin)?beginTime:begin
-            end += 3600*24*1000 - 1 // 向後延時一天，以獲得今天數據
             end = end?end:endTime
-            let res = await $.post('Index','income',{begin:begin,end:end},true)
+            end += 3600*24*1000 - 1 // 向後延時24小時
             this.begin = $.formatDate($.stamp2date(begin/1000),'yyyy-MM-dd')
             this.end = $.formatDate($.stamp2date(end/1000),'yyyy-MM-dd')
+            let res = await $.post('Index','income',{begin:begin,end:end},true)
             if(res.status==1) {
+                if(!res.data || res.data.length==0) return this.replace=true
                 this.orders = res.data
                 // 整理支付方式和貨幣種類
                 for(let i in res.data){

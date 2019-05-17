@@ -28,6 +28,14 @@
                         </el-form-item>
                     </el-col>
                 </el-row>
+                <el-row :gutter="12">
+                    <el-col :span="12" class="text-center">
+                        <img :src="form.certificates" style="width:5rem;">
+                    </el-col>
+                    <el-col :span="12" class="text-center">
+                        <div>地址：{{form.location}}</div>
+                    </el-col>
+                </el-row>
             </el-form>
 
             <div slot="footer" class="dialog-footer">
@@ -39,12 +47,12 @@
             <el-button type="primary" icon="el-icon-plus" @click="dialogFormVisible=true">新增</el-button>
         </el-col>
         <el-table :data="shops.filter(data => !search || data.title.toLowerCase().includes(search.toLowerCase()))" style="width:100%">
-            <el-table-column prop="id" label="編號" width="180"></el-table-column>
+            <el-table-column prop="id" label="編號" width="100"></el-table-column>
             <el-table-column prop="title" label="店鋪名" width="180"></el-table-column>
             <el-table-column prop="email" label="郵箱" width="240"></el-table-column>
-            <el-table-column prop="createtime" label="加入時間" width="300"></el-table-column>
-            <el-table-column prop="uid" label="店長ID" width="200"></el-table-column>
-            <el-table-column prop="username" label="店長名" width="300"></el-table-column>
+            <el-table-column prop="createtime" label="加入時間" width="180"></el-table-column>
+            <el-table-column prop="uid" label="店長ID" width="100"></el-table-column>
+            <el-table-column prop="username" label="店長名" width="200"></el-table-column>
             <el-table-column align="right">
                 <template slot="header" slot-scope="scope">
                     {{scope.length}}
@@ -76,7 +84,9 @@ export default{
                 title:'',
                 username:'',
                 email:'',
-                password:''
+                password:'',
+                location:'',
+                certificates:''
             },
             rules:{
                 title:[
@@ -98,7 +108,7 @@ export default{
             let res = await $.post('SuperAdmin','listShops')
             if(res.status == 1){
                 for(let i in res.data){
-                    res.data[i].createtime= $.formatDate($.stamp2date(res.data[i].createtime),'yyyy-MM-dd')
+                    res.data[i].createtime = $.formatDate($.stamp2date(res.data[i].createtime),'yyyy-MM-dd')
                 }
                 this.shops = res.data
             }
@@ -121,6 +131,8 @@ export default{
             this.form.username = row.username
             this.form.email = row.email
             this.form.password = ''
+            this.form.certificates = row.certificates
+            this.form.location = row.location
             this.dialogFormVisible = true
         },
         // 店铺删除
@@ -142,6 +154,8 @@ export default{
                 this.form.username = ''
                 this.form.email = ''
                 this.form.password = ''
+                this.form.certificates = ''
+                this.form.location = ''
             }
         }
     }

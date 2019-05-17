@@ -1,13 +1,13 @@
 import { Loading,Message } from 'element-ui'
 /*---------------测试服-
----------------*/
 const URL = 'http://localhost:3000' //本地測試服
 const CLIENT = 'http://diet.devil.ren'
+---------------*/
 
 /*---------------正式服
+*/
 const CLIENT = 'http://diet.devil.ren'
 const URL = 'http://node.diet.devil.ren' // 正式服
-*/
 
 
 const PRICE_SIGN = '$'

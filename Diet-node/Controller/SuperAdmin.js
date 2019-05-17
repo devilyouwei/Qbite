@@ -10,7 +10,7 @@ class SuperAdmin {
         if(!user) return res.json({status:-1,msg:'未登錄或登錄狀態失效'})
         if(!user.admin) return res.json({status:-1,msg:'滾開，你不是管理員，禁止一切惡意攻擊！'})
 
-        let data = await db.query('select id,uid,email,title,username,is_del,createtime from user_shop where is_del=0 order by id asc, uid asc')
+        let data = await db.query('select id,uid,email,title,username,is_del,createtime,location,certificates from user_shop where is_del=0 order by id asc, uid asc')
         if(data) return res.json({status:1,msg:'全部列出',data:data})
         else return res.json({status:0,msg:'列出失敗'})
     }
