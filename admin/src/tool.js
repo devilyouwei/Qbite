@@ -81,7 +81,7 @@ export default {
     },
     logout(){
         localStorage.removeItem('userinfo')
-        location.replace('/')
+        location.replace('/Login')
     },
     // 時間格式化函數
     stamp2date: function (ns) {

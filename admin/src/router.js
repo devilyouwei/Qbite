@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import Main from './views/Main.vue'
 import Index from './views/Index.vue'
 import Login from './views/Login.vue'
 import Register from './views/Register.vue'
@@ -15,10 +16,10 @@ export default new Router({
     routes: [
         {
             path: '/',
-            name: Login.name,
-            component: Login,
+            name: Main.name,
+            component: Main,
             meta: {
-                title: '登錄'
+                title: 'Quick Bite'
             }
         },
         {
