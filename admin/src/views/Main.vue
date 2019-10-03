@@ -1,4 +1,4 @@
-<template>
+<template class="h-100">
     <div class="main">
         <div class="head">
             <div class="table">
@@ -25,7 +25,7 @@
         </div>
 
 
-        <div class="top-rated-content container-fluid d-flex flex-column">
+        <div class="top-rated-content container-fluid d-flex flex-column border-bottom ">
             <div class="list-title">Top Rated Food Near You</div>
             <div class="top-rated-container  overflow-auto d-flex flex-row justify-content-around flex-wrap">
                 <div class="top-rated-content-list d-flex" v-for="(item,index) in list" :key="index">
@@ -49,6 +49,20 @@
             </div>
         </div>
 
+        <div class="top-rated-content container-fluid d-flex flex-column">
+            <div class="list-title">Partner Restaurants</div>
+            <div class="partners-restaurant-container d-flex flex-row justify-content-around flex-wrap">
+                <div class="partner-restaurant-content-list d-flex justify-content-center align-items-center shadow p-1 mb-5 bg-white rounded" v-for="(item,index) in list2" :key="index">
+                    <div class="">
+                        <div class=""><img :src="item.img"></div>
+                        <!--                        <div class="">-->
+                        <!--                            {{item.title}}-->
+                        <!--                        </div>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!--        <div class="shops list">-->
         <!--            <div class="list-title">OUR PARTNER RESTAURANTS</div>-->
         <!--            <div class="list-content">-->
@@ -65,7 +79,7 @@
         <!--            </div>-->
         <!--        </div>-->
 
-        <div class="footer d-flex flex-column justify-content-center align-items-center mt-auto">
+        <div class="footer d-flex flex-column justify-content-center align-items-center">
             <span> &copy;Copyright NullTech 2019</span>
         </div>
     </div>
@@ -115,12 +129,12 @@
     }
 
     .head .logo .icon-letter-q {
-        font-size: 0.8rem;
+        font-size: 0.9rem;
 
     }
 
     .logo {
-        padding-left: 1.2rem;
+        padding-left: 2.5rem;
     }
 
     .sign-in {
@@ -138,7 +152,7 @@
         background-image: url("../assets/banner.jpeg");
         background-blend-mode: lighten;
         background-size: 100%;
-        height: 7rem;
+        height: 8rem;
     }
 
     .banner .banner-title {
@@ -192,18 +206,21 @@
 
     /*    !*padding: 0.5rem 0;*!*/
     /*}*/
-    .container-fluid{
+    .container-fluid {
         width: 90%;
         max-height: 13rem;
     }
+
     .top-rated-content {
-        max-height: 13rem;
+        max-height: 17rem;
+        padding-bottom: 1rem;
     }
 
     .list-title {
         font-size: 0.47rem;
         padding: 0.7rem 0;
     }
+
     .top-rated-container {
         /*padding: 0.5rem;*/
     }
@@ -217,6 +234,22 @@
     img {
         max-height: 100%;
         max-width: 100%;
+        display: flex;
+        justify-content: center; /* align horizontal */
+        align-items: center; /* align vertical */
+    }
+
+    .partners-restaurant-container {
+
+    }
+
+    .partner-restaurant-content-list {
+        width: 4rem !important;
+        height: 4rem !important;
+        margin: 0 0.5rem;
+        border-radius: 50%;
+        overflow: hidden;
+
     }
 
     .footer {
