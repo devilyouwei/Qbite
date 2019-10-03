@@ -25,19 +25,27 @@
         </div>
 
 
-        <div class="list container d-flex flex-column flex-wrap">
+        <div class="top-rated-content container-fluid d-flex flex-column">
             <div class="list-title">Top Rated Food Near You</div>
-            <div class="list-content">
-                <ul class="avg-4">
-                    <li v-for="(item,index) in list" :key="index">
-                        <div class="box">
-                            <div class="thumb"><img :src="item.thumb"></div>
-                            <div class="title">
-                                {{item.title}}
-                            </div>
+            <div class="top-rated-container  overflow-auto d-flex flex-row justify-content-around flex-wrap">
+                <div class="top-rated-content-list d-flex" v-for="(item,index) in list" :key="index">
+                    <div class="">
+                        <div class=""><img :src="item.thumb"></div>
+                        <div class="">
+                            {{item.title}}
                         </div>
-                    </li>
-                </ul>
+                    </div>
+                </div>
+                <!--                <ul class="avg-3">-->
+                <!--                    <li v-for="(item,index) in list" :key="index">-->
+                <!--                        <div class="box">-->
+                <!--                            <div class="thumb"><img :src="item.thumb"></div>-->
+                <!--                            <div class="title">-->
+                <!--                                {{item.title}}-->
+                <!--                            </div>-->
+                <!--                        </div>-->
+                <!--                    </li>-->
+                <!--                </ul>-->
             </div>
         </div>
 
@@ -57,8 +65,9 @@
         <!--            </div>-->
         <!--        </div>-->
 
-        <!--        <div class="footer">-->
-        <!--        </div>-->
+        <div class="footer d-flex flex-column justify-content-center align-items-center mt-auto">
+            <span> &copy;Copyright NullTech 2019</span>
+        </div>
     </div>
 </template>
 
@@ -118,7 +127,8 @@
         text-align: left;
         font-size: 0.32rem;
     }
-    .table  {
+
+    .table {
         margin-bottom: auto;
     }
 
@@ -174,13 +184,39 @@
         color: white;
     }
 
-    .list {
-        padding: 0.7rem 0;
+    /*.list {*/
+    /*    padding: 0.7rem 0;*/
+    /*}*/
+
+    /*.list .list-title {*/
+
+    /*    !*padding: 0.5rem 0;*!*/
+    /*}*/
+    .container-fluid{
+        width: 90%;
+        max-height: 13rem;
+    }
+    .top-rated-content {
+        max-height: 13rem;
     }
 
-    .list .list-title {
+    .list-title {
         font-size: 0.47rem;
-        /*padding: 0.5rem 0;*/
+        padding: 0.7rem 0;
+    }
+    .top-rated-container {
+        /*padding: 0.5rem;*/
+    }
+
+    .top-rated-content-list {
+        width: 8rem !important;
+        height: 8rem !important;
+        margin: 0 0.5rem;
+    }
+
+    img {
+        max-height: 100%;
+        max-width: 100%;
     }
 
     .footer {
@@ -190,36 +226,36 @@
         box-sizing: border-box;
     }
 
-    .list .list-content .img {
-        text-align: center;
-    }
+    /*.list .list-content .img {*/
+    /*    text-align: center;*/
+    /*}*/
 
-    .list .list-content .img img {
-        width: 3rem;
-        height: 3rem;
-        object-fit: cover;
-        margin: 0 auto;
-    }
+    /*.list .list-content .img img {*/
+    /*    width: 3rem;*/
+    /*    height: 3rem;*/
+    /*    object-fit: cover;*/
+    /*    margin: 0 auto;*/
+    /*}*/
 
-    .list .list-content .thumb {
-        text-align: center;
-    }
+    /*.list .list-content .thumb {*/
+    /*    text-align: center;*/
+    /*}*/
 
-    .list .list-content .thumb img {
-        width: 5rem;
-        height: 3rem;
-        object-fit: cover;
-        margin: 0 auto;
-    }
+    /*.list .list-content .thumb img {*/
+    /*    width: 5rem;*/
+    /*    height: 3rem;*/
+    /*    object-fit: cover;*/
+    /*    margin: 0 auto;*/
+    /*}*/
 
-    .list .list-content .title {
-        text-align: center;
-        font-size: 0.25rem;
-        line-height: 0.4rem;
-        padding: 0.1rem 0;
-    }
+    /*.list .list-content .title {*/
+    /*    text-align: center;*/
+    /*    font-size: 0.25rem;*/
+    /*    line-height: 0.4rem;*/
+    /*    padding: 0.1rem 0;*/
+    /*}*/
 
-    .list .list-content .box {
-        padding-bottom: 0.5rem;
-    }
+    /*.list .list-content .box {*/
+    /*    padding-bottom: 0.5rem;*/
+    /*}*/
 </style>
