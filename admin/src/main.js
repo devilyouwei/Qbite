@@ -6,11 +6,13 @@ import VCharts from 'v-charts'
 import './assets/style.css'
 import 'element-ui/lib/theme-chalk/index.css'
 import BootstrapVue from 'bootstrap-vue'
+import { DropdownPlugin } from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import {i18n} from './plugins/i18n'
 import FlagIcon from 'vue-flag-icon'
 
+Vue.use(DropdownPlugin)
 Vue.use(BootstrapVue)
 Vue.config.productionTip = false
 Vue.use(ElementUI)
