@@ -2,11 +2,11 @@
 <template>
     <div class="print-income">
         <div class="replace" v-if="replace">
-            暫無數據
+            {{$t(noIncomeDataText)}}
         </div>
         <div class="table" v-if="tableData">
             <div class="row">
-                <div class="cell bold">貨幣/支付方式</div>
+                <div class="cell bold">{{$t(paymentText)}}</div>
                 <div class="cell bold" v-for="(item,index) in payway">{{item}}</div>
             </div>
             <div class="row" v-for="(item,index) in currency">

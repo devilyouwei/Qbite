@@ -3,22 +3,25 @@
         <div class="head">
             <div class="table">
                 <div class="cell logo" @click="toIndex"><i class="iconfont icon-letter-q"></i>uick Bite</div>
-                <div class="cell"></div>
-                <div class="cell sign-in">Sign In</div>
+                <div class="cell">
+                    <a href="#" @click="setLocale('en')"><flag iso="us"></flag></a>
+                    <a href="#" @click="setLocale('zh')"><flag iso="cn"></flag></a>
+                </div>
+                <div class="cell sign-in"><router-link to="/login">{{$t('signIn')}}</router-link></div>
             </div>
         </div>
 
         <div class="banner table">
             <div class="banner-align">
                 <div class="title-align">
-                    <h1 class="banner-title">Find The Food, Find The Restaurant</h1>
+                    <h1 class="banner-title">{{$t('bannerTitle')}}</h1>
                 </div>
                 <div class="search-align">
                     <div class="banner-search-box">
-                        <el-input v-model="search" placeholder="Let's find some yummy food"></el-input>
+                        <el-input v-model="search" :placeholder="$t('bannerSearchBox')"></el-input>
                     </div>
                     <div>
-                        <el-button class="search-btn">Feed Me</el-button>
+                        <el-button class="search-btn">{{$t('bannerSearchButton')}}</el-button>
                     </div>
                 </div>
             </div>
@@ -26,7 +29,7 @@
 
 
         <div class="top-rated-content container-fluid d-flex flex-column border-bottom ">
-            <div class="list-title">Top Rated Food Near You</div>
+            <div class="list-title">{{$t('topRatedFood')}}</div>
             <div class="top-rated-container  overflow-auto d-flex flex-row justify-content-around flex-wrap">
                 <div class="top-rated-content-list d-flex" v-for="(item,index) in list" :key="index">
                     <div class="">
@@ -50,7 +53,7 @@
         </div>
 
         <div class="top-rated-content container-fluid d-flex flex-column">
-            <div class="list-title">Partner Restaurants</div>
+            <div class="list-title">{{$t('partnerRestaurants')}}</div>
             <div class="partners-restaurant-container d-flex flex-row justify-content-around flex-wrap">
                 <div class="partner-restaurant-content-list d-flex justify-content-center align-items-center shadow p-1 mb-5 bg-white rounded"
                      v-for="(item,index) in list2" :key="index">
@@ -109,7 +112,10 @@
                     this.list = res.data
                     this.list2 = res2.data
                 }
-            }
+            },
+            setLocale(locale){
+            this.$root.$i18n.locale = locale
+        }
         },
         mounted() {
             this.loadData();

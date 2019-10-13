@@ -3,11 +3,11 @@
     <div>
         <div class="table">
             <div class="cell title">
-                收入方式分佈
+                {{$t('paymentMethodDistribution')}}
             </div>
             <div class="cell tool">
                 <div class="picker">
-                    <el-date-picker v-model="value" type="daterange" align="right" unlink-panels range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" :picker-options="pickerOptions"></el-date-picker>
+                    <el-date-picker v-model="value" type="daterange" align="right" unlink-panels :range-separator="$t('to')" :start-placeholder="$t('startDate')" :end-placeholder="$t('endDate')" :picker-options="pickerOptions"></el-date-picker>
                 </div>
             </div>
         </div>

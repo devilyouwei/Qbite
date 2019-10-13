@@ -1,10 +1,10 @@
 <template>
     <div class="admin">
-        <el-dialog title="編輯商铺" :visible.sync="dialogFormVisible">
+        <el-dialog :title="$t('editStoreInformation')" :visible.sync="dialogFormVisible">
             <el-form :model="form" :rules="rules" ref="form" label-width="2rem">
                 <el-row :gutter="12">
                     <el-col :span="24">
-                        <el-form-item label="店名" prop="title">
+                        <el-form-item :label="$t('storeName2')" prop="title">
                             <el-input v-model="form.title" type="text"></el-input>
                         </el-form-item>
                     </el-col>
@@ -18,12 +18,12 @@
                 </el-row>
                 <el-row :gutter="12">
                     <el-col :span="12">
-                        <el-form-item label="店長" prop="username">
+                        <el-form-item :label="$t('storeManager')" prop="username">
                             <el-input v-model="form.username" type="text"></el-input>
                         </el-form-item>
                     </el-col>
                     <el-col :span="12">
-                        <el-form-item label="密碼" prop="password">
+                        <el-form-item :label="$t('password')" prop="password">
                             <el-input v-model="form.password" type="text"></el-input>
                         </el-form-item>
                     </el-col>
@@ -33,34 +33,34 @@
                         <img :src="form.certificates" style="width:5rem;">
                     </el-col>
                     <el-col :span="12" class="text-center">
-                        <div>地址：{{form.location}}</div>
+                        <div>{{$t('storeAddress')}} {{form.location}}</div>
                     </el-col>
                 </el-row>
             </el-form>
 
             <div slot="footer" class="dialog-footer">
-                <el-button @click="dialogFormVisible=false">取消</el-button>
-                <el-button type="primary" @click="submit">確定</el-button>
+                <el-button @click="dialogFormVisible=false">{{$t('cancel')}}</el-button>
+                <el-button type="primary" @click="submit">{{$t('confirm')}}</el-button>
             </div>
         </el-dialog>
         <el-col :span="4">
-            <el-button type="primary" icon="el-icon-plus" @click="dialogFormVisible=true">新增</el-button>
+            <el-button type="primary" icon="el-icon-plus" @click="dialogFormVisible=true">{{$t('addNew')}}</el-button>
         </el-col>
         <el-table :data="shops.filter(data => !search || data.title.toLowerCase().includes(search.toLowerCase()))" style="width:100%">
-            <el-table-column prop="id" label="編號" width="100"></el-table-column>
-            <el-table-column prop="title" label="店鋪名" width="180"></el-table-column>
-            <el-table-column prop="email" label="郵箱" width="240"></el-table-column>
-            <el-table-column prop="createtime" label="加入時間" width="180"></el-table-column>
-            <el-table-column prop="uid" label="店長ID" width="100"></el-table-column>
-            <el-table-column prop="username" label="店長名" width="200"></el-table-column>
+            <el-table-column prop="id" :label="$t('id')" width="100"></el-table-column>
+            <el-table-column prop="title" :label="$t('storeName3')" width="180"></el-table-column>
+            <el-table-column prop="email" :label="$t('email')" width="240"></el-table-column>
+            <el-table-column prop="createtime" :label="$t('timeCreated')" width="180"></el-table-column>
+            <el-table-column prop="uid" :label="$t('managerId')" width="100"></el-table-column>
+            <el-table-column prop="username" :label="$t('managerUsername')" width="200"></el-table-column>
             <el-table-column align="right">
                 <template slot="header" slot-scope="scope">
                     {{scope.length}}
-                    <el-input v-model="search" size="mini" placeholder="輸入用戶名搜索"/>
+                    <el-input v-model="search" size="mini" :placeholder="$t('searchByUsername')"/>
                 </template>
                 <template slot-scope="scope">
-                    <el-button type="text" size="mini" @click="shopEdit(scope.row)">編輯</el-button>
-                    <el-button size="mini" type="text" @click="shopDelete(scope.row.id)">刪除</el-button>
+                    <el-button type="text" size="mini" @click="shopEdit(scope.row)">{{$t('edit')}}</el-button>
+                    <el-button size="mini" type="text" @click="shopDelete(scope.row.id)">{{$t('delete')}}</el-button>
                 </template>
             </el-table-column>
         </el-table>
@@ -95,7 +95,7 @@ export default{
                 ],
                 email:[
                     {required:true, message:'輸入郵箱', trigger:'blur'},
-                    {type: 'email', message: '请输入正确的邮箱地址', trigger: ['blur', 'change']}
+                    {type: 'email', message: '請输入正确的邮箱地址', trigger: ['blur', 'change']}
                 ],
                 username:[{required:true, message:'請輸入用戶名', trigger:'blur'}],
                 password:[{required:true, message:'請輸入密碼', trigger:'blur'}],

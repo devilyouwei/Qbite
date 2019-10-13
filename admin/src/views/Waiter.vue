@@ -1,15 +1,15 @@
 <!--服务生-->
 <template>
     <div class="fullscreen waiter">
-        <a class="refresh" @click="loadData()">刷新</a>
-        <a class="logout" @click="logout()">登出</a>
+        <a class="refresh" @click="loadData()">{{$t('refreshButtonLabel')}}</a>
+        <a class="logout" @click="logout()">{{$t('logout')}}</a>
         <div class="h1-title" v-if="shop">
-            <h1>服務員專頁</h1>
+            <h1>{{$t('staffPageTitle')}}</h1>
             <h2>{{shop.title}}-{{user.position}}-{{user.username}}</h2>
             <p>{{shop.description}}</p>
         </div>
         <div class="replace" v-if="replace">
-            暫無訂單，請休息一會~
+            {{$t('staffNoOrdersText')}}
         </div>
         <div v-if="!replace">
             <el-row>
@@ -17,31 +17,31 @@
                     <div class="card" @click="showOrder(item.id)">
                         <div class="title">{{item.title}}</div>
                         <div style="font-size:0.3rem;padding-top:0.2rem;">
-                            <div>訂單：{{item.orderNum}}</div>
+                            <div>{{$t('order')}} {{item.orderNum}}</div>
                         </div>
                     </div>
                 </el-col>
             </el-row>
         </div>
-        <el-dialog title="客戶菜單" :visible.sync="dialog">
+        <el-dialog :title="$t('customerMenu')" :visible.sync="dialog">
             <div class="order" v-for="(item,index) in orders" :key="index">
-                <h1 class="order-title">訂單號：{{item.id}}</h1>
+                <h1 class="order-title">{{$t('orderNumber')}} {{item.id}}</h1>
                 <div class="tag" :class="item2.cooked>=item2.count?'finish':''" v-for="(item2,index2) in item.content" :key="index2">
                     <div class="tag-content">
                         <img :src="item2.thumb" class="tag-thumb">
                         {{item2.title}}
-                        <div class="tag-num-cooked" style="color:#4caf50;">上菜 ×{{item2.cooked}}</div>
+                        <div class="tag-num-cooked" style="color:#4caf50;">{{$t('serveFood')}} ×{{item2.cooked}}</div>
                         <div class="tag-num">${{item2.price}} ×{{item2.count}}</div>
                     </div>
                     <div class="tag-opt" @click="finish(index,index2)" v-if="item2.cooked<item2.count">
-                        完成
+                        {{$t('finished')}}
                     </div>
                         <div class="tag-opt finish" v-if="item2.cooked==item2.count">
-                            已完成
+                            {{$t('completed')}}
                         </div>
                 </div>
                 <div class="btn-box">
-                    <el-button type="success" size="medium" @click="submit(index)">保存</el-button>
+                    <el-button type="success" size="medium" @click="submit(index)">{{$t('save')}}</el-button>
                 </div>
             </div>
         </el-dialog>
