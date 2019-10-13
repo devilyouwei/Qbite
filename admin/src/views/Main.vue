@@ -149,7 +149,7 @@
     .banner {
         text-align: center;
         margin: 0 auto;
-        background-image: url("../assets/banner.jpeg");
+        background-image: url("../assets/banner.jpg");
         background-blend-mode: lighten;
         background-size: 100%;
         height: 8rem;
