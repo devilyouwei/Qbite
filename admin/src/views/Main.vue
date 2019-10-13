@@ -150,7 +150,11 @@
     .banner {
         text-align: center;
         margin: 0 auto;
+<<<<<<< HEAD
         background-image: url("../assets/banner2.jpeg");
+=======
+        background-image: url("../assets/banner.jpg");
+>>>>>>> 5c4cea5c9f91fff5ba05c1940f84b83de4186cd8
         background-blend-mode: lighten;
         background-size: 100%;
         height: 8rem;
