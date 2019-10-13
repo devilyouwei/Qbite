@@ -3,52 +3,52 @@
         <transition name="slide">
         <div class="reg-box" v-if="step==1">
             <h1 class="reg-title">Welcome</h1>
-            <h1 class="reg-sub-title">STEP1-創建店鋪</h1>
+            <h1 class="reg-sub-title">STEP1-{{$t('createStoreLabel')}}</h1>
             <el-form ref="form" :model="form" label-width="0px" class="form">
-                <el-form-item label="" prop="email" :rules="[{ required: true, message: '郵箱不能為空', trigger: 'blur' }, { type: 'email', message: '輸入正確的郵箱地址', trigger: ['blur'] }]" style="text-left">
-                    <el-input v-model="form.email" placeholder="輸入店鋪郵箱（待驗證）" style="width:60%;float:left;"></el-input>
-                    <el-button @click="sendMail()" v-if="codeTime==0" style="width:3.3rem;">發送驗證碼</el-button>
+                <el-form-item label="" prop="email" :rules="[{ required: true, message: $t('emptyStoreEmail'), trigger: 'blur' }, { type: 'email', message: $t('validEmailAddress'), trigger: ['blur'] }]" style="text-left">
+                    <el-input v-model="form.email" :placeholder="$t('emailVerificationMessage')" style="width:60%;float:left;"></el-input>
+                    <el-button @click="sendMail()" v-if="codeTime==0" style="width:3.3rem;">{{$t('sendVerificationCode')}}</el-button>
                     <el-button v-if="codeTime>0" type="info" style="width:3.3rem;" plain disabled>{{codeTime}}s</el-button>
                 </el-form-item>
-                <el-form-item label="" prop="code" :rules="[{ required: true, message: '請輸入郵箱獲取的驗證碼', trigger: 'blur' }, { min:4,max:8,message: '驗證碼不符合規範', trigger: ['blur'] }]">
-                    <el-input v-model="form.code" placeholder="輸入獲得的驗證碼" clearable></el-input>
+                <el-form-item label="" prop="code" :rules="[{ required: true, message: $t('verificationCodeInput'), trigger: 'blur' }, { min:4,max:8,message: $t('verificationCodeError'), trigger: ['blur'] }]">
+                    <el-input v-model="form.code" :placeholder="$t('verificationCode')" clearable></el-input>
                 </el-form-item>
-                <el-form-item label="" prop="shop" :rules="[{ required: true, message: '請輸入店鋪名', trigger: 'blur' }, { min:5,max:20,message: '店鋪名5-20個字符', trigger: ['blur'] }]">
-                    <el-input v-model="form.shop" placeholder="店鋪名稱" clearable></el-input>
+                <el-form-item label="" prop="shop" :rules="[{ required: true, message: $t('storeNameEnter'), trigger: 'blur' }, { min:5,max:20,message: $t('storeNameRequirements'), trigger: ['blur'] }]">
+                    <el-input v-model="form.shop" :placeholder="$t('storeName')" clearable></el-input>
                 </el-form-item>
-                <el-form-item label="" prop="username" :rules="[{ required: true, message: '請輸入店長用戶名', trigger: 'blur' }, { min:3,max:20,message: '店長名3-20個字符', trigger: ['blur'] }]">
-                    <el-input v-model="form.username" placeholder="店長用戶名" clearable></el-input>
+                <el-form-item label="" prop="username" :rules="[{ required: true, message: $t('usernameInput'), trigger: 'blur' }, { min:3,max:20,message: $t('usernameRequirements'), trigger: ['blur'] }]">
+                    <el-input v-model="form.username" :placeholder="$t('usernamePlaceholder')" clearable></el-input>
                 </el-form-item>
-                <el-form-item label="" prop="password" :rules="[{ required: true, message: '請輸入店鋪名', trigger: 'blur' }, { min:6,max:99,message: '密碼大於6位', trigger: ['blur'] }]">
-                    <el-input v-model="form.password" type="password" placeholder="店長密碼" clearable show-password></el-input>
+                <el-form-item label="" prop="password" :rules="[{ required: true, message:  $t('passwordInput'), trigger: 'blur' }, { min:6,max:99,message: $t('passwordRequirements'), trigger: ['blur'] }]">
+                    <el-input v-model="form.password" type="password" :placeholder="$t('passwordPlaceholder')" clearable show-password></el-input>
                 </el-form-item>
                 <el-form-item label="" class="text-left">
-                    <span style="padding-right:0.5rem;">地區</span>
-                    <el-select v-model="form.area" placeholder="選擇所屬地區">
+                    <span style="padding-right:0.5rem;">{{$t('location')}}</span>
+                    <el-select v-model="form.area" :placeholder="$t('locationSelect')">
                         <el-option v-for="(item,index) in area" :index="index" :label="item.title" :value="item.id"></el-option>
                     </el-select>
                 </el-form-item>
-                <el-button type="primary" size="medium" @click="submit()" style="width:80%;">創建店鋪</el-button>
-                <el-button type="text" @click="toLog()" size="mini" class="log">已有賬戶？立即登錄</el-button>
-                <el-button v-if="study" type="primary" @click="toStudy()" size="mini" class="study"><i class="iconfont icon-shubiaozhizhen">&nbsp;</i>點擊觀看後台教學</el-button>
+                <el-button type="primary" size="medium" @click="submit()" style="width:80%;">{{$t('createAccButtonLabel')}}</el-button>
+                <el-button type="text" @click="toLog()" size="mini" class="log">{{$t('accountExistsLabel')}}</el-button>
+                <el-button v-if="study" type="primary" @click="toStudy()" size="mini" class="study"><i class="iconfont icon-shubiaozhizhen">&nbsp;</i>{{$t('learnSystemLinkLabel')}}</el-button>
             </el-form>
         </div>
         </transition>
 
         <transition name="slide">
         <div class="reg-box" v-if="step==2" style="margin-top:1.2rem;">
-            <h1 class="reg-sub-title">STEP2-詳細資料</h1>
-            <p style="color:red;">*為了更好的經營和管理您的店鋪，請繼續填寫店鋪的詳細信息</p>
+            <h1 class="reg-sub-title">STEP2-{{$t('detailedInformation')}}</h1>
+            <p style="color:red;">*{{$t('detailedInformationNote')}}</p>
             <el-form ref="form" :model="form" class="form">
                 <el-upload class="avatar-uploader" :action="uploadUrl" :show-file-list="false" :mutiple="false" :on-success="uploadSuccess" :on-error="uploadError" :data="{user:user}">
                     <img v-if="certificate" :src="certificate" class="avatar">
                     <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                 </el-upload>
-                <p class="tip">請上傳營業執照或相關產業的資質證明</p>
+                <p class="tip">{{$t('uploadFilesTip')}}</p>
                 <el-form-item label="" class="text-center">
-                    <el-input type="textarea" v-model="location" style="width:7rem;" placeholder="請輸入詳細地址"></el-input>
+                    <el-input type="textarea" v-model="location" style="width:7rem;" :placeholder="$t('enterFullAddress')"></el-input>
                 </el-form-item>
-                <el-button type="primary" @click="submitMore()" style="width:6rem;margin:0.5rem 0;">提交</el-button>
+                <el-button type="primary" @click="submitMore()" style="width:6rem;margin:0.5rem 0;">{{$t('submit')}}</el-button>
             </el-form>
         </div>
         </transition>
@@ -97,7 +97,7 @@ export default{
         // step1
         async submit(){
             let valid = await this.$refs['form'].validate()
-            if(!this.form.eid) this.$message.error("請點擊發送驗證碼，并查看對應郵箱")
+            if(!this.form.eid) this.$message.error($t('verificationError'))
             if(valid){
                 let res = await $.post('User','register',this.form)
                 if(res.status == 1){
@@ -116,10 +116,10 @@ export default{
             let data = JSON.parse(localStorage.getItem('reg_info'))
             data.location = this.location
             data.certificate = this.certificate
-            if(!data.shopId) return this.$message.error('缺少店鋪ID')
-            if(!data.userId) return this.$message.error('缺少用戶ID')
-            if(!data.certificate) return this.$message.error('缺少相關證明證件圖')
-            if(!data.location) return this.$message.error('缺少詳細地址')
+            if(!data.shopId) return this.$message.error($t('noStoreID'))
+            if(!data.userId) return this.$message.error($t('noUserID'))
+            if(!data.certificate) return this.$message.error($t('noSupportDocuments'))
+            if(!data.location) return this.$message.error($t('noFullAddress'))
             delete data.user
             let res = await $.post('User','regMore',data,true)
             if(res.status == 1){

@@ -8,11 +8,14 @@ import 'element-ui/lib/theme-chalk/index.css'
 import BootstrapVue from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
+import {i18n} from './plugins/i18n'
+import FlagIcon from 'vue-flag-icon'
 
 Vue.use(BootstrapVue)
 Vue.config.productionTip = false
 Vue.use(ElementUI)
 Vue.use(VCharts)
+Vue.use(FlagIcon)
 router.beforeEach((to, from, next) => {
     /* 路由发生变化修改页面title */
     if (to.meta.title) {
@@ -22,7 +25,7 @@ router.beforeEach((to, from, next) => {
 })
 
 new Vue({
+    i18n,
     router,
     render: h => h(App)
 }).$mount('#app')
-

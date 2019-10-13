@@ -2,7 +2,7 @@
     <div class="order">
         <!--已完成訂單詳情-->
         <el-dialog :visible.sync="dialogTableVisible2" style="" :close-on-click-modal="false">
-            <div class="title">訂單號：{{content.id}}</div>
+            <div class="title">{{$t('orderNumber')}} {{content.id}}</div>
             <div class="title">{{content.title}}</div>
             <div class="table fixed" v-for="(item,index) in content.content" :key="index">
                 <div class="cell"><img :src="item.thumb" style="width:1.2rem;"></div>
@@ -10,28 +10,28 @@
                 <div class="cell">{{item.title}}</div>
                 <div class="cell">{{item.price}} × {{item.count}}</div>
             </div>
-            <el-row class="price">總計：{{content.price}} {{PRICE_SIGN}}</el-row>
-            <div style="font-weight:bold;font-size:0.3rem;line-height:0.8rem;">支付方式</div>
+            <el-row class="price">{{$t('total')}} {{content.price}} {{PRICE_SIGN}}</el-row>
+            <div style="font-weight:bold;font-size:0.3rem;line-height:0.8rem;">{{$t('paymentOptions')}}</div>
             <div class="table">
                 <div class="cell" v-for="(item,index) in content.pay" v-if="item.value>0">{{item.title}}&nbsp;{{item.currency}}&nbsp;<span style="color:#ff0000">{{item.value}}</span></div>
             </div>
         </el-dialog>
 
         <!--未完成訂單詳情-->
-        <el-dialog v-if="selectDesk" :title="selectDesk.title+'未結算訂單'" :visible.sync="dialogTableVisible" style="height:10rem;" :close-on-click-modal="false">
+        <el-dialog v-if="selectDesk" :title="selectDesk.title+$t('unsettledOrders')" :visible.sync="dialogTableVisible" style="height:10rem;" :close-on-click-modal="false">
             <el-collapse accordion @change="collapse">
-                <el-collapse-item v-for="(item,index) in orders" :key="index" :title="'訂單號：'+item.id" :name="item.id" style="font-weight:bold">
+                <el-collapse-item v-for="(item,index) in orders" :key="index" :title="$t('orderNumber') +item.id" :name="item.id" style="font-weight:bold">
                     <span class="span" v-for="(item2,index2) in item.content" :key="index2">
                         <span class="span-del" @click="delFood(index,index2)">×</span>
                         {{item2.title}} × {{item2.count}} × {{item2.price}}
-                        <span v-if="item2.count>item2.cooked" style="color:red">(未完成)</span>
-                        <span v-else style="color:green">(完成)</span>
+                        <span v-if="item2.count>item2.cooked" style="color:red">({{$t('notCompleted')}})</span>
+                        <span v-else style="color:green">({{$t('completed')}})</span>
                     </span>
                     <div class="table">
-                        <div class="row text-left" style="color:#f00;font-size:0.3rem;line-height:0.8rem;">合計：{{item.price}}</div>
+                        <div class="row text-left" style="color:#f00;font-size:0.3rem;line-height:0.8rem;">{{$t('total')}} {{item.price}}</div>
                         <div class="row">
                             <div class="cell">
-                                <el-input placeholder="金額" v-model.float="payJson[index3].value" v-for="(item3,index3) in pay" :key="index3" style="margin:0.05rem 0;">
+                                <el-input :placeholder="$t('amount')" v-model.float="payJson[index3].value" v-for="(item3,index3) in pay" :key="index3" style="margin:0.05rem 0;">
                                     <span slot="prepend" style="width:3rem;">{{item3.title}}</span>
                                     <el-select v-model.number="payJson[index3].cid" slot="append">
                                         <el-option v-for="(item4,index4) in currency" :key="index4" :label="item4.title+' '+item4.unit" :value="item4.id"></el-option>
@@ -39,7 +39,7 @@
                                 </el-input>
                             </div>
                             <div class="cell text-right">
-                                <el-button size="normal" type="primary" @click="paid(item)">結算</el-button>
+                                <el-button size="normal" type="primary" @click="paid(item)">{{$t('settlePayment')}}</el-button>
                             </div>
                         </div>
                     </div>
@@ -48,19 +48,19 @@
         </el-dialog>
 
         <div class="replace" v-if="replace">
-            暫無餐桌數據
+            {{$t('noTableData')}}
         </div>
         <!--桌號-->
         <div v-if="list.length">
             <div class="tip">
-                點擊餐桌查看訂單詳細
+                {{$t('clickViewOrderDetails')}}
             </div>
             <el-row :gutter="12">
                 <el-col :span="8" v-for="(item,index) in list" :key="index">
                     <el-card shadow="hover" class="card" :class="item.orderNum>0?'lock':''">
                         <div @click="showOrder(item),selectDesk=item">{{item.title}}</div>
                         <div style="font-size:0.3rem;padding-top:0.2rem;">
-                            <div>訂單：{{item.orderNum}}</div>
+                            <div>{{$t('orderNumber')}} {{item.orderNum}}</div>
                         </div>
                     </el-card>
                 </el-col>
@@ -70,19 +70,19 @@
             <el-collapse accordion>
                 <el-collapse-item>
                     <template slot="title">
-                        <i class="iconfont icon-iconset0203">&nbsp;</i>歷史訂單
+                        <i class="iconfont icon-iconset0203">&nbsp;</i>{{$t('orderHistory')}}
                     </template>
                     <el-row>
                         <el-table :data="orders2.filter(data => !search || data.id.toLowerCase().includes(search.toLowerCase()))" style="width:100%">
-                            <el-table-column prop="id" label="編號" width="180"></el-table-column>
-                            <el-table-column prop="num" label="菜數"></el-table-column>
-                            <el-table-column prop="price" label="總價" width="180"></el-table-column>
-                            <el-table-column prop="title" label="桌號" width="100"></el-table-column>
-                            <el-table-column prop="createtime" label="開始時間" width="180"></el-table-column>
-                            <el-table-column prop="endtime" label="結束時間" width="180"></el-table-column>
-                            <el-table-column label="訂單內容" fixed="right" width="100">
+                            <el-table-column prop="id" :label="$t('id')" width="180"></el-table-column>
+                            <el-table-column prop="num" :label="$t('numOfDishes')"></el-table-column>
+                            <el-table-column prop="price" :label="$t('totalPrice')" width="180"></el-table-column>
+                            <el-table-column prop="title" :label="$t('tableNumber3')" width="100"></el-table-column>
+                            <el-table-column prop="createtime" :label="$t('timeStarted')" width="180"></el-table-column>
+                            <el-table-column prop="endtime" :label="$t('timeFinished')" width="180"></el-table-column>
+                            <el-table-column :label="$t('orderDetails')" fixed="right" width="100">
                                 <template slot-scope="scope">
-                                    <el-button @click="showContent(scope.row)" type="text" size="small">查看</el-button>
+                                    <el-button @click="showContent(scope.row)" type="text" size="small">{{$t('view')}}</el-button>
                                 </template>
                             </el-table-column>
                         </el-table>

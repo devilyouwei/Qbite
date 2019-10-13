@@ -1,10 +1,10 @@
 <template>
     <div class="payway">
         <div class="block">
-            <div class="title">支付方式</div>
+            <div class="title">{{$t('paymentMethod')}}</div>
             <div class="list">
                 <div class="replace" v-if="replace">
-                    暫無數據
+                    {{$t('noPaymentMethodsAdded')}}
                 </div>
                 <el-tag class="tag" v-for="(item,index) in listPay" :key="index" closable @close="delPay(item.id)">{{item.title}}&nbsp;&nbsp;{{item.title_en}}</el-tag>
             </div>
@@ -13,24 +13,24 @@
                     <el-row :gutter=20>
                         <el-col :span=6>
                             <el-form-item prop="title">
-                                <el-input v-model="form.title" placeholder="請輸入支付方式"></el-input>
+                                <el-input v-model="form.title" :placeholder="$t('inputPaymentMethod')"></el-input>
                             </el-form-item>
                         </el-col>
                         <el-col :span=6>
-                                <el-input v-model="form.title_en" placeholder="請輸入英文名或其他"></el-input>
+                                <el-input v-model="form.title_en" :placeholder="$t('englishLabel')"></el-input>
                         </el-col>
                         <el-col :span=6>
-                            <el-button type="primary" size="normal" @click="addPay()">确认</el-button>
+                            <el-button type="primary" size="normal" @click="addPay()">{{$t('confirm')}}</el-button>
                         </el-col>
                     </el-row>
                 </el-form>
             </div>
         </div>
         <div class="block">
-            <div class="title">可用貨幣</div>
+            <div class="title">{{$t('acceptedCurrencies')}}</div>
             <div class="list">
                 <div class="replace" v-if="replace2">
-                    暫無數據
+                    {{$t('noCurrenciesAdded')}}
                 </div>
                 <el-tag type="success" class="tag" v-for="(item,index) in listCurrency" :key="index" closable @close="delCurrency(item.id)">{{item.title}}</el-tag>
             </div>
@@ -39,19 +39,19 @@
                     <el-row :gutter=20>
                         <el-col :span=6>
                             <el-form-item prop="title">
-                                <el-input v-model="form2.title" placeholder="請輸入貨幣名稱（例如港幣）"></el-input>
+                                <el-input v-model="form2.title" :placeholder="$t('enterCurrencyName')"></el-input>
                             </el-form-item>
                         </el-col>
                         <el-col :span=6>
                             <el-form-item prop="unit">
-                                <el-input v-model="form2.unit" placeholder="請輸入貨幣單位"></el-input>
+                                <el-input v-model="form2.unit" :placeholder="$t('enterCurrencyUnit')"></el-input>
                             </el-form-item>
                         </el-col>
                         <el-col :span=6>
-                                <el-input v-model="form2.title_en" placeholder="請輸入英文名或其他"></el-input>
+                                <el-input v-model="form2.title_en" :placeholder="$t('englishLabel')"></el-input>
                         </el-col>
                         <el-col :span=6>
-                            <el-button type="success" size="normal" @click="addCurrency()">确认</el-button>
+                            <el-button type="success" size="normal" @click="addCurrency()">{{$t('confirm')}}</el-button>
                         </el-col>
                     </el-row>
                 </el-form>

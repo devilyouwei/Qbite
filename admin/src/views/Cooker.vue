@@ -1,22 +1,22 @@
 <!--厨师-->
 <template>
     <div class="fullscreen cooker">
-        <a class="refresh" @click="loadData()">刷新</a>
-        <a class="logout" @click="logout()">登出</a>
+        <a class="refresh" @click="loadData()">{{$t("refreshButtonLabel")}}</a>
+        <a class="logout" @click="logout()">{{$t("logout")}}</a>
         <div class="h1-title" v-if="shop">
-            <h1>廚師專頁</h1>
+            <h1>{{$t("chefsPageTitle")}}</h1>
             <h2>{{shop.title}}-{{user.position}}-{{user.username}}</h2>
             <p>{{shop.description}}</p>
         </div>
         <div class="replace" v-if="replace">
-            大廚先生，暫無訂單，請休息一會~
+            {{$t("noOrdersText")}}
         </div>
         <div class="orders" v-if="!replace">
             <el-row :gutter="20">
                 <el-col v-for="(item,index) in list" :key="index" :span="6">
                     <div class="table title" :class="item.percent==1?'finish':''">
-                        <div class="cell text-left">訂單號：{{item.id}}</div>
-                        <div class="cell text-right">桌號：{{item.title}}</div>
+                        <div class="cell text-left">{{$t("orderNumber")}} {{item.id}}</div>
+                        <div class="cell text-right">{{$t("tableNumber")}} {{item.title}}</div>
                     </div>
                     <div class="table" :class="item.percent==1?'tbg':''">
                         <div class="row orders-content" :class="item2.cooked==item2.count?'finish':''" v-for="(item2,index2) in item.content" :key="index2">

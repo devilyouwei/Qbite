@@ -1,45 +1,45 @@
 <template>
     <div class="set">
-        <el-dialog title="編輯店員" :visible.sync="dialogFormVisible" width="36%" :close-on-click-modal="false">
+        <el-dialog :title="$t('editUser')" :visible.sync="dialogFormVisible" width="36%" :close-on-click-modal="false">
             <el-form :model="form" :rules="rules" ref="form" label-width="1.5rem">
                 <el-row>
-                    <el-form-item label="員工名" prop="username">
+                    <el-form-item :label="$t('employeeUsername')" prop="username">
                         <el-input v-model="form.username" type="text" style="width:6rem;" :disabled="form.id!=0"></el-input>
                     </el-form-item>
-                    <el-form-item label="密碼" prop="password">
+                    <el-form-item :label="$t('password')" prop="password">
                         <el-input v-model="form.password" type="text" style="width:6rem;"></el-input>
                     </el-form-item>
-                    <el-form-item label="職位" prop="pid">
-                        <el-select v-model="form.pid" placeholder="選擇用戶職位" style="width:6rem;">
+                    <el-form-item :label="$t('position')" prop="pid">
+                        <el-select v-model="form.pid" :placeholder="$t('selectPosition')" style="width:6rem;">
                             <el-option v-for="(item,index) in position" :key="index" :label="item.title" :value="item.id"></el-option>
                         </el-select>
                     </el-form-item>
                 </el-row>
             </el-form>
             <div slot="footer" class="dialog-footer">
-                <el-button @click="dialogFormVisible=false">取消</el-button>
-                <el-button type="primary" @click="submit">確定</el-button>
+                <el-button @click="dialogFormVisible=false">{{$t('cancel')}}</el-button>
+                <el-button type="primary" @click="submit">{{$t('confirm')}}</el-button>
             </div>
         </el-dialog>
 
-        <el-dialog title="編輯新桌" :visible.sync="dialogFormVisible2" :close-on-click-modal="false">
+        <el-dialog :title="$t('editNewTable')" :visible.sync="dialogFormVisible2" :close-on-click-modal="false">
             <el-form :model="form2" :rules="rules2" ref="form2">
-                <el-form-item label="桌編號" prop="title">
+                <el-form-item :label="$t('tableNumber2')" prop="title">
                     <el-input v-model="form2.title" type="text"></el-input>
                 </el-form-item>
-                <el-form-item label="人數" prop="num">
+                <el-form-item :label="$t('tableNumber2')" prop="num">
                     <el-input v-model.number="form2.num" type="number"></el-input>
                 </el-form-item>
             </el-form>
 
             <div slot="footer" class="dialog-footer">
-                <el-button @click="dialogFormVisible2=false">取消</el-button>
-                <el-button type="primary" @click="submit2">確定</el-button>
+                <el-button @click="dialogFormVisible2=false">{{$t('cancel')}}</el-button>
+                <el-button type="primary" @click="submit2">{{$t('confirm')}}</el-button>
             </div>
         </el-dialog>
 
         <!--員工管理-->
-        <el-row style="margin-bottom:0.3rem;font-size:0.25rem;"><i class="iconfont icon-info">&nbsp;</i>店鋪信息</el-row>
+        <el-row style="margin-bottom:0.3rem;font-size:0.25rem;"><i class="iconfont icon-info">&nbsp;</i>{{$t('storeInformation')}}</el-row>
         <el-row type="flex" align="middle" class="header" :style="shop.background?'background:url('+shop.background+')':''">
             <el-col :span="4">
                 <el-upload class="avatar-uploader" :action="uploadUrl" :show-file-list="false" :on-success="uploadLogoSuccess" :data="{user:JSON.stringify(user)}" :on-error="uploadLogoError">
@@ -48,39 +48,39 @@
                 </el-upload>
             </el-col>
             <el-col :span="12" style="text-align:center">
-                <el-input placeholder="请输入内容" v-model="shop.title" clearable></el-input>
-                <el-input placeholder="店鋪描述" v-model="shop.description" clearable style="margin-top:0.3rem"></el-input>
+                <el-input :placeholder="$t('enterStoreDetails')" v-model="shop.title" clearable></el-input>
+                <el-input :placeholder="$t('storeDescription')" v-model="shop.description" clearable style="margin-top:0.3rem"></el-input>
             </el-col>
             <el-col :span="8" style="text-align:right">
                 <el-upload class="upload-demo" :action="uploadUrl" :show-file-list="false" :on-success="uploadBgSuccess" :data="{user:JSON.stringify(user)}" :on-error="uploadBgError">
-                    <el-button size="small" type="primary">上傳店鋪背景</el-button>
+                    <el-button size="small" type="primary">{{$t('uploadBgImage')}}</el-button>
                 </el-upload>
-                <el-button type="primary" @click="changeShop">存儲</el-button>
+                <el-button type="primary" @click="changeShop">{{$t('save2')}}</el-button>
             </el-col>
         </el-row>
 
         <el-collapse accordion>
             <el-collapse-item>
                 <template slot="title">
-                    <i class="iconfont icon-iconset0203">&nbsp;</i>店員管理
+                    <i class="iconfont icon-iconset0203">&nbsp;</i>{{$t('staffManagement')}}
                 </template>
                 <el-row>
                     <el-table :data="users.filter(data => !search || data.username.toLowerCase().includes(search.toLowerCase()))" style="width:100%">
-                        <el-table-column prop="id" label="編號" width="200"></el-table-column>
-                        <el-table-column prop="username" label="員工名"></el-table-column>
-                        <el-table-column prop="position" label="店內職務" width="200"></el-table-column>
+                        <el-table-column prop="id" :label="$t('id')" width="200"></el-table-column>
+                        <el-table-column prop="username" :label="$t('employeeUsername')"></el-table-column>
+                        <el-table-column prop="position" :label="$t('position2')" width="200"></el-table-column>
                         <el-table-column align="left" width="200">
                             <template slot="header" slot-scope="scope">
                                 {{scope.length}}
-                                <el-input v-model="search" size="mini" placeholder="輸入用戶名搜索"/>
+                                <el-input v-model="search" size="mini" :placeholder="$t('searchByUsername')"/>
                             </template>
                             <template slot-scope="scope">
-                                <el-button type="text" size="mini" @click="userEdit(scope.row)">編輯</el-button>
-                                <el-button size="mini" type="text" @click="userDelete(scope.row)">刪除</el-button>
+                                <el-button type="text" size="mini" @click="userEdit(scope.row)">{{$t('edit')}}</el-button>
+                                <el-button size="mini" type="text" @click="userDelete(scope.row)">{{$t('delete')}}</el-button>
                             </template>
                         </el-table-column>
                     </el-table>
-                    <el-button type="primary" icon="el-icon-plus" @click="dialogFormVisible=true" style="margin-top:0.3rem;float:right;">新增店員</el-button>
+                    <el-button type="primary" icon="el-icon-plus" @click="dialogFormVisible=true" style="margin-top:0.3rem;float:right;">{{$t('addNewStaff')}}</el-button>
                 </el-row>
             </el-collapse-item>
         </el-collapse>
@@ -89,28 +89,28 @@
         <el-collapse accordion style="margin-top:1rem;">
             <el-collapse-item>
                 <template slot="title">
-                    <i class="iconfont icon-iconset0203">&nbsp;</i>餐桌管理
+                    <i class="iconfont icon-iconset0203">&nbsp;</i>{{$t('tableManagement')}}
                 </template>
                 <el-row>
                     <el-table :data="desks.filter(data => !search || data.username.toLowerCase().includes(search.toLowerCase()))" style="width:100%">
-                        <el-table-column prop="id" label="編號" width="180"></el-table-column>
-                        <el-table-column prop="title" label="桌編號" width="180"></el-table-column>
-                        <el-table-column prop="num" label="人數"></el-table-column>
-                        <el-table-column align="left" width="300" label="二維碼">
+                        <el-table-column prop="id" :label="$t('id')" width="180"></el-table-column>
+                        <el-table-column prop="title" :label="$t('tableNumber2')" width="180"></el-table-column>
+                        <el-table-column prop="num" :label="$t('numberOfPeople')"></el-table-column>
+                        <el-table-column align="left" width="300" :label="$t('qrCode')">
                             <template slot-scope="scope">
                                 <div v-html="scope.row.qrcode" style="width:2rem;">
                                     {{scope.row.qrcode}}
                                 </div>
                             </template>
                         </el-table-column>
-                        <el-table-column align="left" width="100" label="操作">
+                        <el-table-column align="left" width="100" :label="$t('actions')">
                             <template slot-scope="scope">
-                                <el-button type="text" size="mini" @click="deskEdit(scope.row)">編輯</el-button>
-                                <el-button size="mini" type="text" @click="deskDelete(scope.row)">刪除</el-button>
+                                <el-button type="text" size="mini" @click="deskEdit(scope.row)">{{$t('edit')}}</el-button>
+                                <el-button size="mini" type="text" @click="deskDelete(scope.row)">{{$t('delete')}}</el-button>
                             </template>
                         </el-table-column>
                     </el-table>
-                    <el-button type="primary" icon="el-icon-plus" @click="dialogFormVisible2=true" style="margin-top:0.3rem;float:right;">新增餐桌</el-button>
+                    <el-button type="primary" icon="el-icon-plus" @click="dialogFormVisible2=true" style="margin-top:0.3rem;float:right;">{{$t('addNewTable')}}</el-button>
                 </el-row>
             </el-collapse-item>
         </el-collapse>
@@ -161,7 +161,7 @@ export default {
             },
             rules2: {
                 title:[{ required:true, message:'輸入桌號', trigger:'blur' }, { min: 1, max: 20, message: '長度小於20個字符', trigger: 'blur' }],
-                num:[{ required: true, message: '请輸入桌人數', trigger: 'blur' },{type:'number',min:1,max:99,message:'人數不合法',trigger:'blur'}]
+                num:[{ required: true, message: '請輸入桌人數', trigger: 'blur' },{type:'number',min:1,max:99,message:'人數不合法',trigger:'blur'}]
             }
         }
     },

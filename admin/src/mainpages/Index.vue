@@ -3,21 +3,21 @@
         <el-row :gutter='40'>
             <el-col :span='8'>
                 <el-card shadow="hover" class="card text-center">
-                    店鋪<br>
+                    {{$t('store')}}<br>
                     {{user.shop}}
                 </el-card>
             </el-col>
 
             <el-col :span='8'>
                 <el-card shadow="hover" class="card text-center">
-                    用戶<br>
+                     {{$t('username')}}<br>
                     {{user.username}}
                 </el-card>
             </el-col>
 
             <el-col :span='8'>
                 <el-card shadow="hover" class="card text-center">
-                    職位<br>
+                    {{$t('position')}}<br>
                     {{user.position}}
                 </el-card>
             </el-col>

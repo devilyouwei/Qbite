@@ -1,23 +1,23 @@
 <template>
     <div class="login" :style="bg?'background-image:url('+bg+')':'background-image:none;opacity:0'" :key="bg">
         <el-alert :title="msg" :type="success" v-show="msg" show-icon></el-alert>
-        <h1>後台</h1>
+        <h1>{{$t("loginTitle")}}</h1>
         <div class="form-field">
             <el-form :model="form" status-icon :rules="formRule" ref="form" label-width="100px" class="form">
-                <el-form-item label="店鋪郵箱" prop="email">
+                <el-form-item :label="$t('storeEmailAddress')" prop="email">
                     <el-input type="text" v-model="form.email" autocomplete="off" @keyup.enter.native="login('form')"></el-input>
                 </el-form-item>
-                <el-form-item label="用戶" prop="username">
+                <el-form-item :label="$t('username')" prop="username">
                     <el-input type="text" v-model="form.username" autocomplete="off" @keyup.enter.native="login('form')"></el-input>
                 </el-form-item>
-                <el-form-item label="密碼" prop="password">
+                <el-form-item :label="$t('password')" prop="password">
                     <el-input type="password" v-model="form.password" autocomplete="off" @keyup.enter.native="login('form')"></el-input>
                 </el-form-item>
             </el-form>
             <div>
-                <el-button type="primary" @click="login('form')" style="width:4rem;font-size:0.4rem;margin-top:0.5rem;">登入</el-button>
+                <el-button type="primary" @click="login('form')" style="width:4rem;font-size:0.4rem;margin-top:0.5rem;">{{$t("loginButtonLabel")}}</el-button>
             </div>
-            <el-button type="text" @click="toReg()" size="mini" class="reg">沒有店鋪？立即註冊</el-button>
+            <el-button type="text" @click="toReg()" size="mini" class="reg">{{$t("signupLabel")}}</el-button>
         </div>
     </div>
 </template>

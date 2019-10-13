@@ -1,7 +1,7 @@
 <!--收入查詢，按日期-->
 <template>
     <div class="data-income">
-        <el-dialog title="收入詳細" :visible.sync="dialog" :close-on-click-modal="false" style="width:30rem;margin:0 auto;">
+        <el-dialog :title="$t('revenueDetails')" :visible.sync="dialog" :close-on-click-modal="false" style="width:30rem;margin:0 auto;">
             <el-table :data="pay" style="width: 100%">
                 <el-table-column type="expand">
                     <template slot-scope="props">
@@ -14,28 +14,28 @@
                         </div>
                     </template>
                 </el-table-column>
-                <el-table-column label="訂單編號" prop="id"></el-table-column>
-                <el-table-column label="總價" prop="price"></el-table-column>
-                <el-table-column label="桌號" prop="title"></el-table-column>
-                <el-table-column label="結束時間" prop="endtime"></el-table-column>
+                <el-table-column :label="$t('orderId')" prop="id"></el-table-column>
+                <el-table-column :label="$t('totalPrice')" prop="price"></el-table-column>
+                <el-table-column :label="$t('tableNumber')" prop="title"></el-table-column>
+                <el-table-column :label="$t('timeFinished')" prop="endtime"></el-table-column>
             </el-table>
         </el-dialog>
         <div class="table">
             <div class="cell title">
-                總收入
+                {{$t('totalRevenue')}}
             </div>
             <div class="cell tool">
                 <div class="picker">
-                    <el-date-picker v-model="value" type="daterange" align="right" unlink-panels range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" :picker-options="pickerOptions"></el-date-picker>
+                    <el-date-picker v-model="value" type="daterange" align="right" unlink-panels :range-separator="$t('to')" :start-placeholder="$t('startDate')" :end-placeholder="$t('endDate')" :picker-options="pickerOptions"></el-date-picker>
                 </div>
             </div>
         </div>
         <el-table :data="tableData">
-            <el-table-column prop="price" :label="'收入(單位'+sign+')'"></el-table-column>
-            <el-table-column prop="orders" label="訂單數目"></el-table-column>
-            <el-table-column label="操作">
-                <el-button @click="dialog=true" type="text" size="small">收入詳細</el-button>
-                <el-button @click="print" type="text" size="small">打印</el-button>
+            <el-table-column prop="price" :label="$t('revenue') + '(' + $t('unit') + sign+')'"></el-table-column>
+            <el-table-column prop="orders" :label="$t('numberOfOrders')"></el-table-column>
+            <el-table-column :label="$t('actions')">
+                <el-button @click="dialog=true" type="text" size="small">{{$t('revenueDetails')}}</el-button>
+                <el-button @click="print" type="text" size="small">{{$t('print')}}</el-button>
             </el-table-column>
         </el-table>
     </div>
