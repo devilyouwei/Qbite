@@ -52,7 +52,8 @@
         <div class="top-rated-content container-fluid d-flex flex-column">
             <div class="list-title">Partner Restaurants</div>
             <div class="partners-restaurant-container d-flex flex-row justify-content-around flex-wrap">
-                <div class="partner-restaurant-content-list d-flex justify-content-center align-items-center shadow p-1 mb-5 bg-white rounded" v-for="(item,index) in list2" :key="index">
+                <div class="partner-restaurant-content-list d-flex justify-content-center align-items-center shadow p-1 mb-5 bg-white rounded"
+                     v-for="(item,index) in list2" :key="index">
                     <div class="">
                         <div class=""><img :src="item.img"></div>
                         <!--                        <div class="">-->
@@ -149,7 +150,7 @@
     .banner {
         text-align: center;
         margin: 0 auto;
-        background-image: url("../assets/banner.jpeg");
+        background-image: url("../assets/banner2.jpeg");
         background-blend-mode: lighten;
         background-size: 100%;
         height: 8rem;
@@ -198,14 +199,6 @@
         color: white;
     }
 
-    /*.list {*/
-    /*    padding: 0.7rem 0;*/
-    /*}*/
-
-    /*.list .list-title {*/
-
-    /*    !*padding: 0.5rem 0;*!*/
-    /*}*/
     .container-fluid {
         width: 90%;
         max-height: 13rem;
@@ -259,36 +252,4 @@
         box-sizing: border-box;
     }
 
-    /*.list .list-content .img {*/
-    /*    text-align: center;*/
-    /*}*/
-
-    /*.list .list-content .img img {*/
-    /*    width: 3rem;*/
-    /*    height: 3rem;*/
-    /*    object-fit: cover;*/
-    /*    margin: 0 auto;*/
-    /*}*/
-
-    /*.list .list-content .thumb {*/
-    /*    text-align: center;*/
-    /*}*/
-
-    /*.list .list-content .thumb img {*/
-    /*    width: 5rem;*/
-    /*    height: 3rem;*/
-    /*    object-fit: cover;*/
-    /*    margin: 0 auto;*/
-    /*}*/
-
-    /*.list .list-content .title {*/
-    /*    text-align: center;*/
-    /*    font-size: 0.25rem;*/
-    /*    line-height: 0.4rem;*/
-    /*    padding: 0.1rem 0;*/
-    /*}*/
-
-    /*.list .list-content .box {*/
-    /*    padding-bottom: 0.5rem;*/
-    /*}*/
 </style>
