@@ -1,15 +1,8 @@
 <!--收入查詢，按日期-->
 <template>
     <div>
-        <div class="i-table">
-            <div class="i-cell title">
-                {{$t('revenueDailyTrend')}}
-            </div>
-            <div class="i-cell tool">
-                <div class="picker">
-                    <el-date-picker v-model="value" type="daterange" align="right" unlink-panels :range-separator="$t('to')" :start-placeholder="$t('startDate')" :end-placeholder="$t('endDate')" :picker-options="pickerOptions"></el-date-picker>
-                </div>
-            </div>
+        <div class="title">
+            {{$t('revenueDailyTrend')}}
         </div>
         <!--走勢圖-->
         <div class="chart" v-if="list.length">

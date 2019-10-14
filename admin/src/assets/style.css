@@ -9,6 +9,10 @@ body {
     left: 0;
     right: 0;
     background: #fff;
+    text-align:left;
+}
+div{
+    text-align:left;
 }
 .fullscreen{
     position:absolute;
