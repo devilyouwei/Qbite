@@ -43,6 +43,7 @@
             </div>
         </header>
         <section class="d-flex popular-food flex-column mt-1">
+            <!-- Top Rated Food-->
             <div class="d-flex flex-column pl-2">
                 <span class="top-rated-food">{{$t('topRatedFood')}}</span>
             </div>
@@ -80,21 +81,59 @@
                     </div>
                 </div>
             </div>
+            <!--            Partner Restaurant -->
+            <div class="d-flex flex-column partner-restaurant">
+                <div class="d-flex flex-column pl-2">
+                    <span class="top-rated-food"> {{$t('partnerRestaurants')}}</span>
+                </div>
+                <div class="d-flex flex-row flex-wrap pt-2">
+                    <div class="restaurant-brand-container" v-for="(item,index) in list2" :key="index" v-if="index <7">
+                        <div class="restaurant-brand"><img :src="item.img"></div>
+                    </div>
+                </div>
+            </div>
+            <footer class="footer d-flex flex-column mt-auto py-3">
+                <div class="container">
+                    <div class="d-flex flex-column w-50">
+                        <div class="row pt-1">
+                            <div class="col-sm">
+                                About Us
+                            </div>
+                            <div class="col-sm">
+                                FAQ
+                            </div>
+                        </div>
+                        <div class="row pt-1">
+                            <div class="col-sm">
+                                Privacy Policy
+                            </div>
+                            <div class="col-sm">
+                                Help Center
+                            </div>
+                        </div>
+                        <div class="row pt-1">
+                            <div class="col-sm">
+                                Terms Of Use
+                            </div>
+                            <div class="col-sm">
+                                Become a Partner
+                            </div>
+                        </div>
+                        <div class="row pt-1">
+                            <div class="col-sm">
+                                Contact Us
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-flex flex-column pt-2 justify-content-center align-items-center">
+                        <span> © Copyright NullBugs 2019</span>
+                    </div>
+                </div>
+            </footer>
+
         </section>
-        <!--        <div class="top-rated-content container-fluid d-flex flex-column border-bottom ">-->
-        <!--            <div class="list-title">{{$t('topRatedFood')}}</div>-->
-        <!--            <div class="top-rated-container  overflow-auto d-flex flex-row justify-content-around flex-wrap">-->
-        <!--                <div class="top-rated-content-list d-flex" v-for="(item,index) in list" :key="index">-->
-        <!--                    <div class="">-->
-        <!--                        <div class=""><img :src="item.thumb"></div>-->
-        <!--                        <div class="">-->
-        <!--                            {{item.title}}-->
-        <!--                        </div>-->
-        <!--                    </div>-->
-        <!--                </div>-->
-        <!--     -->
-        <!--            </div>-->
-        <!--        </div>-->
+
+
     </div>
 </template>
 
@@ -176,7 +215,6 @@
         border-color: unset;
         border: unset;
         font-size: 0.4rem;
-
     }
 
     .dropdown-menu {
@@ -188,10 +226,6 @@
     .dropdown-item {
         padding-left: unset !important;
         padding-right: unset !important;
-        /*!*padding-top: unset !important;*!*/
-        /*!*padding-bottom: unset !important;*!*/
-
-
     }
 
     span.lang-text {
@@ -227,7 +261,7 @@
 
     div.food-item {
         height: 7rem;
-        width: 6rem;
+        width: 7rem;
         margin: .3rem;
     }
 
@@ -236,8 +270,12 @@
     }
 
     img {
+        /* not scew */
+        /*height: 100%;*/
+        /*width: auto;*/
         height: 100%;
-        width: auto;
+        width: 100%;
+        object-fit: cover;
         margin: auto;
         display: flex;
     }
@@ -256,4 +294,26 @@
         font-size: small;
     }
 
+    div.partner-restaurant {
+        height: auto;
+    }
+
+    .restaurant-brand-container {
+        height: 4.5rem;
+        width: 4.5rem;
+        margin: auto;
+    }
+
+    .restaurant-brand {
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+        padding: .3rem;
+    }
+
+    .footer {
+        background-color: black;
+        color: white;
+        height: auto;
+    }
 </style>
