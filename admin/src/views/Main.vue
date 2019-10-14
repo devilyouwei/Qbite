@@ -28,39 +28,73 @@
 
                 </form>
             </nav>
-            <div class="d-flex flex-column ">
+            <div class="d-flex flex-column justify-content-center align-items-center pt-3">
                 <div class="d-flex flex-column align-items-center">
                     <span class="banner-title"><b>{{$t('bannerTitle')}}</b></span>
                 </div>
-                <div class="d-flex flex-column">
-                    <div class="d-flex flex-row">
-                        <div >
-                            <el-input v-model="search" :placeholder="$t('bannerSearchBox')"></el-input>
+                <div class="d-flex flex-row mx-auto pt-1">
+                    <div class="d-flex flex-row search-bar">
+                        <el-input v-model="search" :placeholder="$t('bannerSearchBox')"></el-input>
+                    </div>
+                    <div class="search-btn-div">
+                        <el-button class="search-btn">{{$t('bannerSearchButton')}}</el-button>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <section class="d-flex popular-food flex-column mt-1">
+            <div class="d-flex flex-column pl-2">
+                <span class="top-rated-food">{{$t('topRatedFood')}}</span>
+            </div>
+            <div class="d-flex flex-column justify-content-center my-auto">
+                <div class="row d-flex py-auto">
+                    <div class="col-sm food-item d-flex flex-column py-auto" v-for="(item,index) in list" :key="index"
+                         v-if=" index <3">
+                        <div class="food-img"><img :src="item.thumb"></div>
+                        <div class="food-title d-flex flex-column pt-1">
+                            <span class="food-text"><b>Joe's Bagel & Grill - West Long Branch</b></span>
+                            <div class="food-short-description d-flex flex-row">
+                                <span class="food-price">$ &nbsp</span>
+                                <span>Breakfast and Brunch, Sandwiches, American</span>
+                            </div>
+                            <div class="food-location">
+                                <span>205 Nj-36, West Long Branch, Nj 07764, Usa </span>
+                            </div>
                         </div>
-                        <div>
-                            <el-button class="search-btn">{{$t('bannerSearchButton')}}</el-button>
+                    </div>
+                </div>
+                <div class="row d-flex my-auto">
+                    <div class="col-sm food-item d-flex flex-column py-auto" v-for="(item,index) in list" :key="index"
+                         v-if=" index >=3 && index <6">
+                        <div class="food-img"><img :src="item.thumb"></div>
+                        <div class="food-title d-flex flex-column pt-1">
+                            <span class="food-text"><b>Nick's Pizza and Grill Restaurant</b></span>
+                            <div class="food-short-description d-flex flex-row">
+                                <span class="food-price">$$ &nbsp</span>
+                                <span>Pizza</span>
+                            </div>
+                            <div class="food-location">
+                                <span>589 Cedar Ave, West Long Branch, NJ 07764 </span>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <!--            <div class="banner table">-->
-            <!--                <div class="banner-align">-->
-            <!--                    <div class="title-align">-->
-            <!--                        <h1 class="banner-title">{{$t('bannerTitle')}}</h1>-->
-            <!--                    </div>-->
-            <!--                    <div class="search-align">-->
-            <!--                        <div class="banner-search-box">-->
-            <!--                            <el-input v-model="search" :placeholder="$t('bannerSearchBox')"></el-input>-->
-            <!--                        </div>-->
-            <!--                        <div>-->
-            <!--                            <el-button class="search-btn">{{$t('bannerSearchButton')}}</el-button>-->
-            <!--                        </div>-->
-            <!--                    </div>-->
-            <!--                </div>-->
-            <!--            </div>-->
-
-        </header>
-
+        </section>
+        <!--        <div class="top-rated-content container-fluid d-flex flex-column border-bottom ">-->
+        <!--            <div class="list-title">{{$t('topRatedFood')}}</div>-->
+        <!--            <div class="top-rated-container  overflow-auto d-flex flex-row justify-content-around flex-wrap">-->
+        <!--                <div class="top-rated-content-list d-flex" v-for="(item,index) in list" :key="index">-->
+        <!--                    <div class="">-->
+        <!--                        <div class=""><img :src="item.thumb"></div>-->
+        <!--                        <div class="">-->
+        <!--                            {{item.title}}-->
+        <!--                        </div>-->
+        <!--                    </div>-->
+        <!--                </div>-->
+        <!--     -->
+        <!--            </div>-->
+        <!--        </div>-->
     </div>
 </template>
 
@@ -73,7 +107,7 @@
             return {
                 search: '',
                 list: [],
-                list2: []
+                list2: [],
             }
         },
         methods: {
@@ -94,13 +128,14 @@
         },
         mounted() {
             this.loadData();
-        }
+        },
     }
 </script>
 
+
 <style>
     header.head {
-        min-height: 8rem;
+        height: 8rem;
         background-image: url("../assets/banner.jpg");
         background-size: cover;
         text-align: center;
@@ -165,6 +200,60 @@
 
     span.banner-title {
         font-size: .7rem;
+    }
+
+    .search-bar {
+        width: 9.5rem;
+        padding-right: .05rem;
+    }
+
+    .search-btn-div .search-btn {
+        background: #409eff;
+        color: black;
+
+    }
+
+    section.popular-food {
+        height: 8rem;
+    }
+
+    span.top-rated-food {
+        font-size: .5rem;
+    }
+
+    div.food-item-container {
+        height: 100% !important;
+    }
+
+    div.food-item {
+        height: 7rem;
+        width: 6rem;
+        margin: .3rem;
+    }
+
+    .food-img {
+        height: 80%;
+    }
+
+    img {
+        height: 100%;
+        width: auto;
+        margin: auto;
+        display: flex;
+    }
+
+    span.food-text {
+        font-size: medium;
+    }
+
+    div.food-short-description {
+        font-size: small;
+        padding-top: 0.12rem;
+    }
+
+    .food-location {
+        padding-top: 0.05rem;
+        font-size: small;
     }
 
 </style>
