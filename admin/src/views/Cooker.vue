@@ -14,16 +14,16 @@
         <div class="orders" v-if="!replace">
             <el-row :gutter="20">
                 <el-col v-for="(item,index) in list" :key="index" :span="6">
-                    <div class="table title" :class="item.percent==1?'finish':''">
-                        <div class="cell text-left">{{$t("orderNumber")}} {{item.id}}</div>
-                        <div class="cell text-right">{{$t("tableNumber")}} {{item.title}}</div>
+                    <div class="i-table title" :class="item.percent==1?'finish':''">
+                        <div class="i-cell i-text-left">{{$t("orderNumber")}} {{item.id}}</div>
+                        <div class="i-cell text-right">{{$t("tableNumber")}} {{item.title}}</div>
                     </div>
-                    <div class="table" :class="item.percent==1?'tbg':''">
-                        <div class="row orders-content" :class="item2.cooked==item2.count?'finish':''" v-for="(item2,index2) in item.content" :key="index2">
-                            <div class="cell" style="width:0.7rem;"><img :src="item2.thumb"></div>
-                            <div class="cell order-title">{{item2.title}}</div>
-                            <div class="cell">{{item2.cooked}}/{{item2.count}}</div>
-                            <div class="cell text-center">
+                    <div class="i-table" :class="item.percent==1?'tbg':''">
+                        <div class="i-row orders-content" :class="item2.cooked==item2.count?'finish':''" v-for="(item2,index2) in item.content" :key="index2">
+                            <div class="i-cell" style="width:0.7rem;"><img :src="item2.thumb"></div>
+                            <div class="i-cell order-title">{{item2.title}}</div>
+                            <div class="i-cell">{{item2.cooked}}/{{item2.count}}</div>
+                            <div class="i-cell text-center">
                                 <i class="el-icon-success" v-if="item2.cooked==item2.count"></i>
                                 <i class="el-icon-dish" v-else></i>
                             </div>
@@ -107,6 +107,7 @@ export default {
 }
 .h1-title h1{
     line-height:1rem;
+    font-size: 1rem;
 }
 .h1-title h2{
     font-size:0.5rem;
@@ -116,6 +117,7 @@ export default {
     font-size:0.3rem;
     line-height:0.7rem;
     color:#ccc;
+    margin: 0;
 }
 .orders{
     paddinG:0 0.5rem;
@@ -129,16 +131,16 @@ export default {
 .orders .title.finish{
     background:#4caf50;
 }
-.orders .title .cell{
+.orders .title .i-cell{
     padding:0.1rem 0.2rem;
 }
 .orders .orders-content{
     font-size:0.2rem;
 }
-.orders .orders-content .cell.order-title{
+.orders .orders-content .i-cell.order-title{
     max-width:1.5rem;
 }
-.orders .orders-content.finish .cell.order-title{
+.orders .orders-content.finish .i-cell.order-title{
     text-decoration:line-through;
     color:#ccc;
 }
@@ -163,17 +165,19 @@ export default {
 .orders .tbg{
     background:rgba(76, 175, 80,0.1);
 }
-.logout{
+.app .logout{
     position:fixed;
     top:0.5rem;
     right:0.5rem;
     font-size:0.5rem;
+    cursor: pointer;
 }
-.refresh{
+.app .refresh{
     position:fixed;
     top:0.5rem;
     left:0.5rem;
     color:#4caf50;
     font-size:0.5rem;
+    cursor: pointer;
 }
 </style>

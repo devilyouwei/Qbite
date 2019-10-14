@@ -30,11 +30,11 @@
         <div class="data-show">
             <DataIncomeChart></DataIncomeChart>
         </div>
-        <div class="data-show table fixed">
-            <div class="cell">
+        <div class="data-show i-table fixed">
+            <div class="i-cell">
                 <DataDeskChart style="padding-right:0.5rem;">></DataDeskChart>
             </div>
-            <div class="cell" style="padding-left:0.5rem;">
+            <div class="i-cell" style="padding-left:0.5rem;">
                 <DataPayChart></DataPayChart>
             </div>
         </div>

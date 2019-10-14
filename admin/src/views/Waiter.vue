@@ -128,6 +128,7 @@ export default {
 }
 .h1-title h1{
     line-height:1rem;
+    font-size: 1rem;
 }
 .h1-title h2{
     font-size:0.5rem;
@@ -137,6 +138,7 @@ export default {
     font-size:0.3rem;
     line-height:0.7rem;
     color:#ccc;
+    margin: 0;
 }
 .card {
     padding:0.5rem 1rem;
@@ -207,17 +209,19 @@ export default {
     padding:0.3rem 0;
     text-align:right;
 }
-.logout{
+.app .logout{
     position:fixed;
     top:0.5rem;
     right:0.5rem;
     font-size:0.5rem;
+    cursor: pointer;
 }
-.refresh{
+.app .refresh{
     position:fixed;
     top:0.5rem;
     left:0.5rem;
     color:#4caf50;
     font-size:0.5rem;
+    cursor: pointer;
 }
 </style>

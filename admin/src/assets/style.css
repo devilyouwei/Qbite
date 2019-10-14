@@ -17,11 +17,10 @@ body {
     right:0;
     bottom:0;
 }
-
-button {
+.app button {
     -webkit-tap-highlight-color: transparent;
 }
-.btn {
+.app .btn {
     background:rgba(0,0,0,1);
     border:none;
     padding:0.06rem 0.01rem;
@@ -30,10 +29,10 @@ button {
     font-weight:300;
     color:rgba(255,255,255,1);
 }
-.btn.block{
+.app .btn.block{
     width:100%;
 }
-.btn-hollow{
+.app .btn-hollow{
     border:0.01rem solid rgba(0,0,0,1);
     background:#fff;
     padding:0.05rem 0.3rem;
@@ -43,34 +42,34 @@ button {
     font-weight:500;
     color:rgba(0,0,0,1);
 }
-.replace{
+.app .replace{
     padding:1rem;
     font-size:.6rem;
     text-align:center;
     color:#ccc;
 }
 
-input,
-textarea {
+.app input,
+.app textarea {
     -webkit-appearance: none;
 }
 
-img {
+.app img {
     border: none;
     transition: all 0.4s;
 }
 
-img[lazy=loading] {
+.app img[lazy=loading] {
     background: #f2f2f2;
     background-size: 40%;
 }
 
-img[lazy=error] {
+.app img[lazy=error] {
     background: #f2f2f2;
     background-size: 40%;
 }
 
-img[lazy=loaded] {
+.app img[lazy=loaded] {
     animation: fade 0.5s;
     background: none;
 }
@@ -84,49 +83,50 @@ img[lazy=loaded] {
     }
 }
 
-a {
+.app a {
     text-decoration: none!important;
     color: rgba(152, 158, 170, 1);
 }
 
-a:link {
+.app a:link {
     text-decoration: none!important;
 }
 
-a:visited {
+.app a:visited {
     text-decoration: none!important;
 }
 
-a:hover {
+.app a:hover {
     text-decoration: none!important;
 }
 
-a:active {
+.app a:active {
     text-decoration: none!important;
     color: rgba(152, 158, 170, 1);
 }
 
-.table {
+.app .i-table {
     display: table;
     vertical-align: middle;
-    width: 100%
+    width: 100%;
+    margin-bottom: 0;
 }
 
-.table.fixed {
+.app .i-table.fixed {
     table-layout: fixed;
 }
 
-.row {
+.app .i-row {
     display: table-row;
     width: 100%;
 }
 
-.cell {
+.app .i-cell {
     display: table-cell;
     vertical-align: middle;
 }
 
-.text-ellipsis {
+.app .text-ellipsis {
     word-wrap: normal;
     /* for IE */
     text-overflow: ellipsis;
@@ -134,143 +134,143 @@ a:active {
     overflow: hidden;
 }
 
-.text-left {
+.app .i-text-left {
     text-align: left;
 }
 
-.text-right {
+.app .text-right {
     text-align: right;
 }
 
-.text-center {
+.app .text-center {
     text-align: center;
 }
 
-.padding-sm {
+.app .padding-sm {
     padding: 0.5rem;
 }
 
-.padding-md {
+.app .padding-md {
     padding: 1rem;
 }
 
-.padding-lg {
+.app .padding-lg {
     padding: 1.5rem;
 }
 
-.padding-xl {
+.app .padding-xl {
     padding: 2rem;
 }
 
-.padding-top-sm {
+.app .padding-top-sm {
     padding-top: 0.5rem;
 }
 
-.padding-top-md {
+.app .padding-top-md {
     padding-top: 1rem;
 }
 
-.padding-top-lg {
+.app .padding-top-lg {
     padding-top: 1.5rem;
 }
 
-.padding-top-xl {
+.app .padding-top-xl {
     padding-top: 2rem;
 }
 
-.padding-right-sm {
+.app .padding-right-sm {
     padding-right: 0.5rem;
 }
 
-.padding-right-md {
+.app .padding-right-md {
     padding-right: 1rem;
 }
 
-.padding-right-lg {
+.app .padding-right-lg {
     padding-right: 1.5rem;
 }
 
-.padding-right-xl {
+.app .padding-right-xl {
     padding-right: 2rem;
 }
 
-.padding-bottom-sm {
+.app .padding-bottom-sm {
     padding-bottom: 0.5rem;
 }
 
-.padding-bottom-md {
+.app .padding-bottom-md {
     padding-bottom: 1rem;
 }
 
-.padding-bottom-lg {
+.app .padding-bottom-lg {
     padding-bottom: 1.5rem;
 }
 
-.padding-bottom-xl {
+.app .padding-bottom-xl {
     padding-bottom: 2rem;
 }
 
-.padding-left-sm {
+.app .padding-left-sm {
     padding-left: 0.5rem;
 }
 
-.padding-left-md {
+.app .padding-left-md {
     padding-left: 1rem;
 }
 
-.padding-left-lg {
+.app .padding-left-lg {
     padding-left: 1.5rem;
 }
 
-.padding-left-xl {
+.app .padding-left-xl {
     padding-left: 2rem;
 }
 
-.padding-vertical-sm {
+.app .padding-vertical-sm {
     padding: 0.5rem 0;
 }
 
-.padding-vertical-md {
+.app .padding-vertical-md {
     padding: 1rem 0;
 }
 
-.padding-vertical-lg {
+.app .padding-vertical-lg {
     padding: 1.5rem 0;
 }
 
-.padding-vertical-xl {
+.app .padding-vertical-xl {
     padding: 2rem 0;
 }
 
-.padding-horizontal-sm {
+.app .padding-horizontal-sm {
     padding: 0 0.5rem;
 }
 
-.padding-horizontal-md {
+.app .padding-horizontal-md {
     padding: 0 1rem;
 }
 
-.padding-horizontal-lg {
+.app .padding-horizontal-lg {
     padding: 0 1.5rem;
 }
 
-.padding-horizontal-xl {
+.app .padding-horizontal-xl {
     padding: 0 2rem;
 }
 
-.border-top {
+.app .border-top {
     border-top: 0.015rem solid rgba(229, 229, 229, 1);
 }
 
-.border-bottom {
+.app .border-bottom {
     border-bottom: 0.015rem solid rgba(229, 229, 229, 1);
 }
 
-.border-right {
+.app .border-right {
     border-right: 0.015rem solid rgba(229, 229, 229, 1);
 }
 
-.border-left {
+.app .border-left {
     border-left: 0.015rem solid rgba(229, 229, 229, 1);
 }
 
@@ -485,5 +485,7 @@ a:active {
 }
 .slide-leave-to {
     transform: translateX(100%);
-    opacity:0;
+    opacity: 0;
 }
+
+

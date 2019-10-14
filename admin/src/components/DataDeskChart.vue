@@ -1,11 +1,11 @@
 <!--訂單，收入，按桌號對比-->
 <template>
     <div>
-        <div class="table">
-            <div class="cell title">
+        <div class="i-table">
+            <div class="i-cell title">
                 {{$t('tableRevenueDistribution')}}
             </div>
-            <div class="cell tool">
+            <div class="i-cell tool">
                 <div class="picker">
                     <el-date-picker v-model="value" type="daterange" align="right" unlink-panels :range-separator="$t('to')" :start-placeholder="$t('startDate')" :end-placeholder="$t('endDate')" :picker-options="pickerOptions"></el-date-picker>
                 </div>

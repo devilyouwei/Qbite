@@ -4,16 +4,16 @@
         <el-dialog :visible.sync="dialogTableVisible2" style="" :close-on-click-modal="false">
             <div class="title">{{$t('orderNumber')}} {{content.id}}</div>
             <div class="title">{{content.title}}</div>
-            <div class="table fixed" v-for="(item,index) in content.content" :key="index">
-                <div class="cell"><img :src="item.thumb" style="width:1.2rem;"></div>
-                <div class="cell">{{item.id}}</div>
-                <div class="cell">{{item.title}}</div>
-                <div class="cell">{{item.price}} × {{item.count}}</div>
+            <div class="i-table fixed" v-for="(item,index) in content.content" :key="index">
+                <div class="i-cell"><img :src="item.thumb" style="width:1.2rem;"></div>
+                <div class="i-cell">{{item.id}}</div>
+                <div class="i-cell">{{item.title}}</div>
+                <div class="i-cell">{{item.price}} × {{item.count}}</div>
             </div>
             <el-row class="price">{{$t('total')}} {{content.price}} {{PRICE_SIGN}}</el-row>
             <div style="font-weight:bold;font-size:0.3rem;line-height:0.8rem;">{{$t('paymentOptions')}}</div>
-            <div class="table">
-                <div class="cell" v-for="(item,index) in content.pay" v-if="item.value>0">{{item.title}}&nbsp;{{item.currency}}&nbsp;<span style="color:#ff0000">{{item.value}}</span></div>
+            <div class="i-table">
+                <div class="i-cell" v-for="(item,index) in content.pay" v-if="item.value>0">{{item.title}}&nbsp;{{item.currency}}&nbsp;<span style="color:#ff0000">{{item.value}}</span></div>
             </div>
         </el-dialog>
 
@@ -27,10 +27,10 @@
                         <span v-if="item2.count>item2.cooked" style="color:red">({{$t('notCompleted')}})</span>
                         <span v-else style="color:green">({{$t('completed')}})</span>
                     </span>
-                    <div class="table">
-                        <div class="row text-left" style="color:#f00;font-size:0.3rem;line-height:0.8rem;">{{$t('total')}} {{item.price}}</div>
-                        <div class="row">
-                            <div class="cell">
+                    <div class="i-table">
+                        <div class="i-row i-text-left" style="color:#f00;font-size:0.3rem;line-height:0.8rem;">{{$t('total')}} {{item.price}}</div>
+                        <div class="i-row">
+                            <div class="i-cell">
                                 <el-input :placeholder="$t('amount')" v-model.float="payJson[index3].value" v-for="(item3,index3) in pay" :key="index3" style="margin:0.05rem 0;">
                                     <span slot="prepend" style="width:3rem;">{{item3.title}}</span>
                                     <el-select v-model.number="payJson[index3].cid" slot="append">
@@ -38,7 +38,7 @@
                                     </el-select>
                                 </el-input>
                             </div>
-                            <div class="cell text-right">
+                            <div class="i-cell text-right">
                                 <el-button size="normal" type="primary" @click="paid(item)">{{$t('settlePayment')}}</el-button>
                             </div>
                         </div>

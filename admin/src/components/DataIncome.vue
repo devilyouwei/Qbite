@@ -5,8 +5,8 @@
             <el-table :data="pay" style="width: 100%">
                 <el-table-column type="expand">
                     <template slot-scope="props">
-                        <div class="table fixed">
-                            <div v-for="(item,index) in props.row.pay" :key="index" class="cell text-center">
+                        <div class="i-table fixed">
+                            <div v-for="(item,index) in props.row.pay" :key="index" class="i-cell text-center">
                                 <div style="color:#000;font-size:0.3rem;line-height:0.4rem;font-weight:bold;">{{item.title}}</div>
                                 <div style="color:#ff0000;line-height:0.4rem;">{{item.value}}</div>
                                 <div style="color:#67C23A;line-height:0.4rem;">{{item.currency}}</div>
@@ -20,11 +20,11 @@
                 <el-table-column :label="$t('timeFinished')" prop="endtime"></el-table-column>
             </el-table>
         </el-dialog>
-        <div class="table">
-            <div class="cell title">
+        <div class="i-table">
+            <div class="i-cell title">
                 {{$t('totalRevenue')}}
             </div>
-            <div class="cell tool">
+            <div class="i-cell tool">
                 <div class="picker">
                     <el-date-picker v-model="value" type="daterange" align="right" unlink-panels :range-separator="$t('to')" :start-placeholder="$t('startDate')" :end-placeholder="$t('endDate')" :picker-options="pickerOptions"></el-date-picker>
                 </div>

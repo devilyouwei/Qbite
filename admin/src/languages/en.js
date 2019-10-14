@@ -88,7 +88,7 @@ export const en = {
     position: 'Position',
     position2: 'Position',
     dashboard: 'Dashboard',
-    advancedManagement: 'Advanced Management',
+    advancedManagement: 'Advanced',
     manageStores: 'Manage Stores',
     paymentOptions: 'Payment Options',
     paymentMethod: 'Payment Method',

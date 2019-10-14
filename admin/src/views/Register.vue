@@ -5,7 +5,7 @@
             <h1 class="reg-title">Welcome</h1>
             <h1 class="reg-sub-title">STEP1-{{$t('createStoreLabel')}}</h1>
             <el-form ref="form" :model="form" label-width="0px" class="form">
-                <el-form-item label="" prop="email" :rules="[{ required: true, message: $t('emptyStoreEmail'), trigger: 'blur' }, { type: 'email', message: $t('validEmailAddress'), trigger: ['blur'] }]" style="text-left">
+                <el-form-item label="" prop="email" :rules="[{ required: true, message: $t('emptyStoreEmail'), trigger: 'blur' }, { type: 'email', message: $t('validEmailAddress'), trigger: ['blur'] }]" style="i-text-left">
                     <el-input v-model="form.email" :placeholder="$t('emailVerificationMessage')" style="width:60%;float:left;"></el-input>
                     <el-button @click="sendMail()" v-if="codeTime==0" style="width:3.3rem;">{{$t('sendVerificationCode')}}</el-button>
                     <el-button v-if="codeTime>0" type="info" style="width:3.3rem;" plain disabled>{{codeTime}}s</el-button>
@@ -22,7 +22,7 @@
                 <el-form-item label="" prop="password" :rules="[{ required: true, message:  $t('passwordInput'), trigger: 'blur' }, { min:6,max:99,message: $t('passwordRequirements'), trigger: ['blur'] }]">
                     <el-input v-model="form.password" type="password" :placeholder="$t('passwordPlaceholder')" clearable show-password></el-input>
                 </el-form-item>
-                <el-form-item label="" class="text-left">
+                <el-form-item label="" class="i-text-left">
                     <span style="padding-right:0.5rem;">{{$t('location')}}</span>
                     <el-select v-model="form.area" :placeholder="$t('locationSelect')">
                         <el-option v-for="(item,index) in area" :index="index" :label="item.title" :value="item.id"></el-option>

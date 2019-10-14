@@ -4,14 +4,14 @@
         <div class="replace" v-if="replace">
             {{$t(noIncomeDataText)}}
         </div>
-        <div class="table" v-if="tableData">
-            <div class="row">
-                <div class="cell bold">{{$t(paymentText)}}</div>
-                <div class="cell bold" v-for="(item,index) in payway">{{item}}</div>
+        <div class="i-table" v-if="tableData">
+            <div class="i-row">
+                <div class="i-cell bold">{{$t(paymentText)}}</div>
+                <div class="i-cell bold" v-for="(item,index) in payway">{{item}}</div>
             </div>
-            <div class="row" v-for="(item,index) in currency">
-                <div class="cell bold">{{item}}</div>
-                <div class="cell" v-for="(item2,index2) in payway">{{tableData[item][item2]}}</div>
+            <div class="i-row" v-for="(item,index) in currency">
+                <div class="i-cell bold">{{item}}</div>
+                <div class="i-cell" v-for="(item2,index2) in payway">{{tableData[item][item2]}}</div>
             </div>
         </div>
         <div class="date">{{begin}} <b>To</b> {{end}}</div>
@@ -104,12 +104,12 @@ export default{
 .print-income{
     padding:0.5rem;
 }
-.table{
+.i-table{
     font-size:0.3rem;
     text-align:center;
     border: 2px solid #ccc;
 }
-.cell{
+.i-cell{
     padding:0.1rem;
 }
 .bold{

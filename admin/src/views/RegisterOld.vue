@@ -4,7 +4,7 @@
         <div class="reg-box" v-if="step==1">
             <h1 class="reg-title">創建店鋪</h1>
             <el-form ref="form" :model="form" label-width="80px" class="form">
-                <el-form-item label="郵箱" prop="email" :rules="[{ required: true, message: '郵箱不能為空', trigger: 'blur' }, { type: 'email', message: '輸入正確的郵箱地址', trigger: ['blur'] }]" style="text-left">
+                <el-form-item label="郵箱" prop="email" :rules="[{ required: true, message: '郵箱不能為空', trigger: 'blur' }, { type: 'email', message: '輸入正確的郵箱地址', trigger: ['blur'] }]" style="i-text-left">
                     <el-input v-model="form.email" placeholder="輸入店鋪郵箱（待驗證）" style="width:70%;float:left;"></el-input>
                     <el-button @click="sendMail()" v-if="codeTime==0">發送驗證碼</el-button>
                     <el-button v-if="codeTime>0" type="info" plain disabled>{{codeTime}}s</el-button>
@@ -21,7 +21,7 @@
                 <el-form-item label="店鋪密碼" prop="password" :rules="[{ required: true, message: '請輸入店鋪名', trigger: 'blur' }, { min:6,max:99,message: '密碼大於6位', trigger: ['blur'] }]">
                     <el-input v-model="form.password" type="password" placeholder="店長密碼" clearable show-password></el-input>
                 </el-form-item>
-                <el-form-item label="地區" class="text-left">
+                <el-form-item label="地區" class="i-text-left">
                     <el-select v-model="form.area" placeholder="選擇所屬地區">
                         <el-option v-for="(item,index) in area" :index="index" :label="item.title" :value="item.id"></el-option>
                     </el-select>
@@ -42,7 +42,7 @@
                     <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                 </el-upload>
                 <p class="tip">請上傳營業執照或相關產業的資質證明</p>
-                <el-form-item label="詳細地址" class="text-left">
+                <el-form-item label="詳細地址" class="i-text-left">
                     <el-input type="textarea" v-model="location" style="width:7rem;"></el-input>
                 </el-form-item>
                 <el-button type="primary" @click="submitMore()" style="width:6rem;margin:0.5rem 0;">提交</el-button>

@@ -1,13 +1,13 @@
 <template class="h-100">
     <div class="main">
         <div class="head">
-            <div class="table">
-                <div class="cell logo" @click="toIndex"><i class="iconfont icon-letter-q"></i>uick Bite</div>
-                <div class="cell">
+            <div class="i-table">
+                <div class="i-cell logo" @click="toIndex"><i class="iconfont icon-letter-q"></i>uick Bite</div>
+                <div class="i-cell">
                     <a href="#" @click="setLocale('en')"><flag iso="us"></flag></a>
                     <a href="#" @click="setLocale('zh')"><flag iso="cn"></flag></a>
                 </div>
-                <div class="cell sign-in"><router-link to="/login">{{$t('signIn')}}</router-link></div>
+                <div class="i-cell sign-in"><router-link to="/login">{{$t('signIn')}}</router-link></div>
             </div>
         </div>
 
