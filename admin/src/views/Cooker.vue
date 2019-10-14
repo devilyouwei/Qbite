@@ -16,7 +16,7 @@
                 <el-col v-for="(item,index) in list" :key="index" :span="6">
                     <div class="i-table title" :class="item.percent==1?'finish':''">
                         <div class="i-cell i-text-left">{{$t("orderNumber")}} {{item.id}}</div>
-                        <div class="i-cell text-right">{{$t("tableNumber")}} {{item.title}}</div>
+                        <div class="i-cell i-text-left">{{$t("tableNumber")}} {{item.title}}</div>
                     </div>
                     <div class="i-table" :class="item.percent==1?'tbg':''">
                         <div class="i-row orders-content" :class="item2.cooked==item2.count?'finish':''" v-for="(item2,index2) in item.content" :key="index2">

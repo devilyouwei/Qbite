@@ -28,7 +28,7 @@
         </div>
 
 
-        <div class="top-rated-content container-fluid d-flex flex-column border-bottom ">
+        <div class="top-rated-content container-fluid d-flex flex-column i-border-bottom">
             <div class="list-title">{{$t('topRatedFood')}}</div>
             <div class="top-rated-container  overflow-auto d-flex flex-row justify-content-around flex-wrap">
                 <div class="top-rated-content-list d-flex" v-for="(item,index) in list" :key="index">

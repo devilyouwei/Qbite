@@ -38,7 +38,7 @@
                                     </el-select>
                                 </el-input>
                             </div>
-                            <div class="i-cell text-right">
+                            <div class="i-cell i-text-left">
                                 <el-button size="normal" type="primary" @click="paid(item)">{{$t('settlePayment')}}</el-button>
                             </div>
                         </div>
