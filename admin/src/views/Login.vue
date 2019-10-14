@@ -1,6 +1,10 @@
 <template>
     <div class="login" :style="bg?'background-image:url('+bg+')':'background-image:none;opacity:0'" :key="bg">
         <el-alert :title="msg" :type="success" v-show="msg" show-icon></el-alert>
+        <div class="language">
+            <a href="#" @click="setLocale('en')">English</a>&nbsp;&nbsp;
+            <a href="#" @click="setLocale('zh')">繁體中文</a>
+        </div>
         <h1>{{$t("loginTitle")}}</h1>
         <div class="form-field">
             <el-form :model="form" status-icon :rules="formRule" ref="form" label-width="100px" class="form">
@@ -60,6 +64,13 @@
     padding:1rem 0.6rem;
     color:#fff;
 }
+.language {
+    text-align:left;
+    padding:0.3rem 0.5rem;
+}
+.language a{
+    color:#fff;
+}
 </style>
 <script>
 import $ from '../tool.js'
@@ -77,13 +88,13 @@ export default {
             },
             formRule : {
                 username: [
-                    {required:true, message:'請輸入用戶名！', trigger:'blur'}
+                    {required:true, message:this.$t('enterUsername'), trigger:'blur'}
                 ],
                 email: [
-                    {required:true, message:'請輸入郵箱！', trigger:'blur'}
+                    {required:true, message:this.$t('enterEmailError'), trigger:'blur'}
                 ],
                 password: [
-                    {required:true, message:'請輸入密碼！', trigger:'blur'}
+                    {required:true, message:this.$t('passwordError'), trigger:'blur'}
                 ]
             },
         }
@@ -91,12 +102,12 @@ export default {
     mounted: function(){
         if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent)) {
             this.$msgbox({
-                title: '提示',
-                message: '<font color="red">您當前使用的是手機瀏覽，進入後台可能出現排版問題</font><br>請使用電腦登錄<div style="font-weight:bold;">www.cocodata.xyz</div>進行後台操作，體驗更佳',
+                title: this.$t('notice'),
+                message: `<font color="red">${this.$t('mobileNotice')}</font><br>${this.$t('mobileNotice2')}<div style="font-weight:bold;">www.cocodata.xyz</div>${this.$t('mobileNotice3')}`,
                 dangerouslyUseHTMLString: true,
                 showCancelButton: true,
-                confirmButtonText: '好的！查看教學',
-                cancelButtonText: '繼續使用手機',
+                confirmButtonText: this.$t('confirmButtonText'),
+                cancelButtonText: this.$t('cancelButtonText'),
             }).then(async action => {
                 if(action=='confirm') {
                     let res = await $.post('Config','config')
@@ -130,6 +141,10 @@ export default {
                     this.msg = res.msg
                 }
             })
+        },
+        setLocale(locale){
+            localStorage.setItem('LANG',locale)
+            this.$root.$i18n.locale = locale
         },
         toReg(){
             this.$router.replace('/Register')

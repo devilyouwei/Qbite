@@ -227,9 +227,6 @@ export default{
 .card{
     cursor:pointer;
 }
-.order{
-    padding:1rem;
-}
 .tip{
     text-align:center;
     color:#409EFF;

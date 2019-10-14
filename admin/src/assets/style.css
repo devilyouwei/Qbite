@@ -18,15 +18,6 @@ body {
     bottom:0;
 }
 
-.content {
-    position:absolute;
-    width:85%;
-    right:0;
-    top:0;
-    bottom:0;
-    overflow-y:scroll;
-}
-
 button {
     -webkit-tap-highlight-color: transparent;
 }

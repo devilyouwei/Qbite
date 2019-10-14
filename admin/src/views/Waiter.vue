@@ -76,9 +76,9 @@ export default {
             let res = await $.post('Waiter','deskList')
             if(res.status==1){
                 if(!res.data || res.data.length == 0) return this.replace = true
-                for(let i in res.data){
-                    this.list = res.data
-                }
+                this.replace = false
+                this.list = []
+                this.list = res.data
             }
         },
         async showOrder(id){
@@ -102,9 +102,9 @@ export default {
             else this.$message.error(res.msg)
         },
         logout(){
-            this.$confirm('是否退出登錄?', '提示', {
-                confirmButtonText: '確定',
-                cancelButtonText: '取消',
+            this.$confirm(this.$t('logoutNotice'), this.$t('logoutNoticeTitle'), {
+                confirmButtonText: this.$t('confirm'),
+                cancelButtonText: this.$t('cancel'),
                 type: 'warning'
             }).then(() => {
                 localStorage.removeItem('userinfo')

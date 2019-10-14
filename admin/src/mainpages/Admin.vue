@@ -163,7 +163,4 @@ export default{
 </script>
 
 <style scoped>
-.admin{
-    padding:1rem;
-}
 </style>

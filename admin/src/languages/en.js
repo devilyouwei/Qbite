@@ -6,7 +6,7 @@ export const en = {
     topRatedFood: 'Top Rated Food Near You',
     partnerRestaurants: 'Partner Restaurants',
     loginTitle: 'Management Area Login',
-    storeEmailAddress: 'Store email address',
+    storeEmailAddress: 'Email',
     username: 'Username',
     password: 'Password',
     login: 'Login',
@@ -208,5 +208,12 @@ export const en = {
     print: 'Print',
     revenueDailyTrend: 'Revenue Daily Trend',
     date: 'Date',
-    paymentMethodDistribution: 'Payment Method Distribution'
+    paymentMethodDistribution: 'Payment Method Distribution',
+    // 以下是頁面的title
+    title_login: 'Login',
+    title_reg: 'Register',
+    title_index: 'Index',
+    title_cooker: 'Cook Page',
+    title_waiter: 'Waiter Page',
+    title_print: 'Print report'
 }

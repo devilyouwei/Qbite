@@ -9,6 +9,7 @@ import Waiter from './views/Waiter.vue'
 import PrintIncome from './views/PrintIncome.vue'
 
 Vue.use(Router)
+import {i18n} from './plugins/i18n'
 
 export default new Router({
     mode: 'history',
@@ -27,7 +28,7 @@ export default new Router({
             name: Login.name,
             component: Login,
             meta: {
-                title: '登錄'
+                title: i18n.t('title_login')
             }
         },
         {
@@ -35,7 +36,7 @@ export default new Router({
             name: Register.name,
             component: Register,
             meta: {
-                title: '註冊'
+                title: i18n.t('title_reg')
             }
         },
         {
@@ -43,7 +44,7 @@ export default new Router({
             name: Index.name,
             component: Index,
             meta: {
-                title: '首頁'
+                title: i18n.t('title_index')
             }
         },
         {
@@ -51,7 +52,7 @@ export default new Router({
             name: Cooker.name,
             component: Cooker,
             meta: {
-                title: '廚師專頁'
+                title: i18n.t('title_cooker')
             }
         },
         {
@@ -59,7 +60,7 @@ export default new Router({
             name: Waiter.name,
             component: Waiter,
             meta: {
-                title: '服务员專頁'
+                title: i18n.t('title_waiter')
             }
         },
         {
@@ -67,7 +68,7 @@ export default new Router({
             name: PrintIncome.name,
             component: PrintIncome,
             meta: {
-                title: '收入報告打印'
+                title: i18n.t('title_print')
             }
         }
     ]

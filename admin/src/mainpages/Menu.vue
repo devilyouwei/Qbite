@@ -201,9 +201,6 @@ export default {
 }
 </script>
 <style scoped>
-.menu{
-    padding:1rem;
-}
 .avatar-uploader .el-upload {
     border: 0.1rem solid #000;
     border-radius: 6px;

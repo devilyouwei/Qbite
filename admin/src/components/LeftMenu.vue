@@ -1,5 +1,5 @@
 <template>
-    <div class="left-menu">
+    <div>
         <el-menu default-active="1" background-color="#409eff" text-color="#fff" active-text-color="#fff" @select="menuSelect" style="height:100%;">
             <el-submenu index="110" v-if="user.admin">
                 <template slot="title">
@@ -88,15 +88,7 @@ export default {
 }
 </style>
 <style scoped>
-.left-menu{
-    position:absolute;
-    top:0;
-    bottom:0;
-    left:0;
-    width:15%;
-    height:100%;
-}
-.left-menu .iconfont{
+.iconfont{
     font-size:0.3rem;
     color:#fff;
 }

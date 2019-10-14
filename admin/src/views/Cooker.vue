@@ -59,9 +59,10 @@ export default {
             let res = await $.post('Cooker','orderList')
             if(res.status==1){
                 if(!res.data || res.data.length == 0) return this.replace = true
+                this.replace = false
                 if(res.data.length>this.list.length)
                     this.$message({
-                        message: '您有新的訂單了~',
+                        message: this.$t('newOrderLabel'),
                         type: 'warning'
                     })
                 for(let i in res.data){
@@ -75,13 +76,14 @@ export default {
                     console.log(cooked)
                     res.data[i].percent = cooked/count
                 }
+                this.list = []
                 this.list = res.data
             }
         },
         logout(){
-            this.$confirm('是否退出登錄?', '提示', {
-                confirmButtonText: '確定',
-                cancelButtonText: '取消',
+            this.$confirm(this.$t('logoutNotice'), this.$t('logoutNoticeTitle'), {
+                confirmButtonText: this.$t('confirm'),
+                cancelButtonText: this.$t('cancel'),
                 type: 'warning'
             }).then(() => {
                 localStorage.removeItem('userinfo')

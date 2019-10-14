@@ -1,6 +1,6 @@
 <template>
     <div class="index">
-        <LeftMenu @select="change"></LeftMenu>
+        <LeftMenu @select="change" class="left-menu"></LeftMenu>
         <div class="content">
             <menuIndex v-if="menu==1"></menuIndex>
             <menuType v-if="menu==21"></menuType>
@@ -41,6 +41,21 @@ export default {
 }
 </script>
 <style scoped>
+.left-menu{
+    position:absolute;
+    top:0;
+    bottom:0;
+    left:0;
+    width:20%;
+    height:100%;
+}
 .content{
+    width:75%;
+    position:absolute;
+    right:0;
+    top:0;
+    bottom:0;
+    overflow-y:scroll;
+    padding:2.5%;
 }
 </style>

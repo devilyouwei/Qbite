@@ -66,9 +66,6 @@ export default {
 }
 </style>
 <style scoped>
-.index{
-    padding:1rem;
-}
 .index .card {
     font-size:0.4rem;
     font-weight:bold;

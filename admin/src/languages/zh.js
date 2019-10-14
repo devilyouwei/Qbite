@@ -208,5 +208,12 @@ export const zh = {
     print: '打印',
     revenueDailyTrend: '收入日走勢',
     date: '日期',
-    paymentMethodDistribution: '收入方式分佈'
+    paymentMethodDistribution: '收入方式分佈',
+    // 以下是頁面的title
+    title_login: '登錄',
+    title_reg: '注冊',
+    title_index: '首頁',
+    title_cooker: '厨師專頁',
+    title_waiter: '服務員專頁',
+    title_print: '打印報告'
 }

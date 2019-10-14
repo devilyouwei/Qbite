@@ -299,9 +299,6 @@ export default {
 }
 </script>
 <style>
-.set{
-    padding:1rem;
-}
 .header{
     border:solid 1px #f0f0f0;
     padding:0.2rem;

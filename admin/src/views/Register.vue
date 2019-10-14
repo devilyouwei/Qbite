@@ -141,7 +141,7 @@ export default{
         },
         async sendMail(){
             let email = this.form.email
-            if(!email) return this.$message.error("請輸入郵箱")
+            if(!email) return this.$message.error(this.$t('enterEmailError'))
             let res = await $.post('User','sendCode',{email:email},true)
             if(res.status==1){
                 this.codeTime = 60
