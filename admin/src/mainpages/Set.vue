@@ -47,11 +47,11 @@
                     <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                 </el-upload>
             </el-col>
-            <el-col :span="12" style="text-align:center">
+            <el-col :span="10" style="text-align:center">
                 <el-input :placeholder="$t('enterStoreDetails')" v-model="shop.title" clearable></el-input>
                 <el-input :placeholder="$t('storeDescription')" v-model="shop.description" clearable style="margin-top:0.3rem"></el-input>
             </el-col>
-            <el-col :span="8" style="text-align:right">
+            <el-col :span="10" style="text-align:right">
                 <el-upload class="upload-demo" :action="uploadUrl" :show-file-list="false" :on-success="uploadBgSuccess" :data="{user:JSON.stringify(user)}" :on-error="uploadBgError">
                     <el-button size="small" type="primary">{{$t('uploadBgImage')}}</el-button>
                 </el-upload>

@@ -1,27 +1,5 @@
 <template>
     <div class="dashboard">
-        <el-row :gutter='40'>
-            <el-col :span='8'>
-                <el-card shadow="hover" class="card text-center">
-                    {{$t('store')}}<br>
-                    {{user.shop}}
-                </el-card>
-            </el-col>
-
-            <el-col :span='8'>
-                <el-card shadow="hover" class="card text-center">
-                    {{$t('username')}}<br>
-                    {{user.username}}
-                </el-card>
-            </el-col>
-
-            <el-col :span='8'>
-                <el-card shadow="hover" class="card text-center">
-                    {{$t('position')}}<br>
-                    {{user.position}}
-                </el-card>
-            </el-col>
-        </el-row>
 
         <!--时间选择器-->
         <div class="picker">
@@ -34,15 +12,15 @@
         </div>
 
         <div class="data-show">
-            <DataIncomeChart></DataIncomeChart>
+            <DataIncomeChart :date="value"></DataIncomeChart>
         </div>
 
         <div class="data-show i-table fixed">
-            <div class="i-cell">
-                <DataDeskChart style="padding-right:0.5rem;">></DataDeskChart>
+            <div class="i-cell" style="padding-right:0.5rem;">
+                <DataDeskChart :date="value"></DataDeskChart>
             </div>
             <div class="i-cell" style="padding-left:0.5rem;">
-                <DataPayChart></DataPayChart>
+                <DataPayChart :date="value"></DataPayChart>
             </div>
         </div>
     </div>
@@ -60,18 +38,17 @@ export default {
     },
     data: function(){
         return{
-            user:$.getUserInfo(),
-            value:'',
+            value:[new Date(), new Date()],
             pickerOptions: {
                 shortcuts: [{
-                    text: '今天',
+                    text: this.$t('today'),
                     onClick(picker) {
                         const start = new Date(new Date().toLocaleDateString());
                         const end = new Date(new Date().toLocaleDateString());
                         picker.$emit('pick', [start, end]);
                     }
                 }, {
-                    text: '近一周',
+                    text: this.$t('pastWeek'),
                     onClick(picker) {
                         const start = new Date(new Date().toLocaleDateString());
                         const end = new Date(new Date().toLocaleDateString());
@@ -79,7 +56,7 @@ export default {
                         picker.$emit('pick', [start, end]);
                     }
                 }, {
-                    text: '一個月',
+                    text: this.$t('pastMonth'),
                     onClick(picker) {
                         const start = new Date(new Date().toLocaleDateString());
                         const end = new Date(new Date().toLocaleDateString());
@@ -87,7 +64,7 @@ export default {
                         picker.$emit('pick', [start, end]);
                     }
                 }, {
-                    text: '全部',
+                    text: this.$t('all'),
                     onClick(picker) {
                         const start = new Date(new Date().toLocaleDateString());
                         const end = new Date(new Date().toLocaleDateString());
@@ -118,10 +95,9 @@ export default {
     font-weight:bold;
 }
 .data-show {
-    margin-top:1rem;
+    margin-top:0.5rem;
 }
 .picker{
-    padding-top:1rem;
     text-align:right;
 }
 </style>

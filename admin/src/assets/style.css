@@ -12,7 +12,7 @@ body {
     text-align:left;
 }
 div{
-    text-align:left;
+    text-align:inherit;
 }
 .fullscreen{
     position:absolute;

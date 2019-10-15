@@ -18,7 +18,7 @@
                     <el-input type="password" v-model="form.password" autocomplete="off" @keyup.enter.native="login('form')"></el-input>
                 </el-form-item>
             </el-form>
-            <div>
+            <div class="text-center">
                 <el-button type="primary" @click="login('form')" style="width:4rem;font-size:0.4rem;margin-top:0.5rem;">{{$t("loginButtonLabel")}}</el-button>
             </div>
             <el-button type="text" @click="toReg()" size="mini" class="reg">{{$t("signupLabel")}}</el-button>
@@ -50,7 +50,7 @@
     background-size:100% 100%;
 }
 .login h1{
-    margin-top:3vw;
+    margin-top:0.3rem;
     font-size:0.8rem;
     font-weight:bolder;
     padding:0.5rem 0;

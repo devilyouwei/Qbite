@@ -1,11 +1,10 @@
-<!--收入查詢，按日期-->
+<!--饼图：支付方式-->
 <template>
     <div>
         <div class="title">
             {{$t('paymentMethodDistribution')}}
         </div>
 
-        <!--走勢圖-->
         <div class="chart">
             <ve-pie :data="chart"></ve-pie>
         </div>
@@ -15,48 +14,15 @@
 import $ from '../tool.js'
 export default{
     name:'DataDeskChart',
+    props:{
+        date: Array
+    },
     data(){
         return {
-            value:'',
             list:[],
-            payway:[],
             chart:{
                 columns: ['支付方式', '收入'],
                 rows: []
-            },
-            pickerOptions: {
-                shortcuts: [{
-                    text: '今天',
-                    onClick(picker) {
-                        const start = new Date(new Date().toLocaleDateString());
-                        const end = new Date(new Date().toLocaleDateString());
-                        picker.$emit('pick', [start, end]);
-                    }
-                }, {
-                    text: '近一周',
-                    onClick(picker) {
-                        const start = new Date(new Date().toLocaleDateString());
-                        const end = new Date(new Date().toLocaleDateString());
-                        start.setTime(start.getTime() - 3600 * 1000 * 24 * 6);
-                        picker.$emit('pick', [start, end]);
-                    }
-                }, {
-                    text: '一個月',
-                    onClick(picker) {
-                        const start = new Date(new Date().toLocaleDateString());
-                        const end = new Date(new Date().toLocaleDateString());
-                        start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
-                        picker.$emit('pick', [start, end]);
-                    }
-                }, {
-                    text: '全部',
-                    onClick(picker) {
-                        const start = new Date(new Date().toLocaleDateString());
-                        const end = new Date(new Date().toLocaleDateString());
-                        start.setTime(0);
-                        picker.$emit('pick', [start, end]);
-                    }
-                }]
             }
         }
     },
@@ -68,20 +34,31 @@ export default{
             end += 3600*24*1000 // 向後延時一天，以獲得今天數據
             let res = await $.post('Index','incomeByPayWay',{begin:begin,end:end},true)
             if(res.status==1) {
-                this.payway = res.data.payway
-                this.list = res.data.orders
+                this.list = []
+                this.list = res.data
             } else this.$message.error(res.msg)
         }
     },
     watch:{
-        value(v){
-            this.loadData(Date.parse(v[0]),Date.parse(v[1]))
+        date:{
+            immediate: true, 
+            handler (v, oldVal) {
+                this.loadData(Date.parse(v[0]),Date.parse(v[1]))
+            }
         },
         list(v){
             this.chart.rows = []
-            for(let i in this.payway){
+            // 整理出所有的支付方式
+            let arr = []
+            for(let i in v){
+                for(let j in v[i]['pay']){
+                    arr.push(v[i]['pay'][j]['title'])
+                }
+            }
+            arr = $.unique(arr)
+            for(let i in arr){
                 this.chart.rows.push({
-                    '支付方式': this.payway[i].title,
+                    '支付方式': arr[i],
                     '收入': 0
                 })
             }

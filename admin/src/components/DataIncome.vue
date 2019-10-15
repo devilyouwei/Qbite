@@ -57,7 +57,7 @@ export default{
         }
     },
     props:{
-        value:{}
+        date: Array
     },
     mounted(){
         this.loadData()
@@ -77,17 +77,21 @@ export default{
                     this.tableData[0].price+=parseFloat(this.pay[i].price)
                     this.tableData[0].orders++
                 }
+                this.tableData[0].price = parseFloat(this.tableData[0].price).toFixed(2)
             } else this.$message.error(res.msg)
         },
         print(){
-            let begin = Date.parse(this.value[0])
-            let end = Date.parse(this.value[1])
+            let begin = Date.parse(this.date[0])
+            let end = Date.parse(this.date[1])
             window.open(`/PrintIncome?begin=${begin}&end=${end}`,"_blank")
         }
     },
     watch:{
-        value(v){
-            this.loadData(Date.parse(v[0]),Date.parse(v[1]))
+        date:{
+            immediate: true, 
+            handler (v, oldVal) {
+                this.loadData(Date.parse(v[0]),Date.parse(v[1]))
+            }
         }
     }
 }

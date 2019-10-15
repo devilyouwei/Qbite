@@ -14,51 +14,19 @@
 import $ from '../tool.js'
 export default{
     name:'DataIncomeChart',
+    props:{
+        date: Array
+    },
     data(){
         this.chartSettings = {
             metrics: ['收入'],
             dimension: ['日期']
         }
         return {
-            value:'',
             list:[],
             chart: {
                 columns: ['日期', '收入'],
                 rows: []
-            },
-            pickerOptions: {
-                shortcuts: [{
-                    text: '今天',
-                    onClick(picker) {
-                        const start = new Date(new Date().toLocaleDateString());
-                        const end = new Date(new Date().toLocaleDateString());
-                        picker.$emit('pick', [start, end]);
-                    }
-                }, {
-                    text: '近一周',
-                    onClick(picker) {
-                        const start = new Date(new Date().toLocaleDateString());
-                        const end = new Date(new Date().toLocaleDateString());
-                        start.setTime(start.getTime() - 3600 * 1000 * 24 * 6);
-                        picker.$emit('pick', [start, end]);
-                    }
-                }, {
-                    text: '一個月',
-                    onClick(picker) {
-                        const start = new Date(new Date().toLocaleDateString());
-                        const end = new Date(new Date().toLocaleDateString());
-                        start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
-                        picker.$emit('pick', [start, end]);
-                    }
-                }, {
-                    text: '全部',
-                    onClick(picker) {
-                        const start = new Date(new Date().toLocaleDateString());
-                        const end = new Date(new Date().toLocaleDateString());
-                        start.setTime(0);
-                        picker.$emit('pick', [start, end]);
-                    }
-                }]
             }
         }
     },
@@ -110,8 +78,11 @@ export default{
         }
     },
     watch:{
-        value(v){
-            this.loadData(Date.parse(v[0]),Date.parse(v[1]))
+        date:{
+            immediate: true, 
+            handler (v, oldVal) {
+                this.loadData(Date.parse(v[0]),Date.parse(v[1]))
+            }
         },
         list(v){
             this.chart.rows = []
