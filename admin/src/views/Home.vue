@@ -405,8 +405,6 @@
         }
     });
 
-
-
     export default {
         name: 'Home',
     }
