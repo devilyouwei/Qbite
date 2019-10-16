@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Main from './views/Main.vue'
 import Home from './views/Home.vue'
+import Cart from './views/Cart.vue'
 import Index from './views/Index.vue'
 import Login from './views/Login.vue'
 import Register from './views/Register.vue'
@@ -30,6 +31,14 @@ export default new Router({
             component: Home,
             meta: {
                 title: 'Home'
+            }
+        },
+        {
+            path: '/Cart',
+            name: Cart.name,
+            component: Cart,
+            meta: {
+                title: 'Cart'
             }
         },
         {
