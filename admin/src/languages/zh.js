@@ -216,6 +216,7 @@ export const zh = {
     revenueDailyTrend: '收入日走勢',
     date: '日期',
     paymentMethodDistribution: '收入方式分佈',
+    goIndex: '官網',
     // 以下是頁面的title
     title_login: '登錄',
     title_reg: '注冊',
@@ -223,5 +224,8 @@ export const zh = {
     title_cooker: '厨師專頁',
     title_waiter: '服務員專頁',
     title_print: '打印報告',
+    title_official_main: '主頁',
+    title_official_home: '餐廳',
+    title_official_cart: '訂單',
     error_network: '網絡錯誤，請檢查網絡'
 }

@@ -8,14 +8,14 @@
                 </a>
                 <form class="form-inline">
                     <b-dropdown size="sm" id="lang-dropdown" text="EN" class="">
-                        <b-dropdown-item-button class="">
-                            <a href="#" @click="setLocale('en')">
+                        <b-dropdown-item-button class="" @click="setLocale('en')">
+                            <a href="#">
                                 <flag iso="us"></flag>
                             </a>
                             <span class="lang-text">EN</span>
                         </b-dropdown-item-button>
-                        <b-dropdown-item-button>
-                            <a href="#" @click="setLocale('zh')">
+                        <b-dropdown-item-button @click="setLocale('zh')">
+                            <a href="#">
                                 <flag iso="cn">CN</flag>
                             </a>
                             <span class="lang-text">CN</span>
@@ -49,33 +49,35 @@
             </div>
             <div class="d-flex flex-column justify-content-center my-auto">
                 <div class="row d-flex py-auto">
-                    <div class="col-sm food-item d-flex flex-column py-auto" v-for="(item,index) in list" :key="index" v-if="index <3">
-                        <div class="food-img"><img :src="item.thumb"></div>
-                        <div class="food-title d-flex flex-column pt-1">
-                            <span class="food-text"><b>Joe's Bagel & Grill - West Long Branch</b></span>
-                            <div class="food-short-description d-flex flex-row">
-                                <span class="food-price">$ &nbsp;</span>
-                                <span>Breakfast and Brunch, Sandwiches, American</span>
-                            </div>
-                            <div class="food-location">
-                                <span>205 Nj-36, West Long Branch, Nj 07764, Usa </span>
-                            </div>
-                        </div>
+                    <div class="col-sm food-item d-flex flex-column py-auto" v-for="(item,index) in list" :key="index"
+                                                                             v-if=" index <3">
+                                                                             <div class="food-img"><img :src="item.thumb"></div>
+                                                                             <div class="food-title d-flex flex-column pt-1">
+                                                                                 <span class="food-text"><b>Joe's Bagel & Grill - West Long Branch</b></span>
+                                                                                 <div class="food-short-description d-flex flex-row">
+                                                                                     <span class="food-price">$ &nbsp</span>
+                                                                                     <span>Breakfast and Brunch, Sandwiches, American</span>
+                                                                                 </div>
+                                                                                 <div class="food-location">
+                                                                                     <span>205 Nj-36, West Long Branch, Nj 07764, Usa </span>
+                                                                                 </div>
+                                                                             </div>
                     </div>
                 </div>
                 <div class="row d-flex my-auto">
-                    <div class="col-sm food-item d-flex flex-column py-auto" v-for="(item,index) in list" :key="index" v-if=" index >=3 && index <6">
-                        <div class="food-img"><img :src="item.thumb"></div>
-                        <div class="food-title d-flex flex-column pt-1">
-                            <span class="food-text"><b>Nick's Pizza and Grill Restaurant</b></span>
-                            <div class="food-short-description d-flex flex-row">
-                                <span class="food-price">$$ &nbsp;</span>
-                                <span>Pizza</span>
-                            </div>
-                            <div class="food-location">
-                                <span>589 Cedar Ave, West Long Branch, NJ 07764 </span>
-                            </div>
-                        </div>
+                    <div class="col-sm food-item d-flex flex-column py-auto" v-for="(item,index) in list" :key="index"
+                                                                             v-if=" index >=3 && index <6">
+                                                                             <div class="food-img"><img :src="item.thumb"></div>
+                                                                             <div class="food-title d-flex flex-column pt-1">
+                                                                                 <span class="food-text"><b>Nick's Pizza and Grill Restaurant</b></span>
+                                                                                 <div class="food-short-description d-flex flex-row">
+                                                                                     <span class="food-price">$$ &nbsp</span>
+                                                                                     <span>Pizza</span>
+                                                                                 </div>
+                                                                                 <div class="food-location">
+                                                                                     <span>589 Cedar Ave, West Long Branch, NJ 07764 </span>
+                                                                                 </div>
+                                                                             </div>
                     </div>
                 </div>
             </div>
@@ -137,6 +139,8 @@
 
 <script>
 import $ from '../tool.js'
+import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap-vue/dist/bootstrap-vue.css'
 
 export default {
     name: 'Main',
@@ -173,7 +177,7 @@ export default {
 <style>
 header.head {
     height: 8rem;
-    background-image: url("/banner.jpg");
+    background-image: url("../assets/home-banner.jpg");
     background-size: cover;
     text-align: center;
     margin: 0 auto;

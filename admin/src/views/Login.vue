@@ -2,8 +2,15 @@
     <div class="login" :style="bg?'background-image:url('+bg+')':'background-image:none;opacity:0'" :key="bg">
         <el-alert :title="msg" :type="success" v-show="msg" show-icon></el-alert>
         <div class="language">
-            <a href="#" @click="setLocale('en')">English</a>&nbsp;&nbsp;
-            <a href="#" @click="setLocale('zh')">繁體中文</a>
+            <div class="i-table">
+                <div class="i-cell">
+                    <a href="#" @click="setLocale('en')">English</a>&nbsp;&nbsp;
+                    <a href="#" @click="setLocale('zh')">繁體中文</a>
+                </div>
+                <div class="i-cell i-text-right">
+                    <a href="/">{{$t("goIndex")}}</a>
+                </div>
+            </div>
         </div>
         <h1>{{$t("loginTitle")}}</h1>
         <div class="form-field">

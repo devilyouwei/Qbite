@@ -216,6 +216,7 @@ export const en = {
     revenueDailyTrend: 'Revenue Daily Trend',
     date: 'Date',
     paymentMethodDistribution: 'Payment Method Distribution',
+    goIndex: 'Official Page',
     // 以下是頁面的title
     title_login: 'Login',
     title_reg: 'Register',
@@ -223,5 +224,8 @@ export const en = {
     title_cooker: 'Cook Page',
     title_waiter: 'Waiter Page',
     title_print: 'Print report',
+    title_official_main: 'Main',
+    title_official_home: 'Home',
+    title_official_cart: 'Cart',
     error_network: 'Network Error, please check your network'
 }
