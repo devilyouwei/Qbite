@@ -8,6 +8,7 @@
                     <a href="#" @click="setLocale('zh')"><flag iso="cn"></flag></a>
                 </div>
                 <div class="i-cell sign-in"><router-link to="/login">{{$t('signIn')}}</router-link></div>
+                <div class="i-cell"><router-link to="/cart"><span class="cart"><i class="fas fa-shopping-bag"></i></span></router-link></div>
             </div>
         </div>
         <div class="banner">
@@ -28,7 +29,7 @@
             </div>
             <div class="search-box col-sm-3">
                 <div class="search">
-                    <el-input v-model="search" placeholder="Search Food"></el-input>
+                    <el-input placeholder="Search Food"></el-input>
                     <span><i class="fa fa-search"></i></span>
                 </div>
             </div>
@@ -408,14 +409,6 @@
 
     export default {
         name: 'Home',
-        data: () => ({
-            menuVisible: false
-        }),
-        methods: {
-            toggleMenu () {
-                this.menuVisible = !this.menuVisible
-            }
-        }
     }
 </script>
 
@@ -437,6 +430,12 @@
         .sign-in {
             text-align: left;
             font-size: 0.32rem;
+        }
+        .cart{
+            font-size: 0.5rem;
+            &:hover{
+                color: #409EFF;
+            }
         }
     }
 
