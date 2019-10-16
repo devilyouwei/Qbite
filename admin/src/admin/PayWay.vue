@@ -1,4 +1,6 @@
+<!-- 管理支付方式，貨幣和地區-->
 <template>
+    <!--管理支付方式-->
     <div class="payway">
         <div class="block">
             <div class="title">{{$t('paymentMethod')}}</div>
@@ -17,7 +19,7 @@
                             </el-form-item>
                         </el-col>
                         <el-col :span=6>
-                                <el-input v-model="form.title_en" :placeholder="$t('englishLabel')"></el-input>
+                            <el-input v-model="form.title_en" :placeholder="$t('englishLabel')"></el-input>
                         </el-col>
                         <el-col :span=6>
                             <el-button type="primary" size="normal" @click="addPay()">{{$t('confirm')}}</el-button>
@@ -26,6 +28,7 @@
                 </el-form>
             </div>
         </div>
+        <!--管理貨幣-->
         <div class="block">
             <div class="title">{{$t('acceptedCurrencies')}}</div>
             <div class="list">
@@ -48,10 +51,37 @@
                             </el-form-item>
                         </el-col>
                         <el-col :span=6>
-                                <el-input v-model="form2.title_en" :placeholder="$t('englishLabel')"></el-input>
+                            <el-input v-model="form2.title_en" :placeholder="$t('englishLabel')"></el-input>
                         </el-col>
                         <el-col :span=6>
                             <el-button type="success" size="normal" @click="addCurrency()">{{$t('confirm')}}</el-button>
+                        </el-col>
+                    </el-row>
+                </el-form>
+            </div>
+        </div>
+        <!--管理地區-->
+        <div class="block">
+            <div class="title">{{$t('areas')}}</div>
+            <div class="list">
+                <div class="replace" v-if="replace3">
+                    {{$t('noAreasAdded')}}
+                </div>
+                <el-tag type="warning" class="tag" v-for="(item,index) in listArea" :key="index" closable @close="delArea(item.id)">{{item.title+item.title_en}}</el-tag>
+            </div>
+            <div class="form">
+                <el-form :model="form3" :rules="rules3" ref="form3">
+                    <el-row :gutter=20>
+                        <el-col :span=6>
+                            <el-form-item prop="title">
+                                <el-input v-model="form3.title" :placeholder="$t('areaName')"></el-input>
+                            </el-form-item>
+                        </el-col>
+                        <el-col :span=6>
+                            <el-input v-model="form3.title_en" :placeholder="$t('englishLabel')"></el-input>
+                        </el-col>
+                        <el-col :span=6>
+                            <el-button type="warning" size="normal" @click="addArea()">{{$t('confirm')}}</el-button>
                         </el-col>
                     </el-row>
                 </el-form>
@@ -67,8 +97,10 @@ export default{
         return{
             listPay:[],
             listCurrency:[],
+            listArea:[],
             replace:false,
             replace2:false,
+            replace3:false,
             form:{
                 title:'',
                 title_en:''
@@ -78,20 +110,30 @@ export default{
                 unit:'',
                 title_en:''
             },
+            form3:{
+                title:'',
+                title_en:''
+            },
             rules:{
                 title:[
-                    {required:true, message:'輸入支付方式名稱', trigger:'blur'},
-                    {min:1, max:15, message:'長度小於15個字符', trigger:'blur'}
+                    {required:true, message:this.$t('inputPaymentMethod'), trigger:'blur'},
+                    {min:1, max:15, message:this.$t('paymentMethodNameLength'), trigger:'blur'}
                 ]
             },
             rules2:{
                 title:[
-                    {required:true, message:'輸入貨幣名稱（例如港幣）', trigger:'blur'},
-                    {min:1, max:15, message:'長度小於15個字符', trigger:'blur'}
+                    {required:true, message:this.$t('enterCurrencyName'), trigger:'blur'},
+                    {min:1, max:15, message:this.$t('paymentMethodNameLength'), trigger:'blur'}
                 ],
                 unit:[
-                    {required:true, message:'輸入貨幣的單位', trigger:'blur'},
-                    {min:1, max:15, message:'長度小於15個字符', trigger:'blur'}
+                    {required:true, message:this.$t('enterCurrencyUnit'), trigger:'blur'},
+                    {min:1, max:15, message:this.$t('paymentMethodNameLength'), trigger:'blur'}
+                ]
+            },
+            rules3:{
+                title:[
+                    {required:true, message:this.$t('enterAreaName'), trigger:'blur'},
+                    {min:1, max:15, message:this.$t('paymentMethodNameLength'), trigger:'blur'}
                 ]
             }
         }
@@ -101,8 +143,12 @@ export default{
     },
     methods:{
         async loadData(){
-            let res = await $.post('SuperAdmin','payList',{},true)
+            let res = await $.post('SuperAdmin','setList',{},true)
             if(res.status == 1){
+                this.listPay = []
+                this.listCurrency = []
+                this.listArea = []
+
                 if(res.data.payway.length==0) this.replace = true
                 else{
                     this.replace = false
@@ -112,6 +158,11 @@ export default{
                 else{
                     this.replace2 = false
                     this.listCurrency = res.data.currency
+                }
+                if(res.data.area.length==0) this.replace3 = true
+                else{
+                    this.replace3 = false
+                    this.listArea = res.data.area
                 }
             }
         },
@@ -126,7 +177,7 @@ export default{
         },
         async delPay(id){
             if(!id) return
-            this.$confirm('是否刪除該支付方式，刪除後用戶無法使用該支付方式','刪除支付方式').then(async ()=>{
+            this.$confirm(this.$t('removePaymentMethodMessage'),this.$t('removePaymentMethod')).then(async ()=>{
                 let res = await $.post('SuperAdmin','payWayDel',{id:id},true)
                 if(res.status == 1){
                     this.loadData()
@@ -147,8 +198,27 @@ export default{
         // 刪除貨幣
         async delCurrency(id){
             if(!id) return
-            this.$confirm('是否刪除該貨幣？刪除後貨幣無法使用','刪除貨幣').then(async ()=>{
+            this.$confirm(this.$t('removeCurrencyMessage'),this.$t('removeCurrency')).then(async ()=>{
                 let res = await $.post('SuperAdmin','currencyDel',{id:id},true)
+                if(res.status == 1){
+                    this.loadData()
+                } else this.$message.error(res.msg)
+            }).catch(()=>{})
+        },
+        // 添加地區
+        async addArea(){
+            let valid = await this.$refs['form3'].validate()
+            if(valid){
+                let res = await $.post('SuperAdmin','areaAdd',this.form3,true)
+                if(res.status == 1){
+                    this.loadData()
+                } else this.$message.error(res.msg)
+            }
+        },
+        async delArea(id){
+            if(!id) return
+            this.$confirm(this.$t('removeAreaMessage'),this.$t('removeArea')).then(async ()=>{
+                let res = await $.post('SuperAdmin','areaDel',{id:id},true)
                 if(res.status == 1){
                     this.loadData()
                 } else this.$message.error(res.msg)

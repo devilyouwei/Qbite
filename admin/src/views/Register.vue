@@ -25,7 +25,7 @@
                 <el-form-item label="" class="i-text-left">
                     <span style="padding-right:0.5rem;">{{$t('location')}}</span>
                     <el-select v-model="form.area" :placeholder="$t('locationSelect')">
-                        <el-option v-for="(item,index) in area" :index="index" :label="item.title" :value="item.id"></el-option>
+                        <el-option v-for="(item,index) in area" :index="index" :label="item.title+item.title_en" :value="item.id"></el-option>
                     </el-select>
                 </el-form-item>
                 <el-button type="primary" size="medium" @click="submit()" style="width:80%;">{{$t('createAccButtonLabel')}}</el-button>
@@ -68,7 +68,7 @@ export default{
                 code:'',
                 shop:'',
                 username:'',
-                area:1,
+                area:'',
                 password:''
             },
             user:localStorage.getItem('userinfo')||null,

@@ -1,43 +1,5 @@
 <template>
     <div class="set">
-        <el-dialog :title="$t('editUser')" :visible.sync="dialogFormVisible" width="36%" :close-on-click-modal="false">
-            <el-form :model="form" :rules="rules" ref="form" label-width="1.5rem">
-                <el-row>
-                    <el-form-item :label="$t('employeeUsername')" prop="username">
-                        <el-input v-model="form.username" type="text" style="width:6rem;" :disabled="form.id!=0"></el-input>
-                    </el-form-item>
-                    <el-form-item :label="$t('password')" prop="password">
-                        <el-input v-model="form.password" type="text" style="width:6rem;"></el-input>
-                    </el-form-item>
-                    <el-form-item :label="$t('position')" prop="pid">
-                        <el-select v-model="form.pid" :placeholder="$t('selectPosition')" style="width:6rem;">
-                            <el-option v-for="(item,index) in position" :key="index" :label="item.title" :value="item.id"></el-option>
-                        </el-select>
-                    </el-form-item>
-                </el-row>
-            </el-form>
-            <div slot="footer" class="dialog-footer">
-                <el-button @click="dialogFormVisible=false">{{$t('cancel')}}</el-button>
-                <el-button type="primary" @click="submit">{{$t('confirm')}}</el-button>
-            </div>
-        </el-dialog>
-
-        <el-dialog :title="$t('editNewTable')" :visible.sync="dialogFormVisible2" :close-on-click-modal="false">
-            <el-form :model="form2" :rules="rules2" ref="form2">
-                <el-form-item :label="$t('tableNumber2')" prop="title">
-                    <el-input v-model="form2.title" type="text"></el-input>
-                </el-form-item>
-                <el-form-item :label="$t('tableNumber2')" prop="num">
-                    <el-input v-model.number="form2.num" type="number"></el-input>
-                </el-form-item>
-            </el-form>
-
-            <div slot="footer" class="dialog-footer">
-                <el-button @click="dialogFormVisible2=false">{{$t('cancel')}}</el-button>
-                <el-button type="primary" @click="submit2">{{$t('confirm')}}</el-button>
-            </div>
-        </el-dialog>
-
         <!--員工管理-->
         <el-row style="margin-bottom:0.3rem;font-size:0.25rem;"><i class="iconfont icon-info">&nbsp;</i>{{$t('storeInformation')}}</el-row>
         <el-row type="flex" align="middle" class="header" :style="shop.background?'background:url('+shop.background+')':''">
@@ -50,6 +12,7 @@
             <el-col :span="10" style="text-align:center">
                 <el-input :placeholder="$t('enterStoreDetails')" v-model="shop.title" clearable></el-input>
                 <el-input :placeholder="$t('storeDescription')" v-model="shop.description" clearable style="margin-top:0.3rem"></el-input>
+                <el-input :placeholder="$t('storePhone')" v-model="shop.phone" clearable style="margin-top:0.3rem"></el-input>
             </el-col>
             <el-col :span="10" style="text-align:right">
                 <el-upload class="upload-demo" :action="uploadUrl" :show-file-list="false" :on-success="uploadBgSuccess" :data="{user:JSON.stringify(user)}" :on-error="uploadBgError">
@@ -59,109 +22,29 @@
             </el-col>
         </el-row>
 
-        <el-collapse accordion>
-            <el-collapse-item>
-                <template slot="title">
-                    <i class="iconfont icon-iconset0203">&nbsp;</i>{{$t('staffManagement')}}
-                </template>
-                <el-row>
-                    <el-table :data="users.filter(data => !search || data.username.toLowerCase().includes(search.toLowerCase()))" style="width:100%">
-                        <el-table-column prop="id" :label="$t('id')" width="200"></el-table-column>
-                        <el-table-column prop="username" :label="$t('employeeUsername')"></el-table-column>
-                        <el-table-column prop="position" :label="$t('position2')" width="200"></el-table-column>
-                        <el-table-column align="left" width="200">
-                            <template slot="header" slot-scope="scope">
-                                {{scope.length}}
-                                <el-input v-model="search" size="mini" :placeholder="$t('searchByUsername')"/>
-                            </template>
-                            <template slot-scope="scope">
-                                <el-button type="text" size="mini" @click="userEdit(scope.row)">{{$t('edit')}}</el-button>
-                                <el-button size="mini" type="text" @click="userDelete(scope.row)">{{$t('delete')}}</el-button>
-                            </template>
-                        </el-table-column>
-                    </el-table>
-                    <el-button type="primary" icon="el-icon-plus" @click="dialogFormVisible=true" style="margin-top:0.3rem;float:right;">{{$t('addNewStaff')}}</el-button>
-                </el-row>
-            </el-collapse-item>
-        </el-collapse>
-
-        <!--餐桌管理-->
-        <el-collapse accordion style="margin-top:1rem;">
-            <el-collapse-item>
-                <template slot="title">
-                    <i class="iconfont icon-iconset0203">&nbsp;</i>{{$t('tableManagement')}}
-                </template>
-                <el-row>
-                    <el-table :data="desks.filter(data => !search || data.username.toLowerCase().includes(search.toLowerCase()))" style="width:100%">
-                        <el-table-column prop="id" :label="$t('id')" width="180"></el-table-column>
-                        <el-table-column prop="title" :label="$t('tableNumber2')" width="180"></el-table-column>
-                        <el-table-column prop="num" :label="$t('numberOfPeople')"></el-table-column>
-                        <el-table-column align="left" width="300" :label="$t('qrCode')">
-                            <template slot-scope="scope">
-                                <div v-html="scope.row.qrcode" style="width:2rem;">
-                                    {{scope.row.qrcode}}
-                                </div>
-                            </template>
-                        </el-table-column>
-                        <el-table-column align="left" width="100" :label="$t('actions')">
-                            <template slot-scope="scope">
-                                <el-button type="text" size="mini" @click="deskEdit(scope.row)">{{$t('edit')}}</el-button>
-                                <el-button size="mini" type="text" @click="deskDelete(scope.row)">{{$t('delete')}}</el-button>
-                            </template>
-                        </el-table-column>
-                    </el-table>
-                    <el-button type="primary" icon="el-icon-plus" @click="dialogFormVisible2=true" style="margin-top:0.3rem;float:right;">{{$t('addNewTable')}}</el-button>
-                </el-row>
-            </el-collapse-item>
-        </el-collapse>
-
+        <setDesk></setDesk>
+        <setStaff style="margin-top:0.5rem;"></setStaff>
     </div>
 </template>
 <script>
 import $ from '../tool.js'
+import setDesk from '../components/SetDesk.vue'
+import setStaff from '../components/SetStaff.vue'
 export default {
     name:'Set',
+    components: {
+        setDesk,setStaff
+    },
     data(){
         return{
             user:$.getUserInfo(),
-            users:[],
-            desks:[],
             uploadUrl:$.URL+'/Upload/img',
-            search:'',
-            dialogFormVisible:false,
-            dialogFormVisible2:false,
-            position:[],
             shop:{
                 title:'',
+                phone:'',
                 description:'',
                 background:'',
                 img:''
-            },
-            form:{
-                id:0,
-                username:'',
-                password:'',
-                pid:''
-            },
-            rules:{
-                username:[
-                    {required:true, message:'輸入用戶名', trigger:'blur'},
-                    {min:5, max:20, message:'長度小於20個字符大於5個字符', trigger:'blur'}
-                ],
-                password:[
-                    {required:true, message:'輸入密碼', trigger:'blur'},
-                    {min:5, max:20, message:'長度小於50個字符大於5個字符', trigger:'blur'}
-                ],
-                pid:[{required:true, message:'請輸入職位', trigger:'blur'}],
-            },
-            form2: {
-                id:0,
-                title:'',
-                num:0
-            },
-            rules2: {
-                title:[{ required:true, message:'輸入桌號', trigger:'blur' }, { min: 1, max: 20, message: '長度小於20個字符', trigger: 'blur' }],
-                num:[{ required: true, message: '請輸入桌人數', trigger: 'blur' },{type:'number',min:1,max:99,message:'人數不合法',trigger:'blur'}]
             }
         }
     },
@@ -170,89 +53,26 @@ export default {
     },
     methods:{
         async loadData(){
-            let res = await $.post('Admin','setUserList',{},true)
-            if(res.status == 1) this.users = res.data
-            else this.$message.error(res.msg)
-            res = await  $.post('Admin','setShop')
+            let res = await  $.post('Admin','setShop')
             if(res.status == 1) {
                 this.shop.title = res.data.title
                 this.shop.img = res.data.img
+                this.shop.phone = res.data.phone
                 this.shop.description = res.data.description
                 this.shop.background = res.data.background
             }
-            res = await $.post('Admin','deskList')
-            if(res.status==1){
-                let QR = require('qr-image')
-                for(let i in res.data){
-                    let url = `${$.CLIENT}?sid=${res.data[i].sid}&did=${res.data[i].id}`
-                    res.data[i].qrcode = QR.imageSync(url, { type: 'svg' })
-                }
-                this.desks = res.data
-            } else this.$message.error(res.msg)
-        },
-        async userDelete(item){
-            let res = await $.post('Admin','setUserDelete',{id:item.id})
-            if(res.status == 1) this.loadData()
-            else this.$message.error(res.msg)
-        },
-        async deskDelete(item){
-            let flag = await this.$confirm('此操作將永久刪除該餐桌，訂單將會被保留', '提示', {
-                confirmButtonText: '确定',
-                cancelButtonText: '取消',
-                type: 'warning'
-            })
-            if(flag=='confirm'){
-                let res = await $.post('Admin','setDeskDelete',{id:item.id})
-                if(res.status==1) this.loadData()
-                else this.$message.error(res.msg)
-            }
-        },
-        userEdit(item){
-            this.form.id = item.id
-            this.form.username = item.username
-            this.form.pid = item.pid
-            this.dialogFormVisible = true
-        },
-        deskEdit(item){
-            this.form2.id = parseInt(item.id)
-            this.form2.title = item.title
-            this.form2.num = parseInt(item.num)
-            this.dialogFormVisible2 = true
-        },
-        // 提交用戶信息
-        async submit(){
-            let valid = await this.$refs['form'].validate()
-            if(valid){
-                let res = await $.post('Admin','setUserSave',this.form,true)
-                if(res.status == 1) {
-                    this.loadData()
-                    this.dialogFormVisible = false
-                } else this.$message.error(res.msg)
-            }
-        },
-        // 提交餐桌
-        async submit2(){
-            let valid = await this.$refs['form2'].validate()
-            if(!valid) return
-            let form = this.form2
-            if(form.title && form.num){
-                let res = await $.post('Admin','deskSave',form,true)
-                if(res.status==1){
-                    this.loadData()
-                    this.dialogFormVisible2 = false
-                }else this.$message.error(res.msg);
-            }
         },
         async changeShop(){
-            if(!this.shop.title) return this.$message.error('請輸入店名');
-            if(!this.shop.img) return this.$message.error('請上傳圖片');
-            if(!this.shop.description) return this.$message.error('請輸入簡介');
-            if(!this.shop.background) return this.$message.error('請上傳背景');
+            if(!this.shop.title) return this.$message.error(this.$t('storeNameError'));
+            if(!this.shop.phone) return this.$message.error(this.$t('storePhoneError'));
+            if(!this.shop.img) return this.$message.error(this.$t('uploadImageError'));
+            if(!this.shop.description) return this.$message.error(this.$t('descriptionError'));
+            if(!this.shop.background) return this.$message.error(this.$t('uploadBgImageError'));
             let res = await $.post('Admin','setShop',this.shop,true)
             if(res.status==1) this.$message({ message: res.msg, type: 'success' })
         },
         uploadLogoError(){
-            this.$message.error('上傳失敗')
+            this.$message.error(this.$t('uploadError'))
         },
         uploadLogoSuccess(res){
             if(res.status == 1){
@@ -264,7 +84,7 @@ export default {
             }
         },
         uploadBgError(){
-            this.$message.error('上傳失敗')
+            this.$message.error(this.$t('uploadError'))
         },
         uploadBgSuccess(res){
             if(res.status == 1){
@@ -275,35 +95,16 @@ export default {
                 })
             }
         }
-    },
-    watch:{
-        async dialogFormVisible(v){
-            if(v==true) {
-                let res = await $.post('Admin','setPositionList')
-                if(res.status == 1) this.position=res.data
-            } else {
-                this.form.id=0
-                this.form.username=''
-                this.form.password=''
-                this.form.pid=''
-            }
-        },
-        async dialogFormVisible2(v){
-            if(v==false){
-                this.form2.title=''
-                this.form2.num=0
-                this.form2.id=0
-            }
-        }
     }
 }
 </script>
 <style>
 .header{
     border:solid 1px #f0f0f0;
-    padding:0.2rem;
+    padding:1rem 0.5rem;
     margin-bottom:1rem;
     background-position:center;
+    border-radius:0.3rem;
     background-size:100%;
 }
 .el-upload {

@@ -1,5 +1,5 @@
 <template>
-    <div class="admin">
+    <div class="shops">
         <el-dialog :title="$t('editStoreInformation')" :visible.sync="dialogFormVisible">
             <el-form :model="form" :rules="rules" ref="form" label-width="2rem">
                 <el-row :gutter="12">
@@ -70,7 +70,7 @@
 <script>
 import $ from '../tool.js'
 export default{
-    name: 'Admin',
+    name: 'Shops',
     mounted(){
         this.loadData()
     },

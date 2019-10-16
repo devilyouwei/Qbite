@@ -1,4 +1,5 @@
 import { Loading,Message } from 'element-ui'
+import {i18n} from './plugins/i18n'
 /*---------------测试服-
 ---------------*/
 const URL = 'http://localhost:3000' //本地測試服
@@ -8,7 +9,6 @@ const CLIENT = 'http://diet.devil.ren'
 const CLIENT = 'http://diet.devil.ren'
 const URL = 'http://node.diet.devil.ren' // 正式服
 */
-
 
 const PRICE_SIGN = '$'
 export default {
@@ -34,7 +34,7 @@ export default {
         } catch (err) {
             Message({
                 showClose: true,
-                message: '網絡錯誤，請檢查網絡',
+                message: i18n.t('error_network'),
                 type: 'error'
             })
             throw err
