@@ -383,7 +383,7 @@
                 </div>
             </div>
         </div>
-       
+
         <div class="footer d-flex flex-column justify-content-center align-items-center">
             <span> &copy;Copyright NullTech 2019</span>
         </div>
@@ -391,6 +391,9 @@
 </template>
 
 <script>
+    import 'bootstrap/dist/css/bootstrap.css'
+    import 'bootstrap-vue/dist/bootstrap-vue.css'
+
     document.addEventListener("DOMContentLoaded", function(event) {
         // When the user scrolls the page, execute myFunction
         window.onscroll = function() {stickyMenuEffect()};
@@ -506,7 +509,7 @@
                     text-align: center;
                     padding: 14px 16px;
                     text-decoration: none;
-                &:hover {
+                    &:hover {
                         color: rgb(0, 0, 0);
                     }
                 }

@@ -1,6 +1,7 @@
 <template>
     <div>
         <el-menu default-active="1" background-color="#409eff" text-color="#fff" active-text-color="#fff" @select="menuSelect" style="height:100%;">
+            <!-- only for admin -->
             <el-submenu index="110" v-if="user.admin">
                 <template slot="title">
                     <i class="iconfont icon-menu">&nbsp;</i>
@@ -13,6 +14,7 @@
                     <span slot="title" style="color:red">{{$t('paymentOptions')}}</span>
                 </el-menu-item>
             </el-submenu>
+
             <el-menu-item index="1">
                 <i class="iconfont icon-home">&nbsp;</i>
                 <span slot="title">{{$t('dashboard')}}</span>
@@ -68,6 +70,9 @@ export default {
 }
 </script>
 <style>
+.left-menu .el-submenu__title{
+    text-align:left;
+}
 .left-menu .el-submenu .el-menu-item {
     height: 50px;
     line-height: 50px;
@@ -87,6 +92,7 @@ export default {
     color: #fff!important;
 }
 </style>
+
 <style scoped>
 .iconfont{
     font-size:0.3rem;

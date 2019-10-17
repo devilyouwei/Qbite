@@ -29,7 +29,7 @@
                             </div>
                         </div>
                     </div>
-                    <el-progress class="progress" :text-inside="true" :stroke-width="15" color="#4caf50" :percentage="parseInt(item.percent*100)"></el-progress>
+                    <el-progress class="progress" :text-inside="true" :stroke-width="15" color="#409eff" :percentage="parseInt(item.percent*100)"></el-progress>
                 </el-col>
             </el-row>
         </div>
@@ -107,25 +107,25 @@ export default {
 }
 .h1-title h1{
     line-height:1rem;
-    font-size: 1rem;
+    font-size: 0.8rem;
 }
 .h1-title h2{
-    font-size:0.5rem;
+    font-size:0.4rem;
     line-height:0.7rem;
 }
 .h1-title p{
     font-size:0.3rem;
-    line-height:0.7rem;
+    line-height:0.5rem;
     color:#ccc;
     margin: 0;
 }
 .orders{
-    paddinG:0 0.5rem;
+    padding:0 0.5rem;
 }
 .orders .title{
     font-size:0.25rem;
     font-weight:bold;
-    background:#ccc;
+    background:#409eff;
     color:#fff;
 }
 .orders .title.finish{
@@ -135,14 +135,18 @@ export default {
     padding:0.1rem 0.2rem;
 }
 .orders .orders-content{
-    font-size:0.2rem;
+    font-size:0.25rem;
+    background:#d6eaff;
+}
+.orders .orders-content .i-cell{
+    padding:0.05rem 0;
 }
 .orders .orders-content .i-cell.order-title{
     max-width:1.5rem;
 }
 .orders .orders-content.finish .i-cell.order-title{
     text-decoration:line-through;
-    color:#ccc;
+    color:#409eff;
 }
 .orders .orders-content.finish img{
     opacity:0.5;
@@ -154,13 +158,13 @@ export default {
     padding:0.05rem;
 }
 .orders .orders-content i.el-icon-success{
-    color:#4caf50;
+    color:#409eff;
 }
 .orders .orders-content i.el-icon-dish{
     color:#ccc;
 }
 .orders .progress{
-    margin:0.2rem 0;
+    margin:0.1rem 0;
 }
 .orders .tbg{
     background:rgba(76, 175, 80,0.1);
@@ -176,7 +180,7 @@ export default {
     position:fixed;
     top:0.5rem;
     left:0.5rem;
-    color:#4caf50;
+    color:#409eff;
     font-size:0.5rem;
     cursor: pointer;
 }

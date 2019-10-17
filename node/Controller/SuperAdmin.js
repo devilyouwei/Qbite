@@ -73,14 +73,15 @@ class SuperAdmin {
         if(flag) return res.json({status:1,msg:'已刪除'})
         return res.json({status:0,msg:'刪除失敗'})
     }
-    //支付,貨幣列表
-    static async payList(req,res){
+    //全局配置列表，支付方式，貨幣和地區
+    static async setList(req,res){
         let user = await $.auth(req.body.user)
         if(!user) return res.json({status:-1,msg:'未登錄或登錄狀態失效'})
         if(!user.admin) return res.json({status:-1,msg:'滾開，你不是管理員，禁止一切惡意攻擊！'})
         let data = await db.query('select * from payway where is_del=0')
         let data2 = await db.query('select * from currency where is_del=0')
-        return res.json({status:1,msg:'全部列出',data:{payway:data,currency:data2}})
+        let data3 = await db.query('select * from area  where is_del=0')
+        return res.json({status:1,msg:'全部列出',data:{payway:data,currency:data2,area:data3}})
     }
     //添加支付方式
     static async payWayAdd(req,res){
@@ -132,6 +133,31 @@ class SuperAdmin {
         let flag = (await db.query('update currency set is_del=1 where id=?',[id])).changedRows
         if(flag) return res.json({status:1,msg:'貨幣已刪除！'})
         else return res.json({status:0,msg:'貨幣刪除失敗！'})
+    }
+    //添加地區
+    static async areaAdd(req,res){
+        let user = await $.auth(req.body.user)
+        if(!user) return res.json({status:-1,msg:'未登錄或登錄狀態失效'})
+        if(!user.admin) return res.json({status:-1,msg:'滾開，你不是管理員，禁止一切惡意攻擊！'})
+        let data = {
+            title:req.body.title,
+            title_en:req.body.title_en,
+            createtime:(new Date()).getTime()/1000
+        }
+        let flag = await db.insert('area',data)
+        if(flag) return res.json({status:1,msg:'新地區寫入成功！'})
+        else return res.json({status:0,msg:'地區寫入失敗！'})
+    }
+    //刪除地區
+    static async areaDel(req,res){
+        let user = await $.auth(req.body.user)
+        if(!user) return res.json({status:-1,msg:'未登錄或登錄狀態失效'})
+        if(!user.admin) return res.json({status:-1,msg:'滾開，你不是管理員，禁止一切惡意攻擊！'})
+        let id = parseInt(req.body.id)
+        if(!id) return res.json({status:0,msg:'請輸入支付方式ID'})
+        let flag = (await db.query('update area set is_del=1 where id=?',[id])).changedRows
+        if(flag) return res.json({status:1,msg:'地區已刪除！'})
+        else return res.json({status:0,msg:'地區刪除失敗！'})
     }
 }
 module.exports=SuperAdmin

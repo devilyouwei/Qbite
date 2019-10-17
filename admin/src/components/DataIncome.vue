@@ -20,15 +20,8 @@
                 <el-table-column :label="$t('timeFinished')" prop="endtime"></el-table-column>
             </el-table>
         </el-dialog>
-        <div class="i-table">
-            <div class="i-cell title">
-                {{$t('totalRevenue')}}
-            </div>
-            <div class="i-cell tool">
-                <div class="picker">
-                    <el-date-picker v-model="value" type="daterange" align="right" unlink-panels :range-separator="$t('to')" :start-placeholder="$t('startDate')" :end-placeholder="$t('endDate')" :picker-options="pickerOptions"></el-date-picker>
-                </div>
-            </div>
+        <div class="title">
+            {{$t('totalRevenue')}}
         </div>
         <el-table :data="tableData">
             <el-table-column prop="price" :label="$t('revenue') + '(' + $t('unit') + sign+')'"></el-table-column>
@@ -57,46 +50,14 @@ export default{
     name:'DataIncome',
     data(){
         return {
-            value:'',
             sign:$.PRICE_SIGN,
             tableData:[],
             dialog:false,
-            pay:[],
-            pickerOptions: {
-                shortcuts: [{
-                    text: '今天',
-                    onClick(picker) {
-                        const start = new Date(new Date().toLocaleDateString());
-                        const end = new Date(new Date().toLocaleDateString());
-                        picker.$emit('pick', [start, end]);
-                    }
-                }, {
-                    text: '近一周',
-                    onClick(picker) {
-                        const start = new Date(new Date().toLocaleDateString());
-                        const end = new Date(new Date().toLocaleDateString());
-                        start.setTime(start.getTime() - 3600 * 1000 * 24 * 6);
-                        picker.$emit('pick', [start, end]);
-                    }
-                }, {
-                    text: '一個月',
-                    onClick(picker) {
-                        const start = new Date(new Date().toLocaleDateString());
-                        const end = new Date(new Date().toLocaleDateString());
-                        start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
-                        picker.$emit('pick', [start, end]);
-                    }
-                }, {
-                    text: '全部',
-                    onClick(picker) {
-                        const start = new Date(new Date().toLocaleDateString());
-                        const end = new Date(new Date().toLocaleDateString());
-                        start.setTime(0);
-                        picker.$emit('pick', [start, end]);
-                    }
-                }]
-            }
+            pay:[]
         }
+    },
+    props:{
+        date: Array
     },
     mounted(){
         this.loadData()
@@ -116,17 +77,21 @@ export default{
                     this.tableData[0].price+=parseFloat(this.pay[i].price)
                     this.tableData[0].orders++
                 }
+                this.tableData[0].price = parseFloat(this.tableData[0].price).toFixed(2)
             } else this.$message.error(res.msg)
         },
         print(){
-            let begin = Date.parse(this.value[0])
-            let end = Date.parse(this.value[1])
+            let begin = Date.parse(this.date[0])
+            let end = Date.parse(this.date[1])
             window.open(`/PrintIncome?begin=${begin}&end=${end}`,"_blank")
         }
     },
     watch:{
-        value(v){
-            this.loadData(Date.parse(v[0]),Date.parse(v[1]))
+        date:{
+            immediate: true, 
+            handler (v, oldVal) {
+                this.loadData(Date.parse(v[0]),Date.parse(v[1]))
+            }
         }
     }
 }

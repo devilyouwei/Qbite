@@ -28,7 +28,7 @@
 
                 </form>
             </nav>
-            <div class="d-flex flex-column justify-content-center align-items-center pt-3 pb-4">
+            <div class="d-flex flex-column justify-content-center align-items-center pt-4 pb-5">
                 <div class="d-flex flex-column align-items-center">
                     <span class="banner-title"><b>{{$t('bannerTitle')}}</b></span>
                 </div>
@@ -138,6 +138,8 @@
 
 <script>
     import $ from '../tool.js'
+    import 'bootstrap/dist/css/bootstrap.css'
+    import 'bootstrap-vue/dist/bootstrap-vue.css'
 
     export default {
         name: 'Main',
@@ -194,8 +196,8 @@
             a{
                 color: #409eff;
                 &:hover{
-                color: black;
-            }
+                    color: black;
+                }
             }
         }
         #lang-dropdown > button {

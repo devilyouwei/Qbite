@@ -1,8 +1,5 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Main from './views/Main.vue'
-import Home from './views/Home.vue'
-import Cart from './views/Cart.vue'
 import Index from './views/Index.vue'
 import Login from './views/Login.vue'
 import Register from './views/Register.vue'
@@ -19,27 +16,27 @@ export default new Router({
     routes: [
         {
             path: '/',
-            name: Main.name,
-            component: Main,
+            name: 'Main',
             meta: {
                 title: 'Quick Bite'
-            }
+            },
+            component: () => import('./official/Main.vue')
         },
         {
             path: '/Home',
-            name: Home.name,
-            component: Home,
+            name: 'Home',
             meta: {
-                title: 'Home'
-            }
+                title: i18n.t('title_official_home')
+            },
+            component: () => import('./official/Home.vue')
         },
         {
             path: '/Cart',
-            name: Cart.name,
-            component: Cart,
+            name: 'Cart',
             meta: {
-                title: 'Cart'
-            }
+                title: i18n.t('title_official_cart')
+            },
+            component: () => import('./official/Cart.vue')
         },
         {
             path: '/Login',

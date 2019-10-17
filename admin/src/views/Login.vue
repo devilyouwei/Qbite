@@ -2,8 +2,15 @@
     <div class="login" :style="bg?'background-image:url('+bg+')':'background-image:none;opacity:0'" :key="bg">
         <el-alert :title="msg" :type="success" v-show="msg" show-icon></el-alert>
         <div class="language">
-            <a href="#" @click="setLocale('en')">English</a>&nbsp;&nbsp;
-            <a href="#" @click="setLocale('zh')">繁體中文</a>
+            <div class="i-table">
+                <div class="i-cell">
+                    <a href="#" @click="setLocale('en')">English</a>&nbsp;&nbsp;
+                    <a href="#" @click="setLocale('zh')">繁體中文</a>
+                </div>
+                <div class="i-cell i-text-right">
+                    <a href="/">{{$t("goIndex")}}</a>
+                </div>
+            </div>
         </div>
         <h1>{{$t("loginTitle")}}</h1>
         <div class="form-field">
@@ -18,7 +25,7 @@
                     <el-input type="password" v-model="form.password" autocomplete="off" @keyup.enter.native="login('form')"></el-input>
                 </el-form-item>
             </el-form>
-            <div>
+            <div class="text-center">
                 <el-button type="primary" @click="login('form')" style="width:4rem;font-size:0.4rem;margin-top:0.5rem;">{{$t("loginButtonLabel")}}</el-button>
             </div>
             <el-button type="text" @click="toReg()" size="mini" class="reg">{{$t("signupLabel")}}</el-button>
@@ -50,7 +57,7 @@
     background-size:100% 100%;
 }
 .login h1{
-    margin-top:3vw;
+    margin-top:0.3rem;
     font-size:0.8rem;
     font-weight:bolder;
     padding:0.5rem 0;

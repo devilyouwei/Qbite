@@ -207,11 +207,11 @@ class Admin{
         // 店長特權
         if(user.pid!=1) return res.json({status:0,msg:'無權限用戶！'})
         if(req.body.title && req.body.img){
-            let flag = (await db.query('update shop set title=?,img=?,description=?,background=? where id=?',[req.body.title,req.body.img,req.body.description,req.body.background,user.sid])).changedRows
+            let flag = (await db.query('update shop set title=?,phone=?,img=?,description=?,background=? where id=?',[req.body.title,req.body.phone,req.body.img,req.body.description,req.body.background,user.sid])).changedRows
             if(flag>0) return res.json({status:1,msg:'修改成功'})
             else return res.json({status:0,msg:'修改失敗'})
         } else {
-            let data = (await db.query('select title,img,description,background from shop where id=?',[user.sid]))
+            let data = (await db.query('select title,phone,img,description,background from shop where id=?',[user.sid]))
             return res.json({status:1,msg:'輸入店名或者上傳圖片',data:data[0]})
         }
     }
