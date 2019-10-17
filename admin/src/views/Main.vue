@@ -22,13 +22,13 @@
                         </b-dropdown-item-button>
                     </b-dropdown>
 
-                    <button class="btn mr-1" type="button">
+                    <button class="nav-btn btn mr-1" type="button">
                         <router-link to="/login">{{$t('signIn')}}</router-link>
                     </button>
 
                 </form>
             </nav>
-            <div class="d-flex flex-column justify-content-center align-items-center pt-3">
+            <div class="d-flex flex-column justify-content-center align-items-center pt-3 pb-4">
                 <div class="d-flex flex-column align-items-center">
                     <span class="banner-title"><b>{{$t('bannerTitle')}}</b></span>
                 </div>
@@ -42,7 +42,7 @@
                 </div>
             </div>
         </header>
-        <section class="d-flex popular-food flex-column mt-1">
+        <div class="container d-flex popular-food flex-column mt-1">
             <!-- Top Rated Food-->
             <div class="d-flex flex-column pl-2">
                 <span class="top-rated-food">{{$t('topRatedFood')}}</span>
@@ -92,47 +92,46 @@
                     </div>
                 </div>
             </div>
-            <footer class="footer d-flex flex-column mt-auto py-3">
-                <div class="container">
-                    <div class="d-flex flex-column w-50">
-                        <div class="row pt-1">
-                            <div class="col-sm">
-                                About Us
-                            </div>
-                            <div class="col-sm">
-                                FAQ
-                            </div>
+        </div>
+
+        <footer class="footer d-flex flex-column mt-auto py-3">
+            <div class="container">
+                <div class="d-flex flex-column w-50">
+                    <div class="row pt-1">
+                        <div class="col-sm">
+                            About Us
                         </div>
-                        <div class="row pt-1">
-                            <div class="col-sm">
-                                Privacy Policy
-                            </div>
-                            <div class="col-sm">
-                                Help Center
-                            </div>
-                        </div>
-                        <div class="row pt-1">
-                            <div class="col-sm">
-                                Terms Of Use
-                            </div>
-                            <div class="col-sm">
-                                Become a Partner
-                            </div>
-                        </div>
-                        <div class="row pt-1">
-                            <div class="col-sm">
-                                Contact Us
-                            </div>
+                        <div class="col-sm">
+                            FAQ
                         </div>
                     </div>
-                    <div class="d-flex flex-column pt-2 justify-content-center align-items-center">
-                        <span> © Copyright NullBugs 2019</span>
+                    <div class="row pt-1">
+                        <div class="col-sm">
+                            Privacy Policy
+                        </div>
+                        <div class="col-sm">
+                            Help Center
+                        </div>
+                    </div>
+                    <div class="row pt-1">
+                        <div class="col-sm">
+                            Terms Of Use
+                        </div>
+                        <div class="col-sm">
+                            Become a Partner
+                        </div>
+                    </div>
+                    <div class="row pt-1">
+                        <div class="col-sm">
+                            Contact Us
+                        </div>
                     </div>
                 </div>
-            </footer>
-
-        </section>
-
+                <div class="d-flex flex-column pt-2 justify-content-center align-items-center">
+                    <span> © Copyright NullBugs 2019</span>
+                </div>
+            </div>
+        </footer>
 
     </div>
 </template>
@@ -171,20 +170,52 @@
     }
 </script>
 
-
-<style>
+<style lang="scss">
     header.head {
-        height: 8rem;
+        height: 10rem;
         background-image: url("../assets/banner.jpg");
-        background-size: cover;
         text-align: center;
         margin: 0 auto;
         background-blend-mode: lighten;
-
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-size: cover;
+        background-color: #464646;
     }
 
     nav.navbar {
         padding: unset;
+        .navbar-brand{
+            padding: 0;
+        }
+        .nav-btn{
+            background: transparent;
+            a{
+                color: #409eff;
+                &:hover{
+                color: black;
+            }
+            }
+        }
+        #lang-dropdown > button {
+            margin: 0 0.5rem;
+            color: unset;
+            background-color: transparent !important;
+            border-color: unset;
+            border: unset;
+        }
+
+        .dropdown-menu {
+            font-size: 0.3rem;
+            min-width: unset;
+            padding: 0.05rem;
+            border-radius: 0;
+        }
+
+        .dropdown-item {
+            padding: 0.05rem 0.2rem;
+        }
     }
 
     div.logo {
@@ -206,26 +237,6 @@
     .btn:focus {
         box-shadow: unset;
         outline: 0;
-    }
-
-    #lang-dropdown > button {
-        padding: 0.3rem;
-        color: unset;
-        background-color: transparent !important;
-        border-color: unset;
-        border: unset;
-        font-size: 0.4rem;
-    }
-
-    .dropdown-menu {
-        font-size: 0.4rem !important;
-        min-width: unset !important;
-        padding: 0.05rem 0.15rem !important;
-    }
-
-    .dropdown-item {
-        padding-left: unset !important;
-        padding-right: unset !important;
     }
 
     span.lang-text {
@@ -270,9 +281,6 @@
     }
 
     img {
-        /* not scew */
-        /*height: 100%;*/
-        /*width: auto;*/
         height: 100%;
         width: 100%;
         object-fit: cover;

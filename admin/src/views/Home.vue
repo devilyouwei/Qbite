@@ -18,21 +18,27 @@
                 <p>184-188 Georges River Road, CROYDON PARK, NSW 2133</p>
             </div>
         </div>
-        <div id="navbar" class="row restaurant-nav">
-            <div class="menu col-sm-9">
-                <ul>
-                    <li><a href="#popular">Most Popular</a></li>
-                    <li><a href="#beverages">Beverages</a></li>
-                    <li><a href="#lunch">Lunch</a></li>
-                    <li><a href="#dinner">Dinner</a></li>
-                </ul>
-            </div>
-            <div class="search-box col-sm-3">
-                <div class="search">
-                    <el-input placeholder="Search Food"></el-input>
-                    <span><i class="fa fa-search"></i></span>
+        <div id="navbar" class="restaurant-nav">
+            <div class="container">
+                <div class="row">
+                    <div class="menu col-sm-9">
+                        <ul>
+                            <li><a href="#popular">Most Popular</a></li>
+                            <li><a href="#beverages">Beverages</a></li>
+                            <li><a href="#lunch">Lunch</a></li>
+                            <li><a href="#dinner">Dinner</a></li>
+                        </ul>
+                    </div>
+                    <div class="search-box col-sm-3">
+                        <div class="search">
+                            <el-input placeholder="Search Food"></el-input>
+                            <span><i class="fa fa-search"></i></span>
+                        </div>
+                    </div>
                 </div>
             </div>
+
+
         </div>
         <div class="container">
             <div class="content">
@@ -480,15 +486,11 @@
         margin:0 auto;
     }
 
-    .row.restaurant-nav{
-        margin-right: 0;
-        margin-left: 0;
-    }
     .restaurant-nav{
         display: flex;
         align-items: center;
-        margin: 0.3rem 0;
         .menu {
+            padding: 0;
             ul {
                 list-style-type: none;
                 margin: 0;
@@ -509,6 +511,16 @@
                     }
                 }
             }
+        }
+        .container{
+            margin: 0 auto;
+        }
+        .search-box{
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            width: 100%;
+            padding-right: 15px;
         }
     }
 
