@@ -154,7 +154,7 @@ export const en = {
     price: 'Price',
     supply: 'Supply',
     editDish: 'Edit Dish',
-    nameOfDish: 'Name of Dish',
+    nameOfDish: 'Name',
     dishCategory: 'Dish category',
     dishDescription: 'Description',
     enterDishName: 'Enter name of dish',

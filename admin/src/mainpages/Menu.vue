@@ -68,7 +68,7 @@
                 <el-row>
                     <el-col :span="24">
                         <el-form-item :label="$t('description')">
-                            <el-input type="textarea" v-model="form.intro"></el-input>
+                            <el-input type="textarea" v-model="form.intro" style="width:8rem;"></el-input>
                         </el-form-item>
                     </el-col>
                 </el-row>
@@ -224,5 +224,10 @@ export default {
     width:auto;
     margin:0 auto;
     display: block;
+}
+</style>
+<style>
+.el-form-item__label {
+    width:auto!important;
 }
 </style>
