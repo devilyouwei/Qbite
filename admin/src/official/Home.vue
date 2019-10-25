@@ -18,21 +18,27 @@
                 <p>184-188 Georges River Road, CROYDON PARK, NSW 2133</p>
             </div>
         </div>
-        <div id="navbar" class="row restaurant-nav">
-            <div class="menu col-sm-9">
-                <ul>
-                    <li><a href="#popular">Most Popular</a></li>
-                    <li><a href="#beverages">Beverages</a></li>
-                    <li><a href="#lunch">Lunch</a></li>
-                    <li><a href="#dinner">Dinner</a></li>
-                </ul>
-            </div>
-            <div class="search-box col-sm-3">
-                <div class="search">
-                    <el-input placeholder="Search Food"></el-input>
-                    <span><i class="fa fa-search"></i></span>
+        <div id="navbar" class="restaurant-nav">
+            <div class="container">
+                <div class="row">
+                    <div class="menu col-sm-9">
+                        <ul>
+                            <li><a href="#popular">Most Popular</a></li>
+                            <li><a href="#beverages">Beverages</a></li>
+                            <li><a href="#lunch">Lunch</a></li>
+                            <li><a href="#dinner">Dinner</a></li>
+                        </ul>
+                    </div>
+                    <div class="search-box col-sm-3">
+                        <div class="search">
+                            <el-input placeholder="Search Food"></el-input>
+                            <span><i class="fa fa-search"></i></span>
+                        </div>
+                    </div>
                 </div>
             </div>
+
+
         </div>
         <div class="container">
             <div class="content">
@@ -385,204 +391,209 @@
 </template>
 
 <script>
-import 'bootstrap/dist/css/bootstrap.css'
-import 'bootstrap-vue/dist/bootstrap-vue.css'
-export default {
-    name: 'Home',
-    data(){
-        return{
-        }
-    },
-    mounted(){
-        document.addEventListener("DOMContentLoaded", function(event) {
-            // When the user scrolls the page, execute myFunction
-            window.onscroll = function() {stickyMenuEffect()};
-            // Get the navbar
-            var navbar = document.getElementById("navbar");
-            // Get the offset position of the navbar
-            var sticky = navbar.offsetTop;
-            // Add the sticky class to the navbar when you reach its scroll position. Remove "sticky" when you leave the scroll position
-            function stickyMenuEffect() {
-                if (window.pageYOffset >= sticky) {
-                    navbar.classList.add("sticky")
-                } else {
-                    navbar.classList.remove("sticky");
-                }
+    import 'bootstrap/dist/css/bootstrap.css'
+    import 'bootstrap-vue/dist/bootstrap-vue.css'
+
+    document.addEventListener("DOMContentLoaded", function(event) {
+        // When the user scrolls the page, execute myFunction
+        window.onscroll = function() {stickyMenuEffect()};
+
+        // Get the navbar
+        var navbar = document.getElementById("navbar");
+
+        // Get the offset position of the navbar
+        var sticky = navbar.offsetTop;
+
+        // Add the sticky class to the navbar when you reach its scroll position. Remove "sticky" when you leave the scroll position
+        function stickyMenuEffect() {
+            if (window.pageYOffset >= sticky) {
+                navbar.classList.add("sticky")
+            } else {
+                navbar.classList.remove("sticky");
             }
-        });
+        }
+    });
+
+    export default {
+        name: 'Home',
     }
-}
 </script>
 
 <style lang="scss">
-/***********Header************/
-.head {
-    padding: 0.4rem 0.5rem;
-    .logo {
-        color: #409eff;
-        font-size: 0.38rem;
-        font-weight: bold;
-        cursor: pointer;
-        padding-left: 2.5rem;
-        .icon-letter-q {
-            font-size: 0.9rem;
+    /***********Header************/
+    .head {
+        padding: 0.4rem 0.5rem;
+        .logo {
+            color: #409eff;
+            font-size: 0.38rem;
+            font-weight: bold;
+            cursor: pointer;
+            padding-left: 2.5rem;
+            .icon-letter-q {
+                font-size: 0.9rem;
 
+            }
         }
-    }
-    .sign-in {
-        text-align: left;
-        font-size: 0.32rem;
-    }
-    .cart{
-        font-size: 0.5rem;
-        &:hover{
-            color: #409EFF;
+        .sign-in {
+            text-align: left;
+            font-size: 0.32rem;
         }
-    }
-}
-
-/***********Content*************/
-.container .content h1{
-    text-align: left;
-}
-
-/************Banner***********/
-.banner {
-    height: 7rem;
-    background-image: url("/banner.jpg");
-    background-position: center center;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-size: cover;
-    background-color: #464646;
-    display: flex;
-    align-items: center;
-
-    /*************Content**************/
-    .content{
-        padding: 0.5rem;
-        background-color: white;
-        margin: 0.5rem 0;
-        width: 60%;
-        h1{
-            font-size: 0.65rem;
-        }
-        p{
-            font-size: 0.4rem;
-            margin-bottom: 5px;
-        }
-    }
-}
-
-/********** MENU ***********/
-.restaurant-nav.sticky {
-    position: fixed;
-    top: 0;
-    width: 100%;
-    z-index: 99;
-    background-color: white;
-    margin:0 auto;
-}
-
-.row.restaurant-nav{
-    margin-right: 0;
-    margin-left: 0;
-}
-.restaurant-nav{
-    display: flex;
-    align-items: center;
-    margin: 0.3rem 0;
-    .menu {
-        ul {
-            list-style-type: none;
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-        }
-        li {
-            float: left;
-            a {
-                font-size: 0.3rem;
-                display: block;
-                color: rgb(82, 82, 82);
-                text-align: center;
-                padding: 14px 16px;
-                text-decoration: none;
-                &:hover {
-                    color: rgb(0, 0, 0);
-                }
+        .cart{
+            font-size: 0.5rem;
+            &:hover{
+                color: #409EFF;
             }
         }
     }
-}
 
-/*************Search************/
-.search {
-    position: relative;
-    .fa-search {
-        position: absolute;
-        top: 14px;
-        right: 10px;
-        color: #c4c4c4;
+    /***********Content*************/
+    .container .content h1{
+        text-align: left;
     }
-}
 
-/*****************Container*************/
-.container .content h1{
-    font-size: 0.5rem;
-}
+    /************Banner***********/
+    .banner {
+        height: 7rem;
+        background-image: url("../assets/home-banner.jpg");
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-size: cover;
+        background-color: #464646;
+        display: flex;
+        align-items: center;
 
-/*************Menu Items***********/
-.menu-item{
-    h4{
-        font-size: 0.3rem;
-        margin-bottom: 0.2rem;
-    }
-    p{
-        margin-bottom: 0;
-    }
-    .add-btn{
-        display: inline-block;
-        color: #212529;
-        text-align: center;
-        vertical-align: middle;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-        border: 1px solid transparent;
-        padding: 0.15rem 0.3rem;
-        border-radius: 0.25rem;
-        -webkit-transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
-        transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
-        transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-        transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
-        background-color: #409EFF;
-        &:hover {
-            background-color: #409EFF;
-            color: white;
+        /*************Content**************/
+        .content{
+            padding: 0.5rem;
+            background-color: white;
+            margin: 0.5rem 0;
+            width: 60%;
+            h1{
+                font-size: 0.65rem;
+            }
+            p{
+                font-size: 0.4rem;
+                margin-bottom: 5px;
+            }
         }
     }
-    .input-box{
-        display: block;
-        color: #495057;
-        background-color: #fff;
-        background-clip: padding-box;
-        border: 1px solid #ced4da;
-        border-radius: 0.25rem;
-        padding: 0.15rem 0.2rem;
-        -webkit-transition: border-color 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
-        transition: border-color 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
-        transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-        transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
-    }
-    input[type=number]::-webkit-inner-spin-button,
-    input[type=number]::-webkit-outer-spin-button {
 
-        opacity: 1;
-
+    /********** MENU ***********/
+    .restaurant-nav.sticky {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        z-index: 99;
+        background-color: white;
+        margin:0 auto;
     }
-}
+
+    .restaurant-nav{
+        display: flex;
+        align-items: center;
+        .menu {
+            padding: 0;
+            ul {
+                list-style-type: none;
+                margin: 0;
+                padding: 0;
+                overflow: hidden;
+            }
+            li {
+                float: left;
+                a {
+                    font-size: 0.3rem;
+                    display: block;
+                    color: rgb(82, 82, 82);
+                    text-align: center;
+                    padding: 14px 16px;
+                    text-decoration: none;
+                    &:hover {
+                        color: rgb(0, 0, 0);
+                    }
+                }
+            }
+        }
+        .container{
+            margin: 0 auto;
+        }
+        .search-box{
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            width: 100%;
+            padding-right: 15px;
+        }
+    }
+
+    /*************Search************/
+    .search {
+        position: relative;
+        .fa-search {
+            position: absolute;
+            top: 14px;
+            right: 10px;
+            color: #c4c4c4;
+        }
+    }
+
+    /*****************Container*************/
+    .container .content h1{
+        font-size: 0.5rem;
+    }
+
+    /*************Menu Items***********/
+    .menu-item{
+        h4{
+            font-size: 0.3rem;
+            margin-bottom: 0.2rem;
+        }
+        p{
+            margin-bottom: 0;
+        }
+        .add-btn{
+            display: inline-block;
+            color: #212529;
+            text-align: center;
+            vertical-align: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            border: 1px solid transparent;
+            padding: 0.15rem 0.3rem;
+            border-radius: 0.25rem;
+            -webkit-transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
+            transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
+            transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+            transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
+            background-color: #409EFF;
+            &:hover {
+                background-color: #409EFF;
+                color: white;
+            }
+        }
+        .input-box{
+            display: block;
+            color: #495057;
+            background-color: #fff;
+            background-clip: padding-box;
+            border: 1px solid #ced4da;
+            border-radius: 0.25rem;
+            padding: 0.15rem 0.2rem;
+            -webkit-transition: border-color 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
+            transition: border-color 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
+            transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+            transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
+        }
+        input[type=number]::-webkit-inner-spin-button,
+        input[type=number]::-webkit-outer-spin-button {
+
+            opacity: 1;
+
+        }
+    }
 
 
 </style>
