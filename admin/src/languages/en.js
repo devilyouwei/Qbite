@@ -33,6 +33,7 @@ export const en = {
     tableNumber2: 'Table Number: ',
     tableNumber3: 'Table Number: ',
     newOrderLabel: 'A new order has been received!',
+    createTime: 'Order Time',
     logoutNotice: 'Are you sure you want to logout?',
     logoutNoticeTitle: 'Notice',
     confirm: 'Confirm',

@@ -11,9 +11,9 @@
         <div class="replace" v-if="replace">
             {{$t('staffNoOrdersText')}}
         </div>
-        <div v-if="!replace">
+        <div v-if="!replace" style="padding:0.5rem;">
             <el-row>
-                <el-col :span="8" v-for="(item,index) in list" :key="index" class="text-center">
+                <el-col :span="6" v-for="(item,index) in list" :key="index" class="i-text-center" style="padding:0.5rem 0;">
                     <div class="card" @click="showOrder(item.id)">
                         <div class="title">{{item.title}}</div>
                         <div style="font-size:0.3rem;padding-top:0.2rem;">
@@ -30,7 +30,7 @@
                     <div class="tag-content">
                         <img :src="item2.thumb" class="tag-thumb">
                         {{item2.title}}
-                        <div class="tag-num-cooked" style="color:#4caf50;">{{$t('serveFood')}} ×{{item2.cooked}}</div>
+                        <div class="tag-num-cooked" style="color:#409EFF;">{{$t('serveFood')}} ×{{item2.cooked}}</div>
                         <div class="tag-num">${{item2.price}} ×{{item2.count}}</div>
                     </div>
                     <div class="tag-opt" @click="finish(index,index2)" v-if="item2.cooked<item2.count">
@@ -41,7 +41,7 @@
                         </div>
                 </div>
                 <div class="btn-box">
-                    <el-button type="success" size="medium" @click="submit(index)">{{$t('save')}}</el-button>
+                    <el-button type="primary" size="medium" @click="submit(index)">{{$t('save')}}</el-button>
                 </div>
             </div>
         </el-dialog>
@@ -196,7 +196,7 @@ export default {
     margin-bottom:0.1rem;
 }
 .order .tag .tag-opt{
-    background:#4caf50;
+    background:#409EFF;
     padding:0.2rem 0.3rem;
     font-size:0.25rem;
     color:#fff;
@@ -220,7 +220,7 @@ export default {
     position:fixed;
     top:0.5rem;
     left:0.5rem;
-    color:#4caf50;
+    color:#409EFF;
     font-size:0.5rem;
     cursor: pointer;
 }

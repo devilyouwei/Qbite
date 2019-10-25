@@ -33,6 +33,7 @@ export const zh = {
     tableNumber2: '桌編號',
     tableNumber3: '桌號',
     newOrderLabel: '您有新的訂單了~',
+    createTime: '下单时间',
     logoutNotice: '是否退出登錄?',
     logoutNoticeTitle: '提示',
     confirm: '確定',

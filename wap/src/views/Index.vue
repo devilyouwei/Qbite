@@ -27,7 +27,7 @@
                 </div>
             -->
             <div class="replace" v-if="replace">
-                暫無菜品
+                None
             </div>
             <div class="table" v-if="list.length">
                 <div class="row" v-for="(item,index) in list" :key="index" v-show="type[activeIndex].id==item.tid">
@@ -56,7 +56,7 @@
                     <span class="shopped" v-if="shopped">{{shopped}}</span>
                     <span v-if="price" style="margin-left:1rem;">{{price.toFixed(2)}} {{priceSign}}</span>
                 </div>
-                <div class="cell pay">結算</div>
+                <div class="cell pay">Place order</div>
             </div>
         </div>
 
@@ -93,10 +93,10 @@
             </div>
             <div class="table btn-box text-center" v-show="showPopup">
                 <div class="cell">
-                    <van-button type="default" @click="showPopup=false" size="small"><i class="iconfont icon-error">&nbsp;</i>關閉</van-button>
+                    <van-button type="default" @click="showPopup=false" size="small"><i class="iconfont icon-error">&nbsp;</i>close</van-button>
                 </div>
                 <div class="cell">
-                    <van-button type="danger" @click="submit" size="small"><i class="iconfont icon-zhengque">&nbsp;</i>下單</van-button>
+                    <van-button type="danger" @click="submit" size="small"><i class="iconfont icon-zhengque">&nbsp;</i>Place Order</van-button>
                 </div>
             </div>
         </van-popup>

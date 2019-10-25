@@ -83,7 +83,7 @@ export default {
                 mask: true,
                 duration: 0,       // 持续展示 toast
                 forbidClick: true, // 禁用背景点击
-                message: '加載中...'
+                message: 'loading...'
             })
         }else{
             Toast.clear()

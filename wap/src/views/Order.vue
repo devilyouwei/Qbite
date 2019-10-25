@@ -1,9 +1,9 @@
 <template>
     <div class="order">
         <div class="desk" v-if="order">
-            <div class="desk-title">{{shop.title}}{{order.title}}</div>
-            <div class="time">訂單{{order.id}}</div>
-            <div class="time">下單時間：{{order.time}}</div>
+            <div class="desk-title">{{shop.title}} {{order.title}}</div>
+            <div class="time">Order Num: {{order.id}}</div>
+            <div class="time">Order time：{{order.time}}</div>
         </div>
         <div class="table" v-if="order">
             <div class="row" v-for="(item,index) in order.content" :key="index">
@@ -13,10 +13,10 @@
                     <div class="price">{{item.price}} {{priceSign}}</div>
                 </div>
                 <div class="cell status making" style="min-width:1.5rem;" v-if="item.count-item.cooked>0">
-                    準備中×{{item.count-item.cooked}}
+                    preparing×{{item.count-item.cooked}}
                 </div>
                 <div class="cell status success" style="min-width:2rem;" v-else>
-                    已上菜
+                    finished
                 </div>
                 <div class="cell count" :class="item.count==item.cooked?'success':''">
                     ×{{item.count}}
@@ -24,7 +24,7 @@
             </div>
         </div>
         <div class="pay" v-if="order">
-            合計<br>{{order.price}} {{priceSign}}
+            Price<br>{{order.price}} {{priceSign}}
         </div>
     </div>
 </template>
@@ -68,7 +68,7 @@ export default{
 <style scoped>
 .order{
     padding:0.5rem;
-    background:#fff6e7;
+    background:#fff;
     min-height:100%;
 }
 .table{

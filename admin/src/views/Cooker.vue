@@ -29,6 +29,9 @@
                             </div>
                         </div>
                     </div>
+                    <div class="foot" :class="item.percent==1?'finish':''">
+                        {{$t("createTime")}}: {{item.createtime}}
+                    </div>
                     <el-progress class="progress" :text-inside="true" :stroke-width="15" color="#409eff" :percentage="parseInt(item.percent*100)"></el-progress>
                 </el-col>
             </el-row>
@@ -75,6 +78,7 @@ export default {
                     console.log(count)
                     console.log(cooked)
                     res.data[i].percent = cooked/count
+                    res.data[i].createtime = $.formatDate($.stamp2date(res.data[i].createtime),'hh:mm:ss')
                 }
                 this.list = []
                 this.list = res.data
@@ -127,6 +131,14 @@ export default {
     font-weight:bold;
     background:#409eff;
     color:#fff;
+}
+.orders .foot{
+    background:#409eff;
+    font-weight:bold;
+    font-size:0.3rem;
+    padding:0.1rem 0.2rem;
+    color:#fff;
+    text-align:right;
 }
 .orders .title.finish{
     background:#4caf50;
