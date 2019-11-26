@@ -1,3 +1,4 @@
+![Qbite](https://wap.qbite.us/favicon.png "Qbite, faster order")
 # Qbite (EN)
 
 *Scan the QRcode and order what you want!*
