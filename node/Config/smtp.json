@@ -1,8 +1,0 @@
-{
-    "host": "smtp.qq.com",
-    "secure": false,
-    "auth": {
-        "user": "devilyouwei@foxmail.com",
-        "pass": "imznelpqqqbybjcb"
-    }
-}
