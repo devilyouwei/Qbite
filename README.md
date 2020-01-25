@@ -1,7 +1,10 @@
 ![Qbite](https://wap.qbite.us/favicon.png "Qbite, faster order")
 # Qbite (EN)
 
+![Qbite](https://github-devilyouwei.oss-us-west-1.aliyuncs.com/qbite/qbite%20qrcode.jpg)
+
 *Scan the QRcode and order what you want!*
+
 
 ## Statement
 
