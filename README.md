@@ -5,6 +5,7 @@
 
 *Scan the QRcode and order what you want!*
 
+Visit our official website to order food! [http://web.qbite.us](http://web.qbite.us)
 
 ## Statement
 
