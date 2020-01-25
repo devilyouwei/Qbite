@@ -7,7 +7,7 @@
 
 Qbite is an online ordering system with POS and online payment feature. The mission is to bring all the restaurants to be managed online. Take the catering trade into digital world. Make the customers order the food with mobile and the bill payment automatically be processed!
 
-Qbite is developed and maintained by Q-tech LLC now.
+Qbite is developed and maintained by Qbyte LLC now.
 
 ## Project Removed!
 
@@ -35,7 +35,7 @@ Qbite是一個線上點餐平臺，並帶有餐廳需要的POS管理系統以及
 
 享受數字化管理的便捷和大數據可視化的協助。
 
-目前，Qbite由Q-tech科技公司（美國）開發和維護。
+目前，Qbite由Qbyte公司（美國）開發和維護。
 
 ## 項目移除
 
@@ -43,7 +43,7 @@ Qbite是一個線上點餐平臺，並帶有餐廳需要的POS管理系統以及
 
 ## 開源項目
 
-不過，很高興的告訴大家，在Q-tech公司的授權下，我們開源了項目所使用的核心框架——RestfulNode，也就是Qbite後端接口所使用的框架。
+不過，很高興的告訴大家，在Qbyte公司的授權下，我們開源了項目所使用的核心框架——RestfulNode，也就是Qbite後端接口所使用的框架。
 
 RestfulNode提供了更簡單的方式供開發者開發restful風格的JSON API，其路由請求的方式與ThinkPHP相似。
 
@@ -60,7 +60,7 @@ Qbite是一个线上点餐平台，并带有餐厅需要的POS管理系统以及
 
 享受数字化管理的便捷和大数据可视化的协助。
 
-目前，Qbite由Q-tech科技公司（美国）开发和维护。
+目前，Qbite由Qbyte科技公司（美国）开发和维护。
 
 ## 项目移除
 
@@ -68,7 +68,7 @@ Qbite是一个线上点餐平台，并带有餐厅需要的POS管理系统以及
 
 ## 开源项目
 
-不过，很高兴的告诉大家，在Q-tech公司的授权下，我们开源了项目所使用的核心框架——RestfulNode，也就是Qbite后端接口所使用的框架。
+不过，很高兴的告诉大家，在Qbyte公司的授权下，我们开源了项目所使用的核心框架——RestfulNode，也就是Qbite后端接口所使用的框架。
 
 RestfulNode提供了更简单的方式供开发者开发restful风格的JSON API，其路由请求的方式与ThinkPHP相似。
 
