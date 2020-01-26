@@ -18,7 +18,7 @@ Qbite is developed and maintained by Qbyte LLC now.
 
 ## Project Removed!
 
-We are sorry that Qbite now become a bussiness project with commercial rights.
+We are sorry that Qbite now become a commercial project with a Qbyte LLC copyright.
 
 From now on, Qbite will be no longer open source to the public.
 
