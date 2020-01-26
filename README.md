@@ -7,6 +7,9 @@
 
 Visit our official website to order food! [http://web.qbite.us](http://web.qbite.us)
 
+Open an account for your restaurant!
+[http://web.qbite.us](http://store.qbite.us)
+
 ## Statement
 
 Qbite is an online ordering system with POS and online payment feature. The mission is to bring all the restaurants to be managed online. Take the catering trade into digital world. Make the customers order the food with mobile and the bill payment automatically be processed!
@@ -21,12 +24,12 @@ From now on, Qbite will be no longer open source to the public.
 
 ## Open source project
 
-Although Qbite is not an open source project we are still very excited to anounce that the framework RestfulNode used by Qbite backend is open source.
+Although Qbite is not an open source project we are still very excited to anounce that the framework QuickNode used by Qbite backend is open source.
 
-RestfulNode is an open source project based on node express.
+QuickNode is an open source project based on node express.
 It is to provide an easier way for the web developers to create restful JSON APIs on node.js web backend.
 
-More info, please visit this repository: [**RestfulNode**](https://github.com/devilyouwei/RestfulNode)
+More info, please visit this repository: [**QuickNode**](https://github.com/devilyouwei/QuickNode)
 
 
 # Qbite (CNHK)
@@ -47,11 +50,11 @@ Qbite是一個線上點餐平臺，並帶有餐廳需要的POS管理系統以及
 
 ## 開源項目
 
-不過，很高興的告訴大家，在Qbyte公司的授權下，我們開源了項目所使用的核心框架——RestfulNode，也就是Qbite後端接口所使用的框架。
+不過，很高興的告訴大家，在Qbyte公司的授權下，我們開源了項目所使用的核心框架——QuickNode，也就是Qbite後端接口所使用的框架。
 
-RestfulNode提供了更簡單的方式供開發者開發restful風格的JSON API，其路由請求的方式與ThinkPHP相似。
+QuickNode提供了更簡單的方式供開發者開發restful風格的JSON API，其路由請求的方式與ThinkPHP相似。
 
-更多信息，請訪問該項目的github主頁： [**RestfulNode**](https://github.com/devilyouwei/RestfulNode)
+更多信息，請訪問該項目的github主頁： [**QuickNode**](https://github.com/devilyouwei/QuickNode)
 
 
 # Qbite (CN)
@@ -72,11 +75,11 @@ Qbite是一个线上点餐平台，并带有餐厅需要的POS管理系统以及
 
 ## 开源项目
 
-不过，很高兴的告诉大家，在Qbyte公司的授权下，我们开源了项目所使用的核心框架——RestfulNode，也就是Qbite后端接口所使用的框架。
+不过，很高兴的告诉大家，在Qbyte公司的授权下，我们开源了项目所使用的核心框架——QuickNode，也就是Qbite后端接口所使用的框架。
 
-RestfulNode提供了更简单的方式供开发者开发restful风格的JSON API，其路由请求的方式与ThinkPHP相似。
+QuickNode提供了更简单的方式供开发者开发restful风格的JSON API，其路由请求的方式与ThinkPHP相似。
 
-更多信息，请访问该项目的github主页： [**RestfulNode**](https://github.com/devilyouwei/RestfulNode)
+更多信息，请访问该项目的github主页： [**QuickNode**](https://github.com/devilyouwei/QuickNode)
 
 ## Examples
 
