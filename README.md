@@ -8,7 +8,7 @@
 Visit our official website to order food! [http://web.qbite.us](http://web.qbite.us)
 
 Open an account for your restaurant!
-[http://web.qbite.us](http://store.qbite.us)
+[http://store.qbite.us](http://store.qbite.us)
 
 ## Statement
 
