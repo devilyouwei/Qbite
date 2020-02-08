@@ -5,7 +5,7 @@
 
 *Scan the QRcode and order some food you want!*
 
-Visit our landing website! [http://www.qbite.us](http://web.qbite.us)
+Visit our landing website! [http://www.qbite.us](http://www.qbite.us)
 
 Open an account for your restaurant!
 [http://store.qbite.us](http://store.qbite.us)
