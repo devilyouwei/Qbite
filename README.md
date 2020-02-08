@@ -3,9 +3,9 @@
 
 ![Qbite](https://github-devilyouwei.oss-us-west-1.aliyuncs.com/qbite/qbite%20qrcode.jpg)
 
-*Scan the QRcode and order what you want!*
+*Scan the QRcode and order some food you want!*
 
-Visit our official website to order food! [http://web.qbite.us](http://web.qbite.us)
+Visit our landing website! [http://www.qbite.us](http://web.qbite.us)
 
 Open an account for your restaurant!
 [http://store.qbite.us](http://store.qbite.us)
